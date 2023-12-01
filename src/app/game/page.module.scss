@@ -1,0 +1,105 @@
+
+.Game {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+
+  .holder {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    padding: 12px;
+    background: #ffffff;
+
+    .stage {
+      display: flex;
+      padding: 8px;
+      margin: 18px 0 4px 0;
+      font-size: 18px;
+      font-weight: bold;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .summary {
+      padding: 12px;
+      margin: 12px;
+      font-size: 14px;
+      border: 1px #000000 dashed;
+      border-radius: 32px;
+
+      div:first-child {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 2px 0 12px 0;
+      }
+    }
+
+    .dialog {
+      padding: 12px;
+      margin: 12px;
+      border: 1px #000000 solid;
+      font-size: 14px;
+
+      div:first-child {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 2px 0 12px 0;
+      }
+    }
+
+    .beliefUpdate {
+      padding: 12px;
+      margin: 12px;
+      font-size: 14px;
+      border: 1px #000000 dashed;
+      border-radius: 32px;
+
+      div:first-child {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 2px 0 12px 0;
+      }
+    }
+
+    .relationUpdate {
+      padding: 12px;
+      margin: 12px;
+      font-size: 14px;
+      border: 1px #000000 dashed;
+      border-radius: 32px;
+
+      div:first-child {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 2px 0 12px 0;
+      }
+    }
+
+    .judge {
+      padding: 12px;
+      margin: 12px;
+      font-size: 14px;
+      border: 1px #000000 solid;
+
+      div:first-child {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 2px 0 12px 0;
+      }
+    }
+
+    .reflect {
+      padding: 12px;
+      margin: 12px;
+      font-size: 14px;
+      border: 1px #000000 solid;
+
+      div:first-child {
+        font-size: 15px;
+        font-weight: bold;
+        margin: 2px 0 12px 0;
+      }
+    }
+  }
+}
