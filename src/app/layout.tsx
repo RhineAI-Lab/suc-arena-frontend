@@ -1,11 +1,17 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
+import '@/resources/icons/material-icons/material-icons.css'
 
-const inter = Inter({ subsets: ['latin'] })
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'Suc Arena',
+  title: 'Succession Arena',
   description: '',
 }
 
@@ -15,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="zh-cn">
+      <body className={roboto.className}>{children}</body>
     </html>
   )
 }

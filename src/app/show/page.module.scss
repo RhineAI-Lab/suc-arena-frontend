@@ -1,0 +1,136 @@
+
+.Show {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+
+  .leftBar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 280px;
+    min-width: 280px;
+    background: #f3f6fc;
+    border-top-right-radius: 32px;
+    border-bottom-right-radius: 32px;
+
+    .title {
+      font-size: 34px;
+      margin: 32px 0 8px 0;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      margin: 8px 0 32px 0;
+      text-align: center;
+      color: #002441;
+      cursor: pointer;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      height: 52px;
+      padding: 0 24px;
+      margin: 0 8px;
+      font-size: 14px;
+    }
+  }
+
+  .holder {
+    flex-grow: 1000000;
+    margin: 12px;
+    max-width: 1280px;
+
+    .img {
+      width: 100%;
+      height: 500px;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 32px;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        position: absolute;
+        top: 30px;
+        bottom: 30px;
+        left: 80px;
+        right: 80px;
+
+        border-radius: 22px;
+        overflow: hidden;
+
+        .title {
+          font-size: 112px;
+          color: #121212;
+        }
+
+        .session {
+          font-size: 24px;
+          color: #121212;
+          margin: 6px 26px 0 6px;
+        }
+      }
+    }
+
+    .topBar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f6f8fb;
+      border-radius: 1000000px;
+      margin-top: 12px;
+
+      .item {
+        flex-grow: 1;
+        padding: 28px;
+        font-size: 15px;
+        text-align: center;
+      }
+    }
+  }
+
+  .selectable {
+    color: #323434;
+    border-radius: 1000000px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.12s ease-in-out;
+  }
+
+  .selectable:hover {
+    background: #e5eaee;
+  }
+
+  .selectable:active {
+    background: #d9dee1;
+  }
+
+  .selectableSelected {
+    background: #c9e5f6;
+    color: #002441;
+  }
+
+  .selectableSelected:hover {
+    background: #c4dded;
+  }
+
+  .selectableSelected:active {
+    background: #b5cddc;
+  }
+
+  .space {
+    flex-grow: 1;
+  }
+}

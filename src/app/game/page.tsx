@@ -1,5 +1,5 @@
 import styles from './page.module.scss'
-import {data} from "@/app/game/data";
+import {data} from "@/app/service/data";
 
 export default function Game() {
   let lines = data
