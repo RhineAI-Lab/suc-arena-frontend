@@ -121,50 +121,90 @@ export default function Show() {
       </div>
       <div className={styles.space}></div>
       <div className={clsx(styles.scroll, styles.holder)}>
-        <div className={styles.img}>
-          <img src='/background/5.jpg' alt=''/>
-          <div className={styles.content}>
-            <h1 className={styles.title}>Succession Arena</h1>
-            <div className={styles.session}>Example Session For UI Design. Only has one round now. Other descriptions...</div>
+        <div className={styles.article}>
+          <div className={styles.img}>
+            <img src='/background/5.jpg' alt=''/>
+            <div className={styles.content}>
+              <h1 className={styles.title}>Succession Arena</h1>
+              <div className={styles.session}>Example Session For UI Design. Only has one round now. Other descriptions...</div>
+            </div>
+          </div>
+          <div className={styles.topBar}>
+            <div className={clsx(styles.selectable, styles.selectableSelected, styles.item)}>对抗阶段</div>
+            <div className={clsx(styles.selectable, styles.item)}>合作阶段</div>
+            <div className={clsx(styles.selectable, styles.item)}>更新阶段</div>
+          </div>
+          <div className={styles.main}>
+            {
+              content.map((item, index) => {
+                return <div className={styles.message} key={index}>
+                  <div className={styles.info}>
+                    <div className={clsx(styles.item, styles.from)}>
+                      <img src='/profile/user.png' alt=''/>
+                    </div>
+                    <div className={clsx(styles.between)}>
+                      <span>{item.from.name}</span>
+                      <Icon size='20px' color='#00345b'>east</Icon>
+                      <span>{item.to.name}</span>
+                    </div>
+                    <div className={clsx(styles.item, styles.to)}>
+                      <img src='/profile/user.png' alt=''/>
+                    </div>
+                  </div>
+                  <div className={styles.text}>
+                    <Icon className={styles.link}>round_all_inclusive</Icon>
+                    {item.message}
+                  </div>
+                </div>
+              })
+            }
+          </div>
+          <div className={styles.hover}>
+
+          </div>
+          <div className={styles.control}>
+            <div onClick={e => {
+            }} style={{
+              cursor: 'pointer'
+            }}>
+              <h1>
+                <Icon size='22px' color='#444746'>round_west</Icon>
+                <span>Previous</span>
+              </h1>
+              <p>{'No more information'}</p>
+            </div>
+            <div onClick={e => {
+            }} style={{
+              cursor: 'pointer'
+            }}>
+              <h1>
+                <span>Next</span>
+                <Icon size='22px' color='#444746'>round_east</Icon>
+              </h1>
+              <p>{'No more information'}</p>
+            </div>
           </div>
         </div>
-        <div className={styles.topBar}>
-          <div className={clsx(styles.selectable, styles.selectableSelected, styles.item)}>对抗阶段</div>
-          <div className={clsx(styles.selectable, styles.item)}>合作阶段</div>
-          <div className={clsx(styles.selectable, styles.item)}>更新阶段</div>
+        <div className={styles.split}>
+          <svg aria-hidden="true" width="200%" height="8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <pattern id="a" width="91" height="8" patternUnits="userSpaceOnUse">
+              <g>
+                <path d="M114 4c-5.067 4.667-10.133 4.667-15.2 0S88.667-.667 83.6 4 73.467 8.667 68.4 4 58.267-.667 53.2 4 43.067 8.667 38 4 27.867-.667 22.8 4 12.667 8.667 7.6 4-2.533-.667-7.6 4s-10.133 4.667-15.2 0S-32.933-.667-38 4s-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0-10.133-4.667-15.2 0-10.133 4.667-15.2 0" stroke="#E1E3E1" ></path>
+              </g>
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#a)"></rect>
+          </svg>
         </div>
-        <div className={styles.main}>
-          {
-            content.map((item, index) => {
-              return <div className={styles.message} key={index}>
-                <div className={styles.info}>
-                  <div className={clsx(styles.item, styles.from)}>
-                    <img src='/profile/user.png' alt=''/>
-                  </div>
-                  <div className={clsx(styles.between)}>
-                    <span>{item.from.name}</span>
-                    <Icon size='20px' color='#00345b'>east</Icon>
-                    <span>{item.to.name}</span>
-                  </div>
-                  <div className={clsx(styles.item, styles.to)}>
-                    <img src='/profile/user.png' alt=''/>
-                  </div>
-                </div>
-                <div className={styles.text}>
-                  <Icon className={styles.link}>round_all_inclusive</Icon>
-                  {item.message}
-                </div>
-              </div>
-            })
-          }
+        <div className={styles.footer}>
+          <div className={styles.author} onClick={e => {
+            window.open('https://github.com/Rhine-AI-Lab')
+          }}>
+            <img alt='' src="/easy.png"/>
+            <span>SA.RHINEAI.COM</span>
+            <p></p>
+            <span>Developed by the RHINEAI</span>
+          </div>
         </div>
-        <div className={styles.hover}>
-
-        </div>
-        <div className={styles.next}></div>
-        <div className={styles.split}></div>
-        <div className={styles.message}></div>
-        <div className={styles.end}></div>
       </div>
       <div className={styles.space}></div>
     </main>
