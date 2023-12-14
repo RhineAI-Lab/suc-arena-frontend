@@ -102,6 +102,15 @@ a {
   text-decoration: none;
 }
 
+::selection{
+  background: #0c3c64;
+  color: #ffffff;
+}
+::-moz-selection{
+  background: #0c3c64;
+  color: #ffffff;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     /*color-scheme: dark;*/

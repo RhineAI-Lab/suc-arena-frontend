@@ -78,30 +78,41 @@ export default function Show() {
         <div className={styles.title}>Suc Arena</div>
         <div className={styles.subtitle}>Process Menu</div>
         <div className={clsx(styles.selectable, styles.item)}>
+          <Icon size='22px'>round_crop_original</Icon>
           <span>Overview</span>
           <div className={styles.space}></div>
-          <Icon size='22px'>round_crop_original</Icon>
+          {/*<Icon size='22px'>round_crop_original</Icon>*/}
         </div>
-        <div className={clsx(styles.selectable, styles.item)}>Start</div>
+        <div className={clsx(styles.selectable, styles.item)}>
+          <Icon size='23px'>round_sports_score</Icon>
+          <span>Start</span>
+        </div>
         <div className={clsx(styles.selectable, styles.selectableSelected, styles.item)}>
+          <Icon size='21px'>outlined_people</Icon>
           <span>Round 1</span>
           <div className={styles.space}></div>
           <Icon size='22px'>outlined_check_circle</Icon>
         </div>
         <div className={clsx(styles.selectable, styles.item)}>
+          <Icon size='21px'>outlined_people</Icon>
           <span>Round 2</span>
           <div className={styles.space}></div>
           <Icon size='22px'>outlined_check_circle</Icon>
         </div>
         <div className={clsx(styles.selectable, styles.item)}>
+          <Icon size='21px'>outlined_people</Icon>
           <span>Round 3</span>
           <div className={styles.space}></div>
-          <span style={{fontWeight: 500}}>3/8</span>
+          <span style={{fontWeight: 600, fontSize: '14px'}}>3/8</span>
         </div>
         <div className={clsx(styles.selectable, styles.item)}>
+          <Icon size='21px'>outlined_people</Icon>
           <span>Round 4</span>
           <div className={styles.space}></div>          </div>
-        <div className={clsx(styles.selectable, styles.item)}>Final</div>
+        <div className={clsx(styles.selectable, styles.item)}>
+          <Icon size='21px'>outlined_event_available</Icon>
+          <span>Final</span>
+        </div>
         <div className={styles.space}></div>
         <div className={styles.button}>
           <Icon size='30px'>round_add</Icon>
@@ -140,6 +151,7 @@ export default function Show() {
                   </div>
                 </div>
                 <div className={styles.text}>
+                  <Icon className={styles.link}>round_all_inclusive</Icon>
                   {item.message}
                 </div>
               </div>
