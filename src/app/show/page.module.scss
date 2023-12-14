@@ -144,8 +144,6 @@
 
     .main {
       max-width: 980px;
-      margin-top: -10px;
-      margin-bottom: -10px;
 
       .message {
         margin: 70px 32px;
@@ -153,7 +151,7 @@
         .info {
           display: flex;
           align-items: center;
-          margin-bottom: 6px;
+          margin-bottom: 8px;
 
           .item {
             display: flex;
@@ -163,14 +161,13 @@
             background: #ffffff00;
             //padding: 8px;
             border-radius: 22px;
-            margin-right: 6px;
 
             img {
               width: 62px;
               height: 62px;
               object-fit: cover;
               border-radius: 20px;
-              border: 2px solid #495b62;
+              border: 2px solid #4c5a60;
             }
 
             span {
@@ -195,7 +192,7 @@
             background: #eef8fd;
             border-radius: 18px;
             padding: 8px 10px;
-            margin-right: 6px;
+            margin: 0 12px;
             font-size: 18px;
             color: #1f1f1f;
 
@@ -210,12 +207,14 @@
         }
 
         .text {
+          position: relative;
           //background: #eef8fd;
           //padding: 20px;
           padding: 6px;
           font-size: 15px;
           line-height: 38px;
           border-radius: 32px 32px 32px 32px;
+          color: #1f1f1f;
         }
       }
     }
@@ -246,7 +245,7 @@
   }
 
   .selectableSelected {
-    background: #c9e5f6;
+    background: #c2e7ff;
     color: #002441;
 
     span:nth-child(3) {
@@ -255,7 +254,7 @@
   }
 
   .selectableSelected:hover {
-    background: #c4dded;
+    background: #bce2fa;
   }
 
   .selectableSelected:active {
