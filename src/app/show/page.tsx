@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styles from "./page.module.scss";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
@@ -71,48 +71,82 @@ export default function Show() {
       onFirstEffect()
     }
   }, [])
-  
+
+  const [current, setCurrent] = useState(2)
+  const [stage, setStage] = useState(0)
+
+  let rounds = [
+    {
+      name: 'Overview',
+      icon: 'round_crop_original',
+      iconSize: 22,
+    },
+    {
+      name: 'Start',
+      icon: 'round_sports_score',
+      iconSize: 23,
+    },
+    {
+      name: 'Round 1',
+      icon: 'outlined_people',
+      iconSize: 21,
+      progressIcon: 'outlined_check_circle',
+      progressIconSize: 21,
+    },
+    {
+      name: 'Round 2',
+      icon: 'outlined_people',
+      iconSize: 21,
+      progressIcon: 'outlined_check_circle',
+      progressIconSize: 21,
+    },
+    {
+      name: 'Round 2',
+      icon: 'outlined_people',
+      iconSize: 21,
+      progress: '3/8',
+    },
+    {
+      name: 'Round 3',
+      icon: 'outlined_people',
+      iconSize: 21,
+    },
+    {
+      name: 'Final',
+      icon: 'outlined_event_available',
+      iconSize: 21,
+    },
+  ]
+  let stages = [
+    '对抗阶段',
+    '合作阶段',
+    '更新阶段',
+  ]
+
   return (
     <main className={styles.Show}>
       <div className={clsx(styles.scroll, styles.leftBar)}>
         <div className={styles.title}>Suc Arena</div>
         <div className={styles.subtitle}>Process Menu</div>
-        <div className={clsx(styles.selectable, styles.item)}>
-          <Icon size='22px'>round_crop_original</Icon>
-          <span>Overview</span>
-          <div className={styles.space}></div>
-          {/*<Icon size='22px'>round_crop_original</Icon>*/}
-        </div>
-        <div className={clsx(styles.selectable, styles.item)}>
-          <Icon size='23px'>round_sports_score</Icon>
-          <span>Start</span>
-        </div>
-        <div className={clsx(styles.selectable, styles.selectableSelected, styles.item)}>
-          <Icon size='21px'>outlined_people</Icon>
-          <span>Round 1</span>
-          <div className={styles.space}></div>
-          <Icon size='22px'>outlined_check_circle</Icon>
-        </div>
-        <div className={clsx(styles.selectable, styles.item)}>
-          <Icon size='21px'>outlined_people</Icon>
-          <span>Round 2</span>
-          <div className={styles.space}></div>
-          <Icon size='22px'>outlined_check_circle</Icon>
-        </div>
-        <div className={clsx(styles.selectable, styles.item)}>
-          <Icon size='21px'>outlined_people</Icon>
-          <span>Round 3</span>
-          <div className={styles.space}></div>
-          <span style={{fontWeight: 600, fontSize: '14px'}}>3/8</span>
-        </div>
-        <div className={clsx(styles.selectable, styles.item)}>
-          <Icon size='21px'>outlined_people</Icon>
-          <span>Round 4</span>
-          <div className={styles.space}></div>          </div>
-        <div className={clsx(styles.selectable, styles.item)}>
-          <Icon size='21px'>outlined_event_available</Icon>
-          <span>Final</span>
-        </div>
+        {
+          rounds.map((item, index) => {
+            return <div className={clsx(styles.selectable, index == current ? styles.selectableSelected : '', styles.item)}
+              onClick={e => {
+                setCurrent(index)
+              }}
+            >
+              <Icon size={item.iconSize + 'px'}>{item.icon}</Icon>
+              <span>{item.name}</span>
+              <div className={styles.space}></div>
+              {
+                item.progress && <span style={{fontWeight: 600, fontSize: '14px'}}>{item.progress}</span>
+              }
+              {
+                item.progressIcon && <Icon size={item.progressIconSize + 'px'}>{item.progressIcon}</Icon>
+              }
+            </div>
+          })
+        }
         <div className={styles.space}></div>
         <div className={styles.button}>
           <Icon size='30px'>round_add</Icon>
@@ -130,9 +164,18 @@ export default function Show() {
             </div>
           </div>
           <div className={styles.topBar}>
-            <div className={clsx(styles.selectable, styles.selectableSelected, styles.item)}>对抗阶段</div>
-            <div className={clsx(styles.selectable, styles.item)}>合作阶段</div>
-            <div className={clsx(styles.selectable, styles.item)}>更新阶段</div>
+            {
+              stages.map((item, index) => {
+                return <div
+                  className={clsx(styles.selectable, index == stage ? styles.selectableSelected : '', styles.item)}
+                  onClick={e => {
+                    setStage(index)
+                  }}
+                >
+                  {item}
+                </div>
+              })
+            }
           </div>
           <div className={styles.main}>
             {
