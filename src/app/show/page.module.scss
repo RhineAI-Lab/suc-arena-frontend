@@ -84,7 +84,7 @@
   .holder {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     flex-grow: 1000000;
     margin: 0 4px 0 0;
     padding: 12px 8px 12px 0;
@@ -95,16 +95,15 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
       margin-left: 12px;
       margin-right: 8px;
-      max-width: 1380px;
     }
 
     .img {
       width: 100%;
       height: 500px;
       position: relative;
+      max-width: 1380px;
 
       img {
         width: 100%;
@@ -148,6 +147,7 @@
       background: #f6f8fb;
       border-radius: 1000000px;
       margin-top: 12px;
+      max-width: 1380px;
 
       .item {
         flex-grow: 1;
@@ -158,10 +158,10 @@
     }
 
     .main {
-      max-width: 1080px;
+      max-width: 1020px;
 
       .message {
-        margin: 70px 74px;
+        margin: 76px 74px;
 
         .info {
           display: flex;
@@ -262,7 +262,7 @@
       margin-bottom: 50px;
       align-items: center;
       justify-content: center;
-      max-width: 1180px;
+      max-width: 1080px;
 
       div {
         height: 100%;

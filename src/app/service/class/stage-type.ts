@@ -1,0 +1,7 @@
+
+export enum StageType {
+  CONFRONTATION = 'CONFRONTATION',
+  COLLABORATION = 'COLLABORATION',
+  UPDATE = 'UPDATE',
+  NONE = 'NONE',
+}
