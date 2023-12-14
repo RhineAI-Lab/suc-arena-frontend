@@ -74,7 +74,7 @@ export default function Show() {
   
   return (
     <main className={styles.Show}>
-      <div className={styles.leftBar}>
+      <div className={clsx(styles.scroll, styles.leftBar)}>
         <div className={styles.title}>Suc Arena</div>
         <div className={styles.subtitle}>Process Menu</div>
         <div className={clsx(styles.selectable, styles.item)}>
@@ -109,7 +109,7 @@ export default function Show() {
         </div>
       </div>
       <div className={styles.space}></div>
-      <div className={styles.holder}>
+      <div className={clsx(styles.scroll, styles.holder)}>
         <div className={styles.img}>
           <img src='/background/5.jpg' alt=''/>
           <div className={styles.content}>
@@ -132,7 +132,7 @@ export default function Show() {
                   </div>
                   <div className={clsx(styles.between)}>
                     <span>{item.from.name}</span>
-                    <Icon size='14px'>east</Icon>
+                    <Icon size='20px' color='#00345b'>east</Icon>
                     <span>{item.to.name}</span>
                   </div>
                   <div className={clsx(styles.item, styles.to)}>

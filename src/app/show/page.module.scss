@@ -36,8 +36,9 @@
       display: flex;
       align-items: center;
       height: 52px;
+      min-height: 48px;
       padding: 0 18px 0 26px;
-      margin: 0 8px;
+      margin: 1px 8px;
       font-size: 14px;
 
       span:nth-child(3) {
@@ -50,6 +51,7 @@
       display: flex;
       margin: 14px;
       height: 60px;
+      min-height: 54px;
       align-items: center;
       padding: 0 16px;
       border: 1px solid #747775;
@@ -68,18 +70,25 @@
     }
   }
 
+  .leftBar::-webkit-scrollbar-track {
+    margin: 26px 0;
+  }
+
   .holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     flex-grow: 1000000;
-    margin: 12px 4px 12px 12px;
-    max-width: 1280px;
+    margin: 0 4px 0 12px;
+    padding: 12px 8px 12px 0;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-right: 8px;
 
     .img {
       width: 100%;
       height: 500px;
       position: relative;
+      max-width: 1280px;
 
       img {
         width: 100%;
@@ -117,11 +126,13 @@
 
     .topBar {
       display: flex;
+      width: 100%;
       align-items: center;
       justify-content: center;
       background: #f6f8fb;
       border-radius: 1000000px;
       margin-top: 12px;
+      max-width: 1280px;
 
       .item {
         flex-grow: 1;
@@ -132,9 +143,12 @@
     }
 
     .main {
+      max-width: 980px;
+      margin-top: -10px;
+      margin-bottom: -10px;
 
       .message {
-        margin: 40px 0;
+        margin: 70px 32px;
 
         .info {
           display: flex;
@@ -146,16 +160,17 @@
             flex-direction: column;
             align-items: center;
 
-            background: #eef8fd;
-            padding: 8px;
+            background: #ffffff00;
+            //padding: 8px;
             border-radius: 22px;
             margin-right: 6px;
 
             img {
-              width: 50px;
-              height: 50px;
+              width: 62px;
+              height: 62px;
               object-fit: cover;
-              border-radius: 14px;
+              border-radius: 20px;
+              border: 2px solid #495b62;
             }
 
             span {
@@ -178,11 +193,11 @@
             display: flex;
             align-items: center;
             background: #eef8fd;
-            border-radius: 22px;
-            padding: 14px 14px;
+            border-radius: 18px;
+            padding: 8px 10px;
             margin-right: 6px;
-            font-size: 14px;
-            color: #002441;
+            font-size: 18px;
+            color: #1f1f1f;
 
             span {
               margin: 0 6px;
@@ -195,14 +210,19 @@
         }
 
         .text {
-          background: #eef8fd;
-          padding: 20px;
+          //background: #eef8fd;
+          //padding: 20px;
+          padding: 6px;
           font-size: 15px;
-          line-height: 32px;
-          border-radius: 12px 32px 32px 32px;
+          line-height: 38px;
+          border-radius: 32px 32px 32px 32px;
         }
       }
     }
+  }
+
+  .holder::-webkit-scrollbar-track {
+    margin: 12px 0;
   }
 
   .selectable {
@@ -244,5 +264,31 @@
 
   .space {
     flex-grow: 1;
+  }
+
+  .scroll {
+    scroll-behavior: smooth
+  }
+
+  .scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+
+  .scroll::-webkit-scrollbar-track {
+    border-radius: 5px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .scroll::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #e2e2e2;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .scroll::-webkit-scrollbar-thumb:hover {
+    background: #aaaaaa;
   }
 }
