@@ -1,11 +1,14 @@
 import CreateConfig from "@/app/api/class/create-config";
+import {proxy} from "valtio";
 
 export default class Api {
 
   static URL = 'http://10.176.64.187:8080'
 
-  static sid = ''
-  static last = 0
+  static data = proxy({
+    sid: '',
+    last: 0,
+  })
 
   static create(config: CreateConfig) {
     const raw = config.toRaw()
@@ -22,8 +25,8 @@ export default class Api {
   }
 
   static reset() {
-    this.sid = ''
-    this.last = 0
+    this.data.sid = ''
+    this.data.last = 0
   }
 
 }

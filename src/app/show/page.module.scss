@@ -94,6 +94,7 @@
     .article {
       display: flex;
       flex-direction: column;
+      flex-grow: 1;
       align-items: center;
       margin-left: 12px;
       margin-right: 8px;
@@ -159,9 +160,11 @@
 
     .main {
       max-width: 1020px;
+      min-height: 100px;
+      flex-grow: 1;
 
       .message {
-        margin: 76px 74px;
+        margin: 80px 74px;
 
         .info {
           display: flex;

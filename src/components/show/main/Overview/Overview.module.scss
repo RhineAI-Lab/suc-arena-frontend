@@ -1,0 +1,22 @@
+
+.Overview {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  width: 500px;
+  min-width: 400px;
+  padding: 90px 0 120px 0;
+
+  h1 {
+    margin-bottom: 40px;
+    font-size: 38px;
+    font-weight: 500;
+  }
+
+  span {
+    line-height: 40px;
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+}

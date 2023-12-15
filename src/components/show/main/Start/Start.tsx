@@ -1,0 +1,52 @@
+"use client"
+
+import React, {useEffect, useRef} from "react";
+import styles from "./Start.module.scss";
+import '@material/web/textfield/filled-text-field'
+import '@material/web/button/text-button'
+import '@material/web/button/filled-tonal-button'
+import '@material/web/button/outlined-button'
+import '@material/web/button/filled-button'
+
+export default function Start () {
+  function onFirstEnter() {
+  }
+  function onFirstEffect() {
+  }
+
+  const firstEnter = useRef<boolean>(true)
+  if (firstEnter.current) {
+    firstEnter.current = false
+    onFirstEnter()
+  }
+  const firstEffect = useRef<boolean>(true)
+  useEffect(() => {
+    if (firstEffect.current) {
+      firstEffect.current = false
+      onFirstEffect()
+    }
+  }, [])
+
+  return (
+    <div className={styles.Start}>
+      <h1>Start Config</h1>
+      <md-filled-text-field label="Game Round" value={3} type='number' size='large'></md-filled-text-field>
+      <div className={styles.line}>
+        <md-filled-text-field label="Battle Chat Round" value={2} type='number' size='large'></md-filled-text-field>
+        <md-filled-text-field label="Collaboration Chat Round" value={2} type='number' size='large'></md-filled-text-field>
+      </div>
+      <div className={styles.line} style={{marginTop: '20px'}}>
+        <md-text-button trailing-icon>
+          Reset
+          {/*<svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>*/}
+        </md-text-button>
+        <div className={styles.space}/>
+        <md-filled-tonal-button>
+          Start
+          {/* @ts-ignore */}
+          <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
+        </md-filled-tonal-button>
+      </div>
+    </div>
+  )
+}

@@ -26,3 +26,11 @@ export default function RootLayout({
     </html>
   )
 }
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      [tag: string]: any
+    }
+  }
+}

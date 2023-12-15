@@ -1,0 +1,44 @@
+
+.Start {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  width: 600px;
+  min-width: 400px;
+  padding: 100px 0 140px 0;
+
+  h1 {
+    margin-bottom: 40px;
+    font-size: 38px;
+    font-weight: 500;
+  }
+
+  md-filled-text-field {
+    margin-bottom: 20px;
+  }
+
+  .line {
+    display: flex;
+
+    .space {
+      flex-grow: 1;
+    }
+
+    md-filled-text-field {
+      flex-grow: 1;
+    }
+
+    *:nth-child(2) {
+      margin-left: 20px;
+    }
+
+    md-text-button {
+      padding: 0 20px;
+    }
+
+    md-filled-tonal-button {
+      padding: 0 32px;
+    }
+  }
+
+}

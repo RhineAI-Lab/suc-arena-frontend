@@ -1,9 +1,11 @@
 "use client"
 
 import React, {useEffect, useRef} from "react";
-import styles from "./Start.module.scss";
+import styles from "./Overview.module.scss";
+import {useSnapshot} from "valtio";
+import Api from "@/app/api/api";
 
-export default function Start () {
+export default function Overview () {
   function onFirstEnter() {
   }
   function onFirstEffect() {
@@ -21,10 +23,14 @@ export default function Start () {
       onFirstEffect()
     }
   }, [])
+
+  const apiData = useSnapshot(Api.data)
   
   return (
-    <div className={styles.Start}>
-
+    <div className={styles.Overview}>
+      <h1>Overview information</h1>
+      <span>Sid: {apiData.sid}</span>
+      <span>LastId: {apiData.last}</span>
     </div>
   )
 }

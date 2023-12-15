@@ -8,6 +8,8 @@ import {clsx} from "clsx";
 import Icon from "@/components/Icon/Icon";
 import Api from "@/app/api/api";
 import CreateConfig from "@/app/api/class/create-config";
+import Start from "@/components/show/main/Start/Start";
+import Overview from "@/components/show/main/Overview/Overview";
 
 export default function Show() {
   const router = useRouter()
@@ -185,42 +187,41 @@ export default function Show() {
               })
             }
           </div>
-          {
-            current == 1 && <div className={styles.main}>
-
-            </div>
-          }
-          {
-            current >= 2 && <div className={styles.main}>
-              {
-                content.map((item, index) => {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.from.name}</span>
-                        <Icon size='20px' color='#00345b'>east</Icon>
-                        <span>{item.to.name}</span>
-                      </div>
-                      <div className={clsx(styles.item, styles.to)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
+          <div className={styles.main}>
+            {current == 0 && <Overview/>}
+            {current == 1 && <Start/>}
+            {
+              current >= 2 && content.map((item, index) => {
+                return <div className={styles.message} key={index}>
+                  <div className={styles.info}>
+                    <div className={clsx(styles.item, styles.from)}>
+                      <img src='/profile/user.png' alt=''/>
                     </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.message}
+                    <div className={clsx(styles.between)}>
+                      <span>{item.from.name}</span>
+                      <Icon size='20px' color='#00345b'>east</Icon>
+                      <span>{item.to.name}</span>
+                    </div>
+                    <div className={clsx(styles.item, styles.to)}>
+                      <img src='/profile/user.png' alt=''/>
                     </div>
                   </div>
-                })
-              }
-              <div className={styles.hover}>
+                  <div className={styles.text}>
+                    <Icon className={styles.link}>round_all_inclusive</Icon>
+                    {item.message}
+                  </div>
+                </div>
+              })
+            }
+            {
+              current >= 2 && <div className={styles.hover}>
 
               </div>
-            </div>
-          }
-          <div className={styles.control}>
+            }
+          </div>
+          <div className={styles.control} style={{
+            display: current != 1 ? 'flex' : 'none'
+          }}>
             <div onClick={e => {
             }} style={{
               cursor: 'pointer'
