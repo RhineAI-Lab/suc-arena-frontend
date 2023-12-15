@@ -101,13 +101,13 @@ export default function Show() {
       progressIconSize: 21,
     },
     {
-      name: 'Round 2',
+      name: 'Round 3',
       icon: 'outlined_people',
       iconSize: 21,
       progress: '3/8',
     },
     {
-      name: 'Round 3',
+      name: 'Round 4',
       icon: 'outlined_people',
       iconSize: 21,
     },
