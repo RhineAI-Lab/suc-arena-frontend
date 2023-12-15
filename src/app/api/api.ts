@@ -13,12 +13,17 @@ export default class Api {
     const requestOptions = {
       method: 'POST',
       body: raw,
-    };
+    }
 
     fetch(this.URL + "/api/v1/create", requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error))
+  }
+
+  static reset() {
+    this.sid = ''
+    this.last = 0
   }
 
 }

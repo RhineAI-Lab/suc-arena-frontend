@@ -6,6 +6,8 @@ import {useRouter} from "next/navigation";
 import Image from "next/image";
 import {clsx} from "clsx";
 import Icon from "@/components/Icon/Icon";
+import Api from "@/app/api/api";
+import CreateConfig from "@/app/api/class/create-config";
 
 export default function Show() {
   const router = useRouter()
@@ -57,6 +59,7 @@ export default function Show() {
   function onFirstEnter() {
   }
   function onFirstEffect() {
+    // Api.create(new CreateConfig())
   }
 
   const firstEnter = useRef<boolean>(true)
@@ -130,7 +133,9 @@ export default function Show() {
         <div className={styles.subtitle}>Process Menu</div>
         {
           rounds.map((item, index) => {
-            return <div className={clsx(styles.selectable, index == current ? styles.selectableSelected : '', styles.item)}
+            return <div
+              className={clsx(styles.selectable, index == current ? styles.selectableSelected : '', styles.item)}
+              key={index}
               onClick={e => {
                 setCurrent(index)
               }}
@@ -163,11 +168,14 @@ export default function Show() {
               <div className={styles.session}>Example Session For UI Design. Only has one round now. Other descriptions...</div>
             </div>
           </div>
-          <div className={styles.topBar}>
+          <div className={styles.topBar} style={{
+            display: current >= 2 ? 'flex' : 'none'
+          }}>
             {
               stages.map((item, index) => {
                 return <div
                   className={clsx(styles.selectable, index == stage ? styles.selectableSelected : '', styles.item)}
+                  key={index}
                   onClick={e => {
                     setStage(index)
                   }}
@@ -177,34 +185,41 @@ export default function Show() {
               })
             }
           </div>
-          <div className={styles.main}>
-            {
-              content.map((item, index) => {
-                return <div className={styles.message} key={index}>
-                  <div className={styles.info}>
-                    <div className={clsx(styles.item, styles.from)}>
-                      <img src='/profile/user.png' alt=''/>
-                    </div>
-                    <div className={clsx(styles.between)}>
-                      <span>{item.from.name}</span>
-                      <Icon size='20px' color='#00345b'>east</Icon>
-                      <span>{item.to.name}</span>
-                    </div>
-                    <div className={clsx(styles.item, styles.to)}>
-                      <img src='/profile/user.png' alt=''/>
-                    </div>
-                  </div>
-                  <div className={styles.text}>
-                    <Icon className={styles.link}>round_all_inclusive</Icon>
-                    {item.message}
-                  </div>
-                </div>
-              })
-            }
-          </div>
-          <div className={styles.hover}>
+          {
+            current == 1 && <div className={styles.main}>
 
-          </div>
+            </div>
+          }
+          {
+            current >= 2 && <div className={styles.main}>
+              {
+                content.map((item, index) => {
+                  return <div className={styles.message} key={index}>
+                    <div className={styles.info}>
+                      <div className={clsx(styles.item, styles.from)}>
+                        <img src='/profile/user.png' alt=''/>
+                      </div>
+                      <div className={clsx(styles.between)}>
+                        <span>{item.from.name}</span>
+                        <Icon size='20px' color='#00345b'>east</Icon>
+                        <span>{item.to.name}</span>
+                      </div>
+                      <div className={clsx(styles.item, styles.to)}>
+                        <img src='/profile/user.png' alt=''/>
+                      </div>
+                    </div>
+                    <div className={styles.text}>
+                      <Icon className={styles.link}>round_all_inclusive</Icon>
+                      {item.message}
+                    </div>
+                  </div>
+                })
+              }
+              <div className={styles.hover}>
+
+              </div>
+            </div>
+          }
           <div className={styles.control}>
             <div onClick={e => {
             }} style={{
