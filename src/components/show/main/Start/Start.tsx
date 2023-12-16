@@ -34,6 +34,7 @@ export default function Start () {
   let [gameRound, setGameRound] = useState('3')
   let [battleChatRound, setBattleChatRound] = useState('2')
   let [collaborationChatRound, setCollaborationChatRound] = useState('2')
+  let [existsSid, setExistsSid] = useState('')
 
   function checkNumberValid(num: number) {
     if (num === undefined) return false;
@@ -82,7 +83,7 @@ export default function Start () {
         <md-filled-text-field label="Battle Chat Round" value={battleChatRound} onInput={(e: any) => setBattleChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
         <md-filled-text-field label="Collaboration Chat Round" value={collaborationChatRound} onInput={(e: any) => setCollaborationChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
       </div>
-      <div className={styles.line} style={{marginTop: '20px'}}>
+      <div className={styles.line} style={{marginTop: '10px'}}>
         <md-text-button trailing-icon>
           Reset
           {/*<svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>*/}
@@ -90,6 +91,22 @@ export default function Start () {
         <div className={styles.space}/>
         <md-filled-tonal-button onClick={() => create()}>
           Start
+          {/* @ts-ignore */}
+          <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
+        </md-filled-tonal-button>
+      </div>
+      <h1>From Exists Session</h1>
+      <md-filled-text-field label="Session Id" value={existsSid} onInput={(e: any) => setExistsSid(e.target.value)} type='number' size='large'></md-filled-text-field>
+      <div className={styles.line} style={{marginTop: '10px'}}>
+        <md-filled-tonal-button onClick={() => {
+          DataService.simulate()
+        }}>
+          Quick Simulate
+        </md-filled-tonal-button>
+        <div className={styles.space}/>
+        <md-filled-tonal-button onClick={() => {
+        }}>
+          Continue
           {/* @ts-ignore */}
           <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
         </md-filled-tonal-button>
