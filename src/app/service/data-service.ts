@@ -36,6 +36,7 @@ export default class DataService {
         this.checkAndAddToSourceData(item)
       }
       console.log('SOURCE DATA', this.sourceData)
+      this.analysis()
     })
   }
 
