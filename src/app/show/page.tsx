@@ -10,6 +10,7 @@ import Api from "@/app/api/api";
 import CreateConfig from "@/app/api/class/create-config";
 import Start from "@/components/show/main/Start/Start";
 import Overview from "@/components/show/main/Overview/Overview";
+import DataService from "@/app/service/data-service";
 
 export default function Show() {
   const router = useRouter()
@@ -61,7 +62,9 @@ export default function Show() {
   function onFirstEnter() {
   }
   function onFirstEffect() {
-    // Api.create(new CreateConfig())
+    setTimeout(() => {
+      DataService.simulate()
+    }, 500)
   }
 
   const firstEnter = useRef<boolean>(true)

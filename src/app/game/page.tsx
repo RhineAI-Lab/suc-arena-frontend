@@ -1,8 +1,8 @@
 import styles from './page.module.scss'
-import {data} from "@/app/service/data";
+import {simulateData} from "@/app/service/simulate-data";
 
 export default function Game() {
-  let lines = data
+  let lines = simulateData
   let jumps = 0
   let hadUpdate = false
 

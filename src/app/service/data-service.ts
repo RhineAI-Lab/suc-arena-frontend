@@ -1,6 +1,8 @@
 import { proxy, useSnapshot } from 'valtio'
 import {SessionState} from "@/app/service/class/session-state";
 import {StageType} from "@/app/service/class/stage-type";
+import Api from "@/app/api/api";
+import {simulateData} from "@/app/service/simulate-data";
 
 export default class DataService {
 
@@ -21,6 +23,62 @@ export default class DataService {
       ]
     ],
   })
+
+  static sourceData: any[] = [
+
+  ]
+  static useId = -1
+
+  static updating = false
+  static updateInterval: any
+
+  static startUpdate() {
+    this.updating = true
+    this.updateInterval = setInterval(() => {
+      this.update()
+    }, 1000)
+  }
+
+  static stopUpdate() {
+    this.updating = false
+    clearInterval(this.updateInterval)
+  }
+
+  static update() {
+    Api.get().then((res: any[]) => {
+      for (let item of res) {
+        this.checkAndAddToSourceData(item)
+      }
+      console.log('SOURCE DATA', this.sourceData)
+    })
+  }
+
+  static checkAndAddToSourceData(item: any) {
+    let id = item['id']
+    for (const dataItem of this.sourceData) {
+      if (dataItem['id'] === id) {
+        return
+      }
+    }
+    this.sourceData.push(item)
+  }
+
+  static simulate() {
+    Api.data.sid = 'da2569d0ca9d4b2aa2c24a8a82494041'
+    let i = 0
+    let interval = setInterval(() => {
+      let num = Math.floor(Math.random() * 5) + 1
+      for (let j = 0; j < num; j++) {
+        if (i >= simulateData.length) {
+          clearInterval(interval)
+          return
+        }
+        this.checkAndAddToSourceData(simulateData[i])
+        Api.data.last = simulateData[i]['id']
+        i++
+      }
+    }, 500)
+  }
 
   static getRoundsNumber() {
     return DataService.data.rounds.length

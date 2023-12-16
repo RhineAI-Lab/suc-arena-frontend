@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@material/web": "^1.1.1",
+    "antd": "^5.12.2",
     "axios": "^1.6.2",
     "clsx": "^2.0.0",
     "next": "14.0.3",
