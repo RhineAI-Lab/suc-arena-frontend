@@ -117,7 +117,7 @@ export const simulateData = [
     "important_log": "important_log",
     "source_character": "Logan Roy",
     "target_character": "Roman Roy",
-    "log_type": "Select dialogue role",
+    "log_type": "Conclusion of environment",
     "log_content": ""
   },
   {

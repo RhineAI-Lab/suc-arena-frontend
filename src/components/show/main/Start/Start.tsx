@@ -46,6 +46,7 @@ export default function Start () {
   function create() {
     if (Api.data.sid.length > 0) {
       AppTools.message('当前已有进行中的会话。', 'warning')
+      return
     }
 
     let config = new CreateConfig()
@@ -60,17 +61,17 @@ export default function Start () {
     }
 
     if (
-      checkNumberValid(config.gameRound)
-      && checkNumberValid(config.battleChatRound)
-      && checkNumberValid(config.collaborationChatRound)
+      !checkNumberValid(config.gameRound)
+      || !checkNumberValid(config.battleChatRound)
+      || !checkNumberValid(config.collaborationChatRound)
     ) {
-      Api.create(config).then(res => {
-        console.log('Start session. Sid:' + res.sid)
-        DataService.startUpdate()
-      })
-    } else {
       AppTools.message('启动参数不支持，请重新设置。', 'warning')
     }
+
+    Api.create(config).then(res => {
+      console.log('Start session. Sid:' + res.sid)
+      DataService.startUpdate()
+    })
   }
 
   return (
