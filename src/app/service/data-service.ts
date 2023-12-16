@@ -11,9 +11,9 @@ export default class DataService {
     rounds: [],
   })
 
-  static sourceData: any[] = [
+  static sourceData: any[] = proxy([
 
-  ]
+  ])
 
   static updating = false
   static updateInterval: any
@@ -53,7 +53,7 @@ export default class DataService {
     Api.data.sid = 'da2569d0ca9d4b2aa2c24a8a82494041'
     let i = 0
     let interval = setInterval(() => {
-      let num = Math.floor(Math.random() * 5) + 1
+      let num = Math.floor(Math.random() * 5) + 5
       for (let j = 0; j < num; j++) {
         if (i >= simulateData.length) {
           clearInterval(interval)
@@ -110,29 +110,86 @@ export default class DataService {
             source: item['source_character'],
             content: content,
           })
+          this.moveRelationUpdateBack()
         } else if (type === LogType.BeliefUpdate) {
-          this.lastStage().push({
-            type: LogType.BeliefUpdate,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            target: item['target_character'],
-            content: content,
-          })
+          let stage = this.lastStage()
+          let ele = undefined
+          let i = stage.length - 1
+          for (; i >= 0; i--) {
+            if (stage[i]['type'] === LogType.BeliefUpdate && stage[i]['source'] === item['source_character']) {
+              ele = stage[i]
+              break
+            }
+          }
+          if (ele == undefined) {
+            ele = {
+              type: LogType.BeliefUpdate,
+              id: item['id'],
+              time: item['time'],
+              source: item['source_character'],
+              content: [
+                {target: item['target_character'], score: content},
+              ]
+            }
+            stage.push(ele)
+          } else {
+            ele.id = item['id']
+            ele.time = item['time']
+            ele.content.push({target: item['target_character'], score: content})
+            const element = stage.splice(i, 1)[0]
+            stage.push(element)
+          }
         } else if (type === LogType.RelationUpdate) {
-          this.lastStage().push({
-            type: LogType.RelationUpdate,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            target: item['target_character'],
-            content: content,
-          })
+          let stage = this.lastStage()
+          let ele = undefined
+          let i = stage.length - 1
+          for (; i >= 0; i--) {
+            if (stage[i]['type'] === LogType.RelationUpdate) {
+              ele = stage[i]
+              break
+            }
+          }
+          if (ele == undefined) {
+            ele = {
+              type: LogType.RelationUpdate,
+              id: item['id'],
+              time: item['time'],
+              characters : [item['source_character']],
+              content: [
+                {source: item['source_character'], target: item['target_character'], score: content},
+              ]
+            }
+            if (ele.characters.indexOf(item['target_character']) == -1) {
+              ele.characters.push(item['target_character'])
+            }
+            stage.push(ele)
+          } else {
+            ele.id = item['id']
+            ele.time = item['time']
+            ele.content.push({source: item['source_character'], target: item['target_character'], score: content})
+            if (ele.characters.indexOf(item['source_character']) == -1) {
+              ele.characters.push(item['source_character'])
+            }
+            if (ele.characters.indexOf(item['target_character']) == -1) {
+              ele.characters.push(item['target_character'])
+            }
+            this.moveRelationUpdateBack()
+          }
         }
       }
       this.usedIndex = i
     }
     console.log('Analysis finished', JSON.parse(JSON.stringify(this.data.rounds)))
+  }
+
+  static moveRelationUpdateBack() {
+    let stage = this.lastStage()
+    for (let i = 0; i < stage.length; i++) {
+      if (stage[i].type === LogType.RelationUpdate) {
+        const element = stage.splice(i, 1)[0]
+        stage.push(element)
+      }
+    }
   }
 
   static lastRound() {

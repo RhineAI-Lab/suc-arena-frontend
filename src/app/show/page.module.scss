@@ -18,10 +18,23 @@
     overflow-x: hidden;
 
     .title {
-      font-size: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 32px 0 8px 0;
-      text-align: center;
       cursor: pointer;
+
+
+      span {
+        font-weight: 100;
+        margin-bottom: 2px;
+        margin-right: 10px;
+      }
+
+      h2 {
+        font-size: 34px;
+        font-weight: 500;
+      }
     }
 
     .subtitle {
@@ -246,6 +259,56 @@
             opacity: 0;
             //transform: translateY(-50%);
             transition: opacity 0.12s ease-in-out;
+          }
+
+          .table {
+
+            .line {
+              display: flex;
+              height: 40px;
+
+              .key {
+                height: 100%;
+                width: 420px;
+                text-align: right;
+                transition: all 0.12s ease-in-out;
+              }
+
+              .split {
+                height: 100%;
+                width: 1px;
+                background: #000000;
+                margin-left: 10px;
+              }
+
+              .block {
+                background: #2c4780;
+                height: 20px;
+                margin: 10px 6px 10px 0;
+                transition: all 0.12s ease-in-out;
+              }
+
+              .number {
+                transition: all 0.12s ease-in-out;
+              }
+            }
+
+            .line:hover {
+
+              .key {
+                font-weight: 600;
+              }
+
+              .number {
+                font-weight: 600;
+              }
+
+              .block {
+                background: #2c4780;
+                height: 22px;
+                margin: 9px 6px 9px 0;
+              }
+            }
           }
         }
       }

@@ -3,17 +3,18 @@
   display: flex;
   align-items: stretch;
   flex-direction: column;
-  width: 500px;
+  max-width: 920px;
   min-width: 400px;
-  padding: 90px 0 120px 0;
+  padding: 0 0 120px 0;
 
   h1 {
+    margin-top: 100px;
     margin-bottom: 40px;
     font-size: 38px;
     font-weight: 500;
   }
 
-  span {
+  .info {
     line-height: 40px;
     font-size: 16px;
     padding: 0 10px;

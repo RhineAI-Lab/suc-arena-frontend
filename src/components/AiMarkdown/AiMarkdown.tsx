@@ -4,7 +4,7 @@ import './markdown.css';
 import {DetailedHTMLProps, HTMLAttributes} from "react";
 import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneLight, vs, materiyalLight, prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { oneLight, vs, prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 
 export default function AiMarkdown(props: AiMarkdownProps): JSX.Element {
@@ -27,7 +27,7 @@ export default function AiMarkdown(props: AiMarkdownProps): JSX.Element {
   // 设置css light主题
   return <ReactMarkdown
     className="markdown-body"
-    remarkPlugins={[[remarkGfm, {singleTilde: false}]]}
+    remarkPlugins={[[remarkGfm as any, {singleTilde: false}]]}
     rehypePlugins={[rehypeRaw]}
     components={{
       code({ node, className, children, ...props }) {

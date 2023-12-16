@@ -18,7 +18,7 @@
     margin-bottom: 20px;
   }
 
-  .line {
+  .fieldLine {
     display: flex;
 
     .space {
@@ -26,6 +26,19 @@
     }
 
     md-filled-text-field {
+      flex-grow: 1;
+    }
+
+    *:nth-child(2) {
+      margin-left: 20px;
+    }
+  }
+
+  .line {
+    height: 50px;
+    display: flex;
+
+    .space {
       flex-grow: 1;
     }
 

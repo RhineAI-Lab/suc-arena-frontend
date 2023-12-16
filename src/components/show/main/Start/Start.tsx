@@ -79,7 +79,7 @@ export default function Start () {
     <div className={styles.Start}>
       <h1>Start Config</h1>
       <md-filled-text-field label="Game Round" value={gameRound} onInput={(e: any) => setGameRound(e.target.value)} type='number' size='large'></md-filled-text-field>
-      <div className={styles.line}>
+      <div className={styles.fieldLine}>
         <md-filled-text-field label="Battle Chat Round" value={battleChatRound} onInput={(e: any) => setBattleChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
         <md-filled-text-field label="Collaboration Chat Round" value={collaborationChatRound} onInput={(e: any) => setCollaborationChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
       </div>

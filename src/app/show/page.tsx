@@ -13,6 +13,7 @@ import Overview from "@/components/show/main/Overview/Overview";
 import DataService from "@/app/service/data-service";
 import {useSnapshot} from "valtio";
 import {LogType} from "@/app/service/class/log-enum";
+import RelationTable from "@/components/RelationTable/RelationTable";
 
 export default function Show() {
   const router = useRouter()
@@ -91,7 +92,10 @@ export default function Show() {
   return (
     <main className={styles.Show}>
       <div className={clsx(styles.scroll, styles.leftBar)}>
-        <div className={styles.title}>Suc Arena</div>
+        <div className={styles.title}>
+          <Icon size='40px'>insights</Icon>
+          <h2>Suc Arena</h2>
+        </div>
         <div className={styles.subtitle}>Process Menu</div>
         {
           rounds.map((item, index) => {
@@ -222,33 +226,37 @@ export default function Show() {
                       </div>
                       {/*<span className={styles.space}></span>*/}
                       <div className={clsx(styles.between)}>
-                        <span>Belief Update</span>
+                        <span>Belief Status</span>
                       </div>
                     </div>
                     <div className={styles.text}>
                       <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.target}
-                      <br/>
-                      Belief Update: {item.content}
+                      <div className={styles.table}>
+                        {
+                          item.content.map((line: any, index: number) => {
+                            return <div className={styles.line} key={index}>
+                              <span className={styles.key}>{line.target}</span>
+                              <span className={styles.split}></span>
+                              <span className={styles.block} style={{
+                                width: line.score * 3.5 + 'px'
+                              }}></span>
+                              <span className={styles.number}>{line.score}</span>
+                            </div>
+                          })
+                        }
+                      </div>
                     </div>
                   </div>
                 } else if (item.type == LogType.RelationUpdate) {
                   return <div className={styles.message} key={index}>
                     <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
+                      <div className={clsx(styles.between)} style={{marginLeft: 0}}>
+                        <span>Relation Status</span>
                       </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                        <Icon size='20px' color='#00345b'>east</Icon>
-                        <span>{item.target}</span>
-                      </div>
-                      <div className={clsx(styles.item, styles.to)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
-                      <div className={clsx(styles.between)}>
-                        <span>Relation Update: {item.content}</span>
-                      </div>
+                    </div>
+                    <div className={styles.text}>
+                      <Icon className={styles.link}>round_all_inclusive</Icon>
+                      <RelationTable keys={item.characters} values={item.content}/>
                     </div>
                   </div>
                 }
