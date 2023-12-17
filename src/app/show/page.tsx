@@ -59,6 +59,35 @@ export default function Show() {
     // },
   ]
 
+  let covers = [
+    {
+      background: '/background/5.jpg',
+      title: 'Succession Arena',
+      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
+    },
+    {
+      background: '/background/4.jpg',
+      title: 'Start A Session',
+      description: 'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.'
+    },
+    {
+      background: '/background/2.jpg',
+      title: 'Confrontation Stage',
+      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
+    },
+    {
+      background: '/background/8.png',
+      title: 'Cooperation Stage',
+      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
+    },
+    {
+      background: '/background/9.jpg',
+      title: 'Update Stage',
+      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
+    },
+  ]
+  let cover = current <= 1 ? covers[current] : covers[stage+2]
+
   for (let i = 0; i < data.rounds.length; i++) {
     if (i < data.rounds.length - 1) {
       rounds.push({
@@ -87,6 +116,69 @@ export default function Show() {
   let currentData = []
   if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
     currentData = data.rounds[current - 2][stage]
+  }
+
+  function getLastText(): string {
+    if (current == 0) return 'No more information'
+    if (current == 1) return 'Overview'
+    if (current == 2 && stage == 0) return 'Start'
+    if (stage == 0) return 'Round ' + (current - 2) + ' - ' + stages[2]
+    if (stage == 1) return 'Round ' + (current - 1) + ' - ' + stages[0]
+    if (stage == 2) return 'Round ' + (current - 1) + ' - ' + stages[1]
+    return 'No more information'
+  }
+
+  function getNextText(): string {
+    if (current == 0) return 'Start'
+    if (current == 1) {
+      if (data.rounds.length > 0) {
+        return 'Round ' + '1' + ' - ' + stages[0]
+      } else {
+        return 'No more information'
+      }
+    }
+    if (stage == 0) return 'Round ' + (current - 1) + ' - ' + stages[1]
+    if (stage == 1) return 'Round ' + (current - 1) + ' - ' + stages[2]
+    if (stage == 2 && data.rounds.length >= current) return 'Round ' + (current) + ' - ' + stages[0]
+    return 'No more information'
+  }
+
+  function lastPage() {
+    if (current == 1) {
+      setCurrent(0)
+      setStage(0)
+    } else if (current == 2 && stage == 0) {
+      setCurrent(1)
+      setStage(0)
+    } else if (stage == 0) {
+      setCurrent(current - 1)
+      setStage(2)
+    } else if (stage == 1) {
+      setCurrent(current)
+      setStage(0)
+    } else if (stage == 2) {
+      setCurrent(current)
+      setStage(1)
+    }
+  }
+
+  function nextPage() {
+    if (current == 0) {
+      setCurrent(1)
+      setStage(0)
+    } else if (current == 1 && data.rounds.length > 0) {
+      setCurrent(2)
+      setStage(0)
+    } else if (stage == 0) {
+      setCurrent(current)
+      setStage(1)
+    } else if (stage == 1) {
+      setCurrent(current)
+      setStage(2)
+    } else if (stage == 2 && data.rounds.length >= current) {
+      setCurrent(current + 1)
+      setStage(0)
+    }
   }
 
   return (
@@ -129,10 +221,10 @@ export default function Show() {
       <div className={clsx(styles.scroll, styles.holder)}>
         <div className={styles.article}>
           <div className={styles.img}>
-            <img src='/background/5.jpg' alt=''/>
+            <img src={cover.background} alt=''/>
             <div className={styles.content}>
-              <h1 className={styles.title}>Succession Arena</h1>
-              <div className={styles.session}>Example Session For UI Design. Only has one round now. Other descriptions...</div>
+              <h1 className={clsx(styles.title, stage == 1 && current > 1 ? styles.textShadow : '')}>{cover.title}</h1>
+              <div className={styles.session}>{cover.description}</div>
             </div>
           </div>
           <div className={styles.topBar} style={{
@@ -269,9 +361,10 @@ export default function Show() {
             }
           </div>
           <div className={styles.control} style={{
-            display: current != 1 ? 'flex' : 'none'
+            // display: current != 1 ? 'flex' : 'none'
           }}>
             <div onClick={e => {
+              lastPage()
             }} style={{
               cursor: 'pointer'
             }}>
@@ -279,9 +372,10 @@ export default function Show() {
                 <Icon size='22px' color='#444746'>round_west</Icon>
                 <span>Previous</span>
               </h1>
-              <p>{'No more information'}</p>
+              <p>{getLastText()}</p>
             </div>
             <div onClick={e => {
+              nextPage()
             }} style={{
               cursor: 'pointer'
             }}>
@@ -289,7 +383,7 @@ export default function Show() {
                 <span>Next</span>
                 <Icon size='22px' color='#444746'>round_east</Icon>
               </h1>
-              <p>{'No more information'}</p>
+              <p>{getNextText()}</p>
             </div>
           </div>
         </div>

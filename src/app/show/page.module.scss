@@ -145,6 +145,18 @@
           color: #121212;
         }
 
+        .textShadow {
+          text-shadow:
+              1px 0 0     #ddddddaa,
+              -1px 0 0    #ddddddaa,
+              0 1px 0     #ddddddaa,
+              0 -1px 0    #ddddddaa,
+              1px 1px 0   #ddddddaa,
+              -1px 1px 0  #ddddddaa,
+              1px -1px 0  #ddddddaa,
+              -1px -1px 0 #ddddddaa;
+        }
+
         .session {
           font-size: 24px;
           color: #121212;
@@ -161,6 +173,7 @@
       background: #f6f8fb;
       border-radius: 1000000px;
       margin-top: 12px;
+      margin-bottom: 30px;
       max-width: 1380px;
 
       .item {
@@ -333,10 +346,12 @@
 
       div {
         height: 100%;
+        width: 50%;
         background: #f5f7fa;
-        flex-grow: 1;
+        overflow: hidden;
         margin: 10px;
         border-radius: 32px;
+        user-select: none;
         transition: all 0.12s ease-in-out;
 
         h1 {
