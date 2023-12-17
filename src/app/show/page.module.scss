@@ -245,6 +245,22 @@
             }
           }
 
+          .tag {
+            display: flex;
+            align-items: center;
+            //background: #eef8fd;
+            border-radius: 18px;
+            padding: 7px 8px;
+            margin: 0 0 0 12px;
+            font-size: 16px;
+            color: #203554;
+            border: 1px solid #203554;
+
+            span {
+              margin: 0 6px;
+            }
+          }
+
           .to {
             //border-radius: 12px 32px 32px 12px;
             margin-left: 12px;

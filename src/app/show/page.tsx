@@ -61,12 +61,12 @@ export default function Show() {
 
   let covers = [
     {
-      background: '/background/5.jpg',
+      background: '/background/4.jpg',
       title: 'Succession Arena',
       description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
     },
     {
-      background: '/background/4.jpg',
+      background: '/background/5.jpg',
       title: 'Start A Session',
       description: 'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.'
     },
@@ -263,6 +263,10 @@ export default function Show() {
                       <div className={clsx(styles.item, styles.to)}>
                         <img src='/profile/user.png' alt=''/>
                       </div>
+                      <span className={styles.space}></span>
+                      <div className={clsx(styles.tag)}>
+                        <span>Dialogue Content</span>
+                      </div>
                     </div>
                     <div className={styles.text}>
                       <Icon className={styles.link}>round_all_inclusive</Icon>
@@ -278,8 +282,8 @@ export default function Show() {
                       <div className={clsx(styles.between)}>
                         <span>{item.source}</span>
                       </div>
-                      {/*<span className={styles.space}></span>*/}
-                      <div className={clsx(styles.between)}>
+                      <span className={styles.space}></span>
+                      <div className={clsx(styles.tag)}>
                         <span>Conclusion Of Environment</span>
                       </div>
                     </div>
@@ -297,8 +301,8 @@ export default function Show() {
                       <div className={clsx(styles.between)}>
                         <span>{item.source}</span>
                       </div>
-                      {/*<span className={styles.space}></span>*/}
-                      <div className={clsx(styles.between)}>
+                      <span className={styles.space}></span>
+                      <div className={clsx(styles.tag)}>
                         <span>Reflection Result</span>
                       </div>
                     </div>
@@ -316,8 +320,8 @@ export default function Show() {
                       <div className={clsx(styles.between)}>
                         <span>{item.source}</span>
                       </div>
-                      {/*<span className={styles.space}></span>*/}
-                      <div className={clsx(styles.between)}>
+                      <span className={styles.space}></span>
+                      <div className={clsx(styles.tag)}>
                         <span>Belief Status</span>
                       </div>
                     </div>

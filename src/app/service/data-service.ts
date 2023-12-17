@@ -54,7 +54,7 @@ export default class DataService {
     Api.data.sid = 'da2569d0ca9d4b2aa2c24a8a82494041'
     let i = 0
     let interval = setInterval(() => {
-      let num = Math.floor(Math.random() * 5) + 5
+      let num = Math.floor(Math.random() * 5) + 4
       for (let j = 0; j < num; j++) {
         if (i >= simulateData.length) {
           clearInterval(interval)
@@ -65,7 +65,7 @@ export default class DataService {
         i++
       }
       this.analysis()
-    }, 200)
+    }, 500)
   }
 
 
@@ -87,6 +87,7 @@ export default class DataService {
           }
           this.lastActionStage = content
         } else if (type === LogType.DialogueContent) {
+          if (content.trim().length == 0) content = 'No Data.'
           this.lastStage().push({
             type: LogType.DialogueContent,
             id: item['id'],
@@ -96,6 +97,7 @@ export default class DataService {
             content: content,
           })
         } else if (type === LogType.ConclusionOfEnvironment) {
+          if (content.trim().length == 0) content = 'No Data.'
           this.lastStage().push({
             type: LogType.ConclusionOfEnvironment,
             id: item['id'],
@@ -104,6 +106,7 @@ export default class DataService {
             content: content,
           })
         } else if (type === LogType.ReflectionResult) {
+          if (content.trim().length == 0) content = 'No Data.'
           this.lastStage().push({
             type: LogType.ReflectionResult,
             id: item['id'],
