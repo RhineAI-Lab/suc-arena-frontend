@@ -75,6 +75,29 @@ export default function Start () {
     })
   }
 
+  function simulate() {
+    if (Api.data.sid.length > 0) {
+      AppTools.message('当前已有进行中的会话。', 'warning')
+      return
+    }
+
+    DataService.simulate()
+  }
+
+  function continueSession() {
+    if (Api.data.sid.length > 0) {
+      AppTools.message('当前已有进行中的会话。', 'warning')
+      return
+    }
+
+    if (existsSid.trim().length == 0) {
+      AppTools.message('请输入SessionId', 'warning')
+    }
+
+    Api.data.sid = existsSid
+    DataService.startUpdate()
+  }
+
   return (
     <div className={styles.Start}>
       <h1>Start Config</h1>
@@ -99,12 +122,13 @@ export default function Start () {
       <md-filled-text-field label="Session Id" value={existsSid} onInput={(e: any) => setExistsSid(e.target.value)} type='number' size='large'></md-filled-text-field>
       <div className={styles.line} style={{marginTop: '10px'}}>
         <md-filled-tonal-button onClick={() => {
-          DataService.simulate()
+          simulate()
         }}>
           Quick Simulate
         </md-filled-tonal-button>
         <div className={styles.space}/>
         <md-filled-tonal-button onClick={() => {
+          continueSession()
         }}>
           Continue
           {/* @ts-ignore */}

@@ -212,7 +212,9 @@ export default function Show() {
           })
         }
         <div className={styles.space}></div>
-        <div className={styles.button}>
+        <div className={styles.button} onClick={e => {
+          window.open(window.location.href, '_blank');
+        }}>
           <Icon size='30px'>round_add</Icon>
           <span style={{marginLeft: '12px'}}>New Session</span>
         </div>
