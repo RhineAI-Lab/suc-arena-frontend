@@ -326,7 +326,7 @@
       width: 100%;
       height: 130px;
       display: flex;
-      margin-bottom: 50px;
+      margin: 50px 0;
       align-items: center;
       justify-content: center;
       max-width: 1080px;
@@ -387,38 +387,87 @@
     }
 
     .footer {
-      height: 300px;
-      min-height: 300px;
+      display: flex;
+      height: 260px;
+      min-height: 260px;
+      justify-content: center;
       width: 100%;
-      max-width: 1280px;
       position: relative;
 
-      .author {
-        position: absolute;
+      .footerMiddle {
         display: flex;
-        padding: 30px;
-        cursor: pointer;
-        bottom: 30px;
-        left: 20px;
-        right: 20px;
-        align-items: center;
-        color: #222222;
+        width: 100%;
+        max-width: 1190px;
+        min-width: 840px;
+        padding: 0 40px;
 
-        img {
-          width:  40px;
-          height: 40px;
-          border-radius: 6px;
-          margin-right: 16px;
-          object-fit: contain;
+        .left {
+          display: flex;
+          flex-direction: column;
+          padding: 50px 0 30px 0;
+
+          .line {
+            display: flex;
+            padding: 4px 30px;
+            cursor: pointer;
+            align-items: center;
+
+            span {
+              transition: all 0.16s ease-in-out;
+            }
+
+            .icon {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width:  40px;
+              height: 40px;
+              border-radius: 6px;
+              margin-right: 16px;
+              object-fit: contain;
+            }
+          }
+
+          .line:hover {
+            span {
+              color: #000000;
+            }
+          }
         }
 
-        p {
-          flex-grow: 1;
-        }
+        .right {
+          .author {
+            padding: 50px 30px 30px 30px;
 
-        span {
-          font-size: 18px;
+            span {
+              display: block;
+              height: 45px;
+              line-height: 45px;
+              transition: all 0.16s ease-in-out;
+            }
+
+            span:nth-child(1) {
+              color: #0c418f;
+            }
+          }
+
+          .author:hover {
+
+            span {
+              color: #000000;
+            }
+
+            span:nth-child(1) {
+              color: #0c418f;
+            }
+          }
         }
+      }
+
+      span {
+        font-size: 18px;
+        color: #444444;
+        white-space: nowrap;
       }
     }
   }
