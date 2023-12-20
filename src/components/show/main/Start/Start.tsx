@@ -119,7 +119,7 @@ export default function Start () {
         </md-filled-tonal-button>
       </div>
       <h1>From Exists Session</h1>
-      <md-filled-text-field label="Session Id" value={existsSid} onInput={(e: any) => setExistsSid(e.target.value)} type='number' size='large'></md-filled-text-field>
+      <md-filled-text-field label="Session Id" value={existsSid} onInput={(e: any) => setExistsSid(e.target.value)} type='text' size='large'></md-filled-text-field>
       <div className={styles.line} style={{marginTop: '10px'}}>
         <md-filled-tonal-button onClick={() => {
           simulate()
