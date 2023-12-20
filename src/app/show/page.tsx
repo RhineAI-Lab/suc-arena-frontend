@@ -108,8 +108,8 @@ export default function Show() {
   }
 
   let stages = [
-    '合作阶段',
     '对抗阶段',
+    '合作阶段',
     '更新阶段',
   ]
 
