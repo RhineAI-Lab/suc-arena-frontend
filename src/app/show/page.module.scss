@@ -23,7 +23,7 @@
       justify-content: center;
       margin: 32px 0 8px 0;
       cursor: pointer;
-
+      transition: all 0.12s ease-in-out;
 
       span {
         font-weight: 100;
@@ -35,6 +35,10 @@
         font-size: 34px;
         font-weight: 500;
       }
+
+      &:hover {
+        transform: scale(1.01);
+      }
     }
 
     .subtitle {
@@ -43,6 +47,12 @@
       text-align: center;
       color: #002441;
       cursor: pointer;
+
+      transition: all 0.12s ease-in-out;
+
+      &:hover {
+        transform: scale(1.01);
+      }
     }
 
     .item {
@@ -443,7 +453,7 @@
         display: flex;
         width: 100%;
         max-width: 1190px;
-        min-width: 840px;
+        min-width: 780px;
         padding: 0 40px;
 
         .left {
@@ -476,6 +486,7 @@
           .line:hover {
             span {
               color: #000000;
+              transform: scale(1.01);
             }
           }
         }
@@ -493,6 +504,11 @@
 
             span:nth-child(1) {
               color: #0c418f;
+              transition: all 0.16s ease-in-out;
+            }
+
+            span:hover {
+              transform: scale(1.01);
             }
           }
 
@@ -510,8 +526,8 @@
       }
 
       span {
-        font-size: 18px;
-        color: #444444;
+        font-size: 15px;
+        color: #222222;
         white-space: nowrap;
       }
     }

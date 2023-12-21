@@ -10,10 +10,8 @@ export default class DataService {
   static data: {rounds: any[][]} = proxy({
     rounds: [],
   })
-
-  static sourceData: any[] = proxy([
-
-  ])
+  static sourceData: any[] = proxy([])
+  static filterData: any[] = proxy([])
 
   static updating = false
   static updateInterval: any
@@ -48,7 +46,18 @@ export default class DataService {
       }
     }
     this.sourceData.push(item)
+
+    let obj = JSON.parse(JSON.stringify(item))
+    delete obj.sid
+    delete obj.time
+    delete obj.id
+    this.filterData.push({
+      id: item.id,
+      time: item.time,
+      code: JSON.stringify(obj, null, 4),
+    })
   }
+
 
   static simulate() {
     Api.data.sid = 'da2569d0ca9d4b2aa2c24a8a82494041'
