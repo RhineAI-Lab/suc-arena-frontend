@@ -6,6 +6,7 @@ import {subscribe, useSnapshot} from "valtio";
 import Api from "@/app/api/api";
 import AiMarkdown from "@/components/AiMarkdown/AiMarkdown";
 import DataService from "@/app/service/data-service";
+import {clsx} from "clsx";
 
 export default function Overview () {
   function onFirstEnter() {
@@ -55,12 +56,20 @@ export default function Overview () {
         showData.map((item, index) => {
           return (
             <div key={index} className={styles.log}>
-              <span className={styles.box}>ID: {item.id} </span>
-              <span className={styles.box}>{item.time.split(' ')[0]}</span>
-              <span className={styles.box}>{item.time.split(' ')[1]}</span>
-              {
-                item.important && <span className={styles.box}>IMPORTANT</span>
-              }
+              <div className={styles.tags}>
+                <span className={clsx(styles.box, styles.border)}>ID: {item.id} </span>
+                <span className={styles.box}>{item.time.split(' ')[0]}</span>
+                <span className={styles.box}>{item.time.split(' ')[1]}</span>
+                {
+                  item.important && <span className={styles.box}>IMPORTANT</span>
+                }
+                <span className={styles.space}></span>
+                {
+                  item.type && <span className={clsx(styles.box, styles.border)} style={{
+                    marginRight: 0,
+                  }}>{item.type}</span>
+                }
+              </div>
               <AiMarkdown>
                 {'```javascript\n' + item.code + '\n```'}
               </AiMarkdown>

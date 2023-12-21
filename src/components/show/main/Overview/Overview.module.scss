@@ -51,6 +51,14 @@
       border: 1px solid #0b2959;
       padding: 7px 13px;
     }
+
+    .tags {
+      display: flex;
+
+      .space {
+        flex-grow: 1;
+      }
+    }
   }
 
 }

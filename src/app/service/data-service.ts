@@ -46,16 +46,25 @@ export default class DataService {
       }
     }
     this.sourceData.push(item)
+    let type = item['log_type']
 
     let obj = JSON.parse(JSON.stringify(item))
     delete obj.sid
     delete obj.time
     delete obj.id
     delete obj.important_log
+
+    if (type) {
+      type = type.split(' ').map((item: string) => {
+        return item[0].toUpperCase() + item.substring(1)
+      }).join(' ')
+    }
+
     this.filterData.push({
       id: item.id,
       time: item.time,
       important: item.important_log == 'important_log',
+      type: type,
       code: JSON.stringify(obj, null, 4),
     })
   }
