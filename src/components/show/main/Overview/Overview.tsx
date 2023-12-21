@@ -47,36 +47,38 @@ export default function Overview () {
       <span className={styles.info}><b>Create Time:</b> &nbsp; {createTime}</span>
       <span className={styles.info}><b>Last Time:</b> &nbsp; {lastTime}</span>
       <h1>All Log</h1>
-      {
-        showData.length === 0 && <div className={styles.empty}>
-          <span>No Data.</span>
-        </div>
-      }
-      {
-        showData.map((item, index) => {
-          return (
-            <div key={index} className={styles.log}>
-              <div className={styles.tags}>
-                <span className={clsx(styles.box, styles.border)}>ID: {item.id} </span>
-                <span className={styles.box}>{item.time.split(' ')[0]}</span>
-                <span className={styles.box}>{item.time.split(' ')[1]}</span>
-                {
-                  item.important && <span className={styles.box}>IMPORTANT</span>
-                }
-                <span className={styles.space}></span>
-                {
-                  item.type && <span className={clsx(styles.box, styles.border)} style={{
-                    marginRight: 0,
-                  }}>{item.type}</span>
-                }
-              </div>
-              <AiMarkdown>
-                {'```javascript\n' + item.code + '\n```'}
-              </AiMarkdown>
+      <div className={styles.logs}>
+        {
+          showData.length === 0 && <div className={styles.empty}>
+                <span>No Data.</span>
             </div>
-          )
-        })
-      }
+        }
+        {
+          showData.map((item, index) => {
+            return (
+              <div key={index} className={styles.log}>
+                <div className={styles.tags}>
+                  <span className={clsx(styles.box, styles.border)}>ID: {item.id} </span>
+                  <span className={styles.box}>{item.time.split(' ')[0]}</span>
+                  <span className={styles.box}>{item.time.split(' ')[1]}</span>
+                  {
+                    item.important && <span className={styles.box}>IMPORTANT</span>
+                  }
+                  <span className={styles.space}></span>
+                  {
+                    item.type && <span className={clsx(styles.box, styles.border)} style={{
+                      marginRight: 0,
+                    }}>{item.type}</span>
+                  }
+                </div>
+                <AiMarkdown>
+                  {'```javascript\n' + item.code + '\n```'}
+                </AiMarkdown>
+              </div>
+            )
+          })
+        }
+      </div>
     </div>
   )
 }
