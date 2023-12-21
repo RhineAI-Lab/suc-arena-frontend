@@ -349,7 +349,10 @@ export default function Show() {
                   return <div className={styles.message} key={index}>
                     <div className={styles.info}>
                       <div className={clsx(styles.between)} style={{marginLeft: 0}}>
-                        <span>Relation Status</span>
+                        <span className={styles.betweenText}>
+                          <Icon className={styles.link}>outlined_groups</Icon>
+                          <span>Relation Status</span>
+                        </span>
                       </div>
                     </div>
                     <div className={styles.text}>

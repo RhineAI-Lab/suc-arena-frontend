@@ -235,13 +235,27 @@
             align-items: center;
             background: #eef8fd;
             border-radius: 18px;
-            padding: 8px 10px;
+            padding: 8px 12px;
             margin: 0 0 0 12px;
             font-size: 18px;
             color: #1f1f1f;
+            min-height: 38px;
 
             span {
               margin: 0 6px;
+            }
+
+            .betweenText {
+              display: flex;
+              align-items: center;
+              margin: 0 6px;
+
+              span:nth-child(1) {
+                margin: 0 12px 0 2px;
+                font-size: 29px;
+                font-weight: 100;
+                transform: translateY(-1px);
+              }
             }
           }
 
