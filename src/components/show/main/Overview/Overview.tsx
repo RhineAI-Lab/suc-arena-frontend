@@ -55,8 +55,8 @@ export default function Overview () {
         showData.map((item, index) => {
           return (
             <div key={index} className={styles.log}>
-              <span>{item.id} </span>
-              <span>{item.time}</span>
+              <span className={styles.box}>ID: {item.id} </span>
+              <span className={styles.box}>{item.time}</span>
               <AiMarkdown>
                 {'```javascript\n' + item.code + '\n```'}
               </AiMarkdown>
