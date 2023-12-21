@@ -51,9 +51,11 @@ export default class DataService {
     delete obj.sid
     delete obj.time
     delete obj.id
+    delete obj.important_log
     this.filterData.push({
       id: item.id,
       time: item.time,
+      important: item.important_log == 'important_log',
       code: JSON.stringify(obj, null, 4),
     })
   }

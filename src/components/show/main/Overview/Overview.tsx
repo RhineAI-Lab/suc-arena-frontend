@@ -56,7 +56,11 @@ export default function Overview () {
           return (
             <div key={index} className={styles.log}>
               <span className={styles.box}>ID: {item.id} </span>
-              <span className={styles.box}>{item.time}</span>
+              <span className={styles.box}>{item.time.split(' ')[0]}</span>
+              <span className={styles.box}>{item.time.split(' ')[1]}</span>
+              {
+                item.important && <span className={styles.box}>IMPORTANT</span>
+              }
               <AiMarkdown>
                 {'```javascript\n' + item.code + '\n```'}
               </AiMarkdown>
