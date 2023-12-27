@@ -7,6 +7,7 @@ import Api from "@/app/api/api";
 import AiMarkdown from "@/components/AiMarkdown/AiMarkdown";
 import DataService from "@/app/service/data-service";
 import {clsx} from "clsx";
+import Icon from "@/components/Icon/Icon";
 
 export default function Overview () {
   function onFirstEnter() {
@@ -62,7 +63,10 @@ export default function Overview () {
                   <span className={styles.box}>{item.time.split(' ')[0]}</span>
                   <span className={styles.box}>{item.time.split(' ')[1]}</span>
                   {
-                    item.important && <span className={styles.box}>IMPORTANT</span>
+                    item.important && <span className={clsx(styles.box, styles.important)}>
+                      <Icon size='23px' className={styles.icon}>round_star_rate</Icon>
+                      <span  className={styles.text}>IMPORTANT</span>
+                    </span>
                   }
                   <span className={styles.space}></span>
                   {

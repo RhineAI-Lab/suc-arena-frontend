@@ -350,7 +350,7 @@ export default function Show() {
                     <div className={styles.info}>
                       <div className={clsx(styles.between)} style={{marginLeft: 0}}>
                         <span className={styles.betweenText}>
-                          <Icon className={styles.link}>round_groups</Icon>
+                          <Icon>round_groups</Icon>
                           <span>Relation Status</span>
                         </span>
                       </div>

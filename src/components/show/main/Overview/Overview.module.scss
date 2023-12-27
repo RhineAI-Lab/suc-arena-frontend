@@ -47,6 +47,32 @@
         color: #0b2959;
       }
 
+      .important {
+
+        .icon {
+          margin: -4px;
+          transform: translateY(-1px);
+        }
+
+        .text {
+          width: auto;
+          max-width: 0;
+          overflow: hidden;
+          transition: all 0.16s ease-in-out;
+          margin-left: 0;
+          transform: scaleX(0.7);
+        }
+      }
+
+      .important:hover {
+
+        .text {
+          margin-left: 8px;
+          max-width: 150px;
+          transform: scaleX(1);
+        }
+      }
+
       .border {
         background: #ffffff;
         color: #0b2959;

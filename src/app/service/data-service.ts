@@ -58,6 +58,7 @@ export default class DataService {
       type = type.split(' ').map((item: string) => {
         return item[0].toUpperCase() + item.substring(1)
       }).join(' ')
+      delete obj.log_type
     }
 
     this.filterData.push({
