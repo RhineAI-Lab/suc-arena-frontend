@@ -2,6 +2,7 @@
 
 import React, {DetailedHTMLProps, HTMLAttributes, useEffect, useRef} from "react";
 import styles from "./RelationTable.module.scss";
+import {clsx} from "clsx";
 
 export default function RelationTable (props: RelationTableProps): JSX.Element {
 
@@ -11,7 +12,7 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
   for (let i = 0; i < keys.length; i++) {
     let line = []
     for (let j = 0; j < keys.length; j++) {
-      line.push(0)
+      line.push(-1)
     }
     data.push(line)
   }
@@ -45,6 +46,9 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
   let size = 50
   let keyWidth = 130
 
+  let [hoverX, setHoverX] = React.useState<number>(-1)
+  let [hoverY, setHoverY] = React.useState<number>(-1)
+
   function color(value: number): string {
     value = 100 - value
     return `rgb(${value * 2.4}, ${value * 2.1 + 30}, ${value * 1.35 + 120})`
@@ -58,7 +62,20 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
         width: size * keys.length + keyWidth + 'px',
         height: size * keys.length + keyWidth + 'px',
         transform: `translateX(-${keyWidth / 2}px)`,
+      }} onMouseLeave={e => {
+        setHoverX(-1)
+        setHoverY(-1)
       }}>
+        <div className={styles.block} style={{
+          top: 0,
+          left: 0,
+          right: keyWidth + 'px',
+          bottom: keyWidth + 'px',
+        }} onMouseEnter={e => {
+          setHoverX(-1)
+          setHoverY(-1)
+        }}>
+        </div>
         <div className={styles.horizontalKeys} style={{
           top: 0,
           left: keyWidth + 'px',
@@ -67,13 +84,16 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
         }}>
           {
             keys.map((key, index) => {
-              return <div key={index} className={styles.key} style={{
+              return <div key={index} className={clsx(styles.key, hoverX == index ? styles.hoverKey : '')} style={{
                 height: size + 'px',
                 lineHeight: size + 'px',
                 bottom: 0,
                 left: index * size + 'px',
                 width: keyWidth + 'px',
                 transformOrigin: size / 2 + 'px ' + size / 2 + 'px',
+              }} onMouseEnter={e => {
+                setHoverX(index)
+                setHoverY(-1)
               }}>{key}</div>
             })
           }
@@ -86,12 +106,15 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
         }}>
           {
             keys.map((key, index) => {
-              return <div key={index} className={styles.key} style={{
+              return <div key={index} className={clsx(styles.key, hoverY == index ? styles.hoverKey : '')} style={{
                 right: 0,
                 top: index * size + 'px',
                 width: keyWidth + 'px',
                 height: size + 'px',
                 lineHeight: size + 'px',
+              }} onMouseEnter={e => {
+                setHoverX(-1)
+                setHoverY(index)
               }}>{key}</div>
             })
           }
@@ -105,14 +128,18 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
           {
             data.map((line, index) => {
               return line.map((item, index2) => {
-                return <div key={index + '-' + index2} className={styles.item} style={{
+                return <div key={index + '-' + index2} className={clsx(styles.item, item != -1 ? styles.useful : '')} style={{
                   top: index * size + 'px',
                   left: index2 * size + 'px',
                   width: size + 'px',
                   height: size + 'px',
                   lineHeight: size + 'px',
                   backgroundColor: color(item),
-                }}>{item}</div>
+                  color: item == -1 ? '#bbbbbb' : '#000000',
+                }} onMouseEnter={e => {
+                  setHoverX(index2)
+                  setHoverY(index)
+                }}>{item == -1 ? 'NaN' : item}</div>
               })
             })
           }

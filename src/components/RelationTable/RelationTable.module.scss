@@ -8,6 +8,11 @@
   .holder {
     position: absolute;
 
+    .block {
+      position: absolute;
+      display: inline-block;
+    }
+
     .horizontalKeys {
       position: absolute;
       display: inline-block;
@@ -21,7 +26,7 @@
         transition: all 0.12s ease-in-out;
       }
 
-      .key:hover {
+      .hoverKey {
         font-size: 17px;
         font-weight: 600;
       }
@@ -40,7 +45,7 @@
         transition: all 0.12s ease-in-out;
       }
 
-      .key:hover {
+      .hoverKey {
         font-size: 17px;
         font-weight: 600;
       }
@@ -60,9 +65,12 @@
       }
 
       .item:hover {
+        border: 1px solid #00000055;
+      }
+
+      .useful:hover {
         font-size: 18px;
         font-weight: 600;
-        border: 1px solid #00000055;
       }
     }
   }
