@@ -87,12 +87,29 @@ export default function Show() {
   ]
   let cover = current <= 1 ? covers[current] : covers[stage+2]
 
-  let stages = [
+  let currentData = []
+  let hadFinal = data.final.length > 0
+  let isFinal = current > data.rounds.length + 1
+  if (isFinal) {
+    currentData = data.final[0][0]
+  } else if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
+    currentData = data.rounds[current - 2][stage]
+  }
+
+  let normalStages = [
     '对抗阶段',
     '合作阶段',
     '宣言阶段',
     '更新阶段',
   ]
+  let finalStages = [
+    '预测阶段',
+    '宣言阶段',
+    '投票阶段',
+    '对外投票阶段',
+  ]
+  let stages = isFinal ? finalStages : normalStages
+  let sl = stages.length
 
   for (let i = 0; i < data.rounds.length; i++) {
     if (i < data.rounds.length - 1 || data.final.length > 0) {
@@ -108,7 +125,7 @@ export default function Show() {
         name: 'Round ' + (i + 1),
         icon: 'outlined_people',
         iconSize: 21,
-        progress: data.rounds[i].length + '/' + stages.length,
+        progress: data.rounds[i].length + '/' + sl,
       })
     }
   }
@@ -121,25 +138,24 @@ export default function Show() {
     })
   }
 
-  let currentData = []
-  let isFinal = rounds[current].name == 'Settlement'
-  if (isFinal) {
-    currentData = data.final[0][0]
-  } else if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
-    currentData = data.rounds[current - 2][stage]
-  }
-
   function getLastText(): string {
+    let currentRoundName = isFinal ? 'Settlement' : 'Round ' + (current - 1)
+    let lastRoundName = 'Round ' + (current - 2)
+
     if (current == 0) return 'No more information'
     if (current == 1) return 'Overview'
     if (current == 2 && stage == 0) return 'Start'
-    if (stage == 0) return 'Round ' + (current - 2) + ' - ' + stages[2]
-    if (stage == 1) return 'Round ' + (current - 1) + ' - ' + stages[0]
-    if (stage == 2) return 'Round ' + (current - 1) + ' - ' + stages[1]
+    if (stage == 0) return lastRoundName + ' - ' + normalStages[sl - 1]
+    if (stage < sl) {
+      return currentRoundName + ' - ' + normalStages[stage - 1]
+    }
     return 'No more information'
   }
 
   function getNextText(): string {
+    let currentRoundName = isFinal ? 'Settlement' : 'Round ' + (current - 1)
+    let nextRoundName = current > data.rounds.length ? 'Settlement' : 'Round ' + current
+
     if (current == 0) return 'Start'
     if (current == 1) {
       if (data.rounds.length > 0) {
@@ -148,9 +164,15 @@ export default function Show() {
         return 'No more information'
       }
     }
-    if (stage == 0) return 'Round ' + (current - 1) + ' - ' + stages[1]
-    if (stage == 1) return 'Round ' + (current - 1) + ' - ' + stages[2]
-    if (stage == 2 && data.rounds.length >= current) return 'Round ' + (current) + ' - ' + stages[0]
+    if (stage < sl - 1) {
+      return currentRoundName + ' - ' + stages[stage + 1]
+    }
+    if (stage == sl - 1 && data.rounds.length >= current) {
+      return nextRoundName + ' - ' + stages[0]
+    }
+    if (data.final.length > 0 && !isFinal) {
+      return nextRoundName + ' - ' + finalStages[0]
+    }
     return 'No more information'
   }
 
@@ -163,30 +185,28 @@ export default function Show() {
       setStage(0)
     } else if (stage == 0) {
       setCurrent(current - 1)
-      setStage(2)
-    } else if (stage == 1) {
+      setStage(sl - 1)
+    } else if (stage < sl) {
       setCurrent(current)
-      setStage(0)
-    } else if (stage == 2) {
-      setCurrent(current)
-      setStage(1)
+      setStage(stage - 1)
     }
   }
 
   function nextPage() {
+    let rl = data.rounds.length
+    if (data.final.length > 0) {
+      rl += 1
+    }
     if (current == 0) {
       setCurrent(1)
       setStage(0)
-    } else if (current == 1 && data.rounds.length > 0) {
+    } else if (current == 1 && rl > 0) {
       setCurrent(2)
       setStage(0)
-    } else if (stage == 0) {
+    } else if (stage < sl - 1) {
       setCurrent(current)
-      setStage(1)
-    } else if (stage == 1) {
-      setCurrent(current)
-      setStage(2)
-    } else if (stage == 2 && data.rounds.length >= current) {
+      setStage(stage + 1)
+    } else if (stage == sl - 1 && rl >= current) {
       setCurrent(current + 1)
       setStage(0)
     }
@@ -241,7 +261,7 @@ export default function Show() {
             </div>
           </div>
           <div className={styles.topBar} style={{
-            display: (current >= 2 && !isFinal) ? 'flex' : 'none'
+            display: (current >= 2) ? 'flex' : 'none'
           }}>
             {
               stages.map((item, index) => {
