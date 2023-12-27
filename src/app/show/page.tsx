@@ -81,12 +81,24 @@ export default function Show() {
       description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
     },
     {
+      background: '/background/1.jpg',
+      title: 'Announcement Stage',
+      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
+    },
+    {
       background: '/background/9.jpg',
       title: 'Update Stage',
       description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
     },
   ]
   let cover = current <= 1 ? covers[current] : covers[stage+2]
+
+  let stages = [
+    '对抗阶段',
+    '合作阶段',
+    '宣言阶段',
+    '更新阶段',
+  ]
 
   for (let i = 0; i < data.rounds.length; i++) {
     if (i < data.rounds.length - 1) {
@@ -102,16 +114,10 @@ export default function Show() {
         name: 'Round ' + (i + 1),
         icon: 'outlined_people',
         iconSize: 21,
-        progress: data.rounds[i].length + '/3',
+        progress: data.rounds[i].length + '/' + stages.length,
       })
     }
   }
-
-  let stages = [
-    '对抗阶段',
-    '合作阶段',
-    '更新阶段',
-  ]
 
   let currentData = []
   if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
@@ -358,6 +364,25 @@ export default function Show() {
                     <div className={styles.text}>
                       <Icon className={styles.link}>round_all_inclusive</Icon>
                       <RelationTable keys={item.characters} values={item.content}/>
+                    </div>
+                  </div>
+                } else if (item.type == LogType.OpenSpeechInRound) {
+                  return <div className={styles.message} key={index}>
+                    <div className={styles.info}>
+                      <div className={clsx(styles.item, styles.from)}>
+                        <img src='/profile/user.png' alt=''/>
+                      </div>
+                      <div className={clsx(styles.between)}>
+                        <span>{item.source}</span>
+                      </div>
+                      <span className={styles.space}></span>
+                      <div className={clsx(styles.tag)}>
+                        <span>Open Speech In Round</span>
+                      </div>
+                    </div>
+                    <div className={styles.text}>
+                      <Icon className={styles.link}>round_all_inclusive</Icon>
+                      {item.content}
                     </div>
                   </div>
                 }

@@ -1,6 +1,7 @@
 
 export enum LogType {
   ActionStage = 'Action stage',
+
   ConclusionOfEnvironment = 'Conclusion of environment',
   SelectDialogueRole = 'Select dialogue role',
   DialogueContent = 'Dialogue content',
@@ -10,6 +11,13 @@ export enum LogType {
   RelationStatus = 'Relation status',
   EnvironmentJudgement = 'Environment judgement',
   ReflectionResult = 'Reflection result',
+  OpenSpeechInRound = 'Open Speech In Round',
+
+  SettlementStage = 'Settlement stage',
+  OpenSpeech = 'Open Speech',
+  VotingExceptSelf = 'Voting Except Self',
+  Voting = 'Voting',
+  WinnerAnnouncement = 'Winner Announcement',
 }
 
 export enum ActionStageType {
