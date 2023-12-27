@@ -7,7 +7,7 @@ import {LogType} from "@/app/service/class/log-enum";
 
 export default class DataService {
 
-  static data: {rounds: any[][], final: [][]} = proxy({
+  static data: {rounds: any[][], final: any[][]} = proxy({
     rounds: [],
     final: []
   })
@@ -114,7 +114,7 @@ export default class DataService {
           })
         } else if (type === LogType.SettlementStage) {
           if (this.lastActionStage != StageType.SETTLEMENT) {
-            this.data.final.push([])
+            this.data.final.push([[]])
             this.lastActionStage = StageType.SETTLEMENT
           }
         } else if (type === LogType.ActionStage) {
@@ -280,7 +280,7 @@ export default class DataService {
 
   static lastStage() {
     if (this.data.final.length > 0) {
-      return this.data.final[this.data.final.length - 1]
+      return this.data.final[0][this.data.final.length - 1]
     }
     let round = this.lastRound()
     return round[round.length - 1]

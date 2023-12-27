@@ -46,17 +46,11 @@ export default function Show() {
       name: 'Overview',
       icon: 'round_crop_original',
       iconSize: 22,
-    },
-    {
+    }, {
       name: 'Start',
       icon: 'round_sports_score',
       iconSize: 23,
     },
-    // {
-    //   name: 'Final',
-    //   icon: 'outlined_event_available',
-    //   iconSize: 21,
-    // },
   ]
 
   let covers = [
@@ -101,7 +95,7 @@ export default function Show() {
   ]
 
   for (let i = 0; i < data.rounds.length; i++) {
-    if (i < data.rounds.length - 1) {
+    if (i < data.rounds.length - 1 || data.final.length > 0) {
       rounds.push({
         name: 'Round ' + (i + 1),
         icon: 'outlined_people',
@@ -119,8 +113,19 @@ export default function Show() {
     }
   }
 
+  if (data.final.length > 0) {
+    rounds.push({
+      name: 'Settlement',
+      icon: 'outlined_event_available',
+      iconSize: 21,
+    })
+  }
+
   let currentData = []
-  if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
+  let isFinal = rounds[current].name == 'Settlement'
+  if (isFinal) {
+    currentData = data.final[0][0]
+  } else if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
     currentData = data.rounds[current - 2][stage]
   }
 
@@ -236,7 +241,7 @@ export default function Show() {
             </div>
           </div>
           <div className={styles.topBar} style={{
-            display: current >= 2 ? 'flex' : 'none'
+            display: (current >= 2 && !isFinal) ? 'flex' : 'none'
           }}>
             {
               stages.map((item, index) => {
@@ -378,6 +383,88 @@ export default function Show() {
                       <span className={styles.space}></span>
                       <div className={clsx(styles.tag)}>
                         <span>Open Speech In Round</span>
+                      </div>
+                    </div>
+                    <div className={styles.text}>
+                      <Icon className={styles.link}>round_all_inclusive</Icon>
+                      {item.content}
+                    </div>
+                  </div>
+                } else if (item.type == LogType.OpenSpeech) {
+                  return <div className={styles.message} key={index}>
+                    <div className={styles.info}>
+                      <div className={clsx(styles.item, styles.from)}>
+                        <img src='/profile/user.png' alt=''/>
+                      </div>
+                      <div className={clsx(styles.between)}>
+                        <span>{item.source}</span>
+                      </div>
+                      <span className={styles.space}></span>
+                      <div className={clsx(styles.tag)}>
+                        <span>Open Speech</span>
+                      </div>
+                    </div>
+                    <div className={styles.text}>
+                      <Icon className={styles.link}>round_all_inclusive</Icon>
+                      {item.content}
+                    </div>
+                  </div>
+                } else if (item.type == LogType.VotingExceptSelf) {
+                  return <div className={styles.message} key={index}>
+                    <div className={styles.info}>
+                      <div className={clsx(styles.item, styles.from)}>
+                        <img src='/profile/user.png' alt=''/>
+                      </div>
+                      <div className={clsx(styles.between)}>
+                        <span>{item.source}</span>
+                        <Icon size='20px' color='#00345b'>east</Icon>
+                        <span>{item.target}</span>
+                      </div>
+                      <div className={clsx(styles.item, styles.to)}>
+                        <img src='/profile/user.png' alt=''/>
+                      </div>
+                      <span className={styles.space}></span>
+                      <div className={clsx(styles.tag)}>
+                        <span>Voting Except Self</span>
+                      </div>
+                    </div>
+                    <div className={styles.text}>
+                      <Icon className={styles.link}>round_all_inclusive</Icon>
+                      {item.content}
+                    </div>
+                  </div>
+                } else if (item.type == LogType.Voting) {
+                  return <div className={styles.message} key={index}>
+                    <div className={styles.info}>
+                      <div className={clsx(styles.item, styles.from)}>
+                        <img src='/profile/user.png' alt=''/>
+                      </div>
+                      <div className={clsx(styles.between)}>
+                        <span>{item.source}</span>
+                        <Icon size='20px' color='#00345b'>east</Icon>
+                        <span>{item.target}</span>
+                      </div>
+                      <div className={clsx(styles.item, styles.to)}>
+                        <img src='/profile/user.png' alt=''/>
+                      </div>
+                      <span className={styles.space}></span>
+                      <div className={clsx(styles.tag)}>
+                        <span>Voting</span>
+                      </div>
+                    </div>
+                    <div className={styles.text}>
+                      <Icon className={styles.link}>round_all_inclusive</Icon>
+                      {item.content}
+                    </div>
+                  </div>
+                } else if (item.type == LogType.WinnerAnnouncement) {
+                  return <div className={styles.message} key={index}>
+                    <div className={styles.info}>
+                      <div className={clsx(styles.between)} style={{marginLeft: 0}}>
+                        <span className={styles.betweenText}>
+                          <Icon size='22px'>round_emoji_events</Icon>
+                          <span>Winner Announcement</span>
+                        </span>
                       </div>
                     </div>
                     <div className={styles.text}>

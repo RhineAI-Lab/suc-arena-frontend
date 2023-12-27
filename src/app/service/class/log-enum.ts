@@ -13,7 +13,7 @@ export enum LogType {
   ReflectionResult = 'Reflection result',
   OpenSpeechInRound = 'Open Speech In Round',
 
-  SettlementStage = 'Settlement stage',
+  SettlementStage = 'Settlement Stage',
   OpenSpeech = 'Open Speech',
   VotingExceptSelf = 'Voting Except Self',
   Voting = 'Voting',
