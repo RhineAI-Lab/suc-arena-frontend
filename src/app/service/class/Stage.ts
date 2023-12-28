@@ -1,4 +1,12 @@
 
+export default class Stage {
+  constructor(
+    public messages: any[] = [],
+    public type: StageType = StageType.UNKNOWN,
+  ) {
+  }
+}
+
 export enum StageType {
   OVERVIEW = 'OVERVIEW',
   START = 'START',
@@ -7,5 +15,5 @@ export enum StageType {
   ANNOUNCEMENT = 'ANNOUNCEMENT',
   UPDATE = 'UPDATE',
   SETTLEMENT = 'SETTLEMENT',
-  NONE = 'NONE',
+  UNKNOWN = 'UNKNOWN',
 }

@@ -1,9 +1,9 @@
 import { proxy, useSnapshot } from 'valtio'
 import {SessionState} from "@/app/service/class/session-state";
-import {StageType} from "@/app/service/class/stage-type";
 import Api from "@/app/api/api";
 import {simulateData} from "@/app/service/simulate-data";
 import {LogType} from "@/app/service/class/log-enum";
+import {StageType} from "@/app/service/class/Stage";
 
 export default class DataService {
 
@@ -51,14 +51,23 @@ export default class DataService {
         return
       }
     }
-    this.sourceData.push(item)
     let type = item['log_type']
+    if (type) {
+      type = type.trim().split(' ').map((item: string) => {
+        return item[0].toUpperCase() + item.substring(1)
+      }).join(' ')
+      item['log_type'] = type
+    }
+    this.sourceData.push(item)
 
     let obj = JSON.parse(JSON.stringify(item))
     delete obj.sid
     delete obj.time
     delete obj.id
     delete obj.important_log
+    if (type) {
+      delete obj.log_type
+    }
 
     if (type) {
       type = type.split(' ').map((item: string) => {
