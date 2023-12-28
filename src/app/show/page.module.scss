@@ -194,6 +194,40 @@
       }
     }
 
+    .empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+      min-height: 400px;
+      width: 100%;
+      max-width: 1050px;
+      border: 1px dashed #cccccc;
+      border-radius: 70px;
+      margin: 50px 0;
+
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 38px;
+        color: #444444;
+        margin-bottom: 50px;
+
+        span:nth-child(1) {
+          font-size: 48px;
+          margin-right: 14px;
+        }
+      }
+
+      .text {
+        font-size: 16px;
+        color: #333333;
+        margin-bottom: 20px;
+      }
+    }
+
     .main {
       max-width: 1020px;
       min-height: 100px;

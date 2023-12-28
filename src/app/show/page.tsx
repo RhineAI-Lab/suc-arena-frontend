@@ -75,18 +75,23 @@ export default function Show() {
       description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
     },
     {
-      background: '/background/1.jpg',
+      background: '/background/9.jpg',
       title: 'Announcement Stage',
       description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
     },
     {
-      background: '/background/9.jpg',
+      background: '/background/12.jpg',
       title: 'Update Stage',
       description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
     },
+    {
+      background: '/background/11.jpg',
+      title: 'Settlement',
+      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
+    },
   ]
-  let cover = current <= 1 ? covers[current] : covers[stage+2]
 
+  let hadData = true
   let currentData = []
   let hadFinal = data.final.length > 0
   let isFinal = current > data.rounds.length + 1
@@ -94,7 +99,11 @@ export default function Show() {
     currentData = data.final[0][0]
   } else if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
     currentData = data.rounds[current - 2][stage]
+  } else {
+    hadData = false
   }
+
+  let cover = isFinal ? covers[6] : (current <= 1 ? covers[current] : covers[stage+2])
 
   let normalStages = [
     '对抗阶段',
@@ -277,7 +286,20 @@ export default function Show() {
               })
             }
           </div>
-          <div className={styles.main}>
+          {
+            !hadData && <div className={styles.empty} style={{
+              display: hadData ? 'none' : 'flex'
+            }}>
+                <span className={styles.title}>
+                  <Icon>outlined_takeout_dining</Icon>
+                  <span>No Data</span>
+                </span>
+                  <span className={styles.text}>The game has not progressed to this stage yet.</span>
+              </div>
+          }
+          <div className={styles.main} style={{
+            display: hadData ? 'block' : 'none'
+          }}>
             {current == 0 && <Overview/>}
             {current == 1 && <Start/>}
             {
