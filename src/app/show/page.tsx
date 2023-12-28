@@ -14,6 +14,8 @@ import DataService from "@/app/service/data-service";
 import {useSnapshot} from "valtio";
 import {LogType} from "@/app/service/class/log-enum";
 import RelationTable from "@/components/RelationTable/RelationTable";
+import '@material/web/progress/linear-progress'
+import TimeUtils from "@/utils/TimeUtils";
 
 export default function Show() {
   const router = useRouter()
@@ -99,7 +101,7 @@ export default function Show() {
     currentData = data.final[0][0]
   } else if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
     currentData = data.rounds[current - 2][stage]
-  } else {
+  } else if (current >= 2) {
     hadData = false
   }
 
@@ -221,6 +223,39 @@ export default function Show() {
     }
   }
 
+  let [progressTime, setProgressTime] = useState('')
+  let [generatingText, setGeneratingText] = useState('Generating.')
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      let lastTime = ''
+      if (DataService.filterData.length > 0) {
+        let lastData = DataService.filterData[DataService.filterData.length - 1]
+        lastTime = lastData.time
+        setProgressTime(TimeUtils.timeDifference(lastTime) + ' / unknown')
+      } else {
+        setProgressTime('')
+      }
+    }, 50)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      if (generatingText.length > 13) {
+        setGeneratingText('Generating.')
+      } else {
+        setGeneratingText(generatingText + '.')
+      }
+    }, 200)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [generatingText])
+
+
   return (
     <main className={styles.Show}>
       <div className={clsx(styles.scroll, styles.leftBar)}>
@@ -287,9 +322,7 @@ export default function Show() {
             }
           </div>
           {
-            !hadData && <div className={styles.empty} style={{
-              display: hadData ? 'none' : 'flex'
-            }}>
+            !hadData && <div className={styles.empty}>
                 <span className={styles.title}>
                   <Icon>outlined_takeout_dining</Icon>
                   <span>No Data</span>
@@ -523,6 +556,18 @@ export default function Show() {
               </div>
             }
           </div>
+          {
+            <div className={styles.progressing}>
+              <md-linear-progress indeterminate={true} style={{
+                width: '100%',
+              }}/>
+              <div className={styles.info}>
+                <span>{generatingText}</span>
+                <span className={styles.space}></span>
+                <span>{progressTime}</span>
+              </div>
+            </div>
+          }
           <div className={styles.control} style={{
             // display: current != 1 ? 'flex' : 'none'
           }}>

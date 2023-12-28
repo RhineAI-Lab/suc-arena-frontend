@@ -228,6 +228,30 @@
       }
     }
 
+    .progressing {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+      max-width: 1050px;
+      margin: 50px 0 80px 0;
+
+      --md-linear-progress-track-height: 6px;
+      --md-linear-progress-active-indicator-height: 6px;
+
+      .info {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 0 4px;
+        margin-top: 12px;
+
+        font-size: 16px;
+        color: #222222;
+      }
+    }
+
     .main {
       max-width: 1020px;
       min-height: 100px;
