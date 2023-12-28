@@ -4,16 +4,18 @@ import Api from "@/app/api/api";
 import {simulateData} from "@/app/service/simulate-data";
 import {LogType} from "@/app/service/class/log-enum";
 import {StageType} from "@/app/service/class/Stage";
+import Round from "@/app/service/class/Round";
 
 export default class DataService {
 
   static data: {
-    rounds: any[][],
-    final: any[][],
+    rounds: Round[],
     finished: boolean
   } = proxy({
-    rounds: [],
-    final: [],
+    rounds: [
+      Round.OverviewRound(),
+      Round.StartRound(),
+    ],
     finished: false,
   })
   static sourceData: any[] = proxy([])
@@ -115,7 +117,7 @@ export default class DataService {
       if (type != undefined) {
         if (type === LogType.OpenSpeechInRound) {
           if (this.lastActionStage != StageType.ANNOUNCEMENT) {
-            this.lastRound().push([])
+            this.data.rounds.push(Round.NormalRound(content))
             this.lastActionStage = StageType.ANNOUNCEMENT
           }
           if (content.trim().length == 0) content = 'No Data.'
@@ -128,16 +130,16 @@ export default class DataService {
           })
         } else if (type === LogType.SettlementStage) {
           if (this.lastActionStage != StageType.SETTLEMENT) {
-            this.data.final.push([[]])
+            this.data.rounds.push(Round.NormalRound(content))
             this.lastActionStage = StageType.SETTLEMENT
           }
         } else if (type === LogType.ActionStage) {
           if (content.indexOf('Turn') == 0) {
-            this.data.rounds.push([])
+            this.data.rounds.push(Round.NormalRound(content))
           } else {
             // 检查当前阶段
             if (content != this.lastActionStage) {
-              this.lastRound().push([])
+              this.data.rounds.push(Round.NormalRound(content))
             }
           }
           this.lastActionStage = content
@@ -173,10 +175,10 @@ export default class DataService {
         } else if (type === LogType.BeliefUpdate) {
           let stage = this.lastStage()
           let ele = undefined
-          let i = stage.length - 1
+          let i = stage.size() - 1
           for (; i >= 0; i--) {
-            if (stage[i]['type'] === LogType.BeliefUpdate && stage[i]['source'] === item['source_character']) {
-              ele = stage[i]
+            if (stage.get(i)['type'] === LogType.BeliefUpdate && stage.get(i)['source'] === item['source_character']) {
+              ele = stage.get(i)
               break
             }
           }
@@ -195,16 +197,16 @@ export default class DataService {
             ele.id = item['id']
             ele.time = item['time']
             ele.content.push({target: item['target_character'], score: content})
-            const element = stage.splice(i, 1)[0]
+            const element = stage.messages.splice(i, 1)[0]
             stage.push(element)
           }
         } else if (type === LogType.RelationUpdate) {
           let stage = this.lastStage()
           let ele = undefined
-          let i = stage.length - 1
+          let i = stage.size() - 1
           for (; i >= 0; i--) {
-            if (stage[i]['type'] === LogType.RelationUpdate) {
-              ele = stage[i]
+            if (stage.get(i)['type'] === LogType.RelationUpdate) {
+              ele = stage.get(i)
               break
             }
           }
@@ -275,14 +277,14 @@ export default class DataService {
       }
       this.usedIndex = i
     }
-    console.log('Analysis finished', JSON.parse(JSON.stringify(this.data.rounds)), JSON.parse(JSON.stringify(this.data.final)))
+    console.log('Analysis finished', JSON.parse(JSON.stringify(this.data.rounds)))
   }
 
   static moveRelationUpdateBack() {
     let stage = this.lastStage()
-    for (let i = 0; i < stage.length; i++) {
-      if (stage[i].type === LogType.RelationUpdate) {
-        const element = stage.splice(i, 1)[0]
+    for (let i = 0; i < stage.size(); i++) {
+      if (stage.get(i).type === LogType.RelationUpdate) {
+        const element = stage.messages.splice(i, 1)[0]
         stage.push(element)
       }
     }
@@ -293,11 +295,8 @@ export default class DataService {
   }
 
   static lastStage() {
-    if (this.data.final.length > 0) {
-      return this.data.final[0][this.data.final.length - 1]
-    }
-    let round = this.lastRound()
-    return round[round.length - 1]
+    let stages = this.lastRound().stages
+    return stages[stages.length - 1]
   }
 
 }

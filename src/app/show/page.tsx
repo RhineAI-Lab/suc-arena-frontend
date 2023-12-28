@@ -3,11 +3,8 @@
 import React, {useEffect, useRef, useState} from "react";
 import styles from "./page.module.scss";
 import {useRouter} from "next/navigation";
-import Image from "next/image";
 import {clsx} from "clsx";
 import Icon from "@/components/Icon/Icon";
-import Api from "@/app/api/api";
-import CreateConfig from "@/app/api/class/create-config";
 import Start from "@/components/show/main/Start/Start";
 import Overview from "@/components/show/main/Overview/Overview";
 import DataService from "@/app/service/data-service";
