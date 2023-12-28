@@ -7,9 +7,14 @@ import {LogType} from "@/app/service/class/log-enum";
 
 export default class DataService {
 
-  static data: {rounds: any[][], final: any[][]} = proxy({
+  static data: {
+    rounds: any[][],
+    final: any[][],
+    finished: boolean
+  } = proxy({
     rounds: [],
-    final: []
+    final: [],
+    finished: false,
   })
   static sourceData: any[] = proxy([])
   static filterData: any[] = proxy([])

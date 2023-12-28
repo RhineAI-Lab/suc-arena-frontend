@@ -104,6 +104,7 @@ export default function Show() {
   } else if (current >= 2) {
     hadData = false
   }
+  let isGenerating = current >= 2 && data.rounds.length == current - 1 && data.rounds[current - 2].length == stage + 1
 
   let cover = isFinal ? covers[6] : (current <= 1 ? covers[current] : covers[stage+2])
 
@@ -557,7 +558,7 @@ export default function Show() {
             }
           </div>
           {
-            <div className={styles.progressing}>
+            isGenerating && <div className={styles.progressing}>
               <md-linear-progress indeterminate={true} style={{
                 width: '100%',
               }}/>
