@@ -13,6 +13,8 @@ import {LogType} from "@/app/service/class/log-enum";
 import RelationTable from "@/components/RelationTable/RelationTable";
 import '@material/web/progress/linear-progress'
 import TimeUtils from "@/utils/TimeUtils";
+import {covers} from "@/app/service/covers-information";
+import Stage from "@/app/service/class/Stage";
 
 export default function Show() {
   const router = useRouter()
@@ -35,12 +37,21 @@ export default function Show() {
     }
   }, [])
 
-  const [current, setCurrent] = useState(1)
-  const [stage, setStage] = useState(0)
 
+  // 页面主要状态管理
+  const [roundIndex, setRoundIndex] = useState(1)
+  const [stageIndex, setStageIndex] = useState(0)
+
+  // 数据映射
   const data = useSnapshot(DataService.data)
+  const round = data.rounds[roundIndex]
+  const stage = round.stages[stageIndex]
 
-  let rounds: any[] = [
+  // 封面信息
+  const cover = covers[stage.coverId]
+
+  // 抽屉信息
+  let drawer: any[] = [
     {
       name: 'Overview',
       icon: 'round_crop_original',
@@ -52,175 +63,29 @@ export default function Show() {
     },
   ]
 
-  let covers = [
-    {
-      background: '/background/4.jpg',
-      title: 'Succession Arena',
-      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
-    },
-    {
-      background: '/background/5.jpg',
-      title: 'Start A Session',
-      description: 'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.'
-    },
-    {
-      background: '/background/2.jpg',
-      title: 'Confrontation Stage',
-      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
-    },
-    {
-      background: '/background/8.png',
-      title: 'Cooperation Stage',
-      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
-    },
-    {
-      background: '/background/9.jpg',
-      title: 'Announcement Stage',
-      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
-    },
-    {
-      background: '/background/12.jpg',
-      title: 'Update Stage',
-      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
-    },
-    {
-      background: '/background/11.jpg',
-      title: 'Settlement',
-      description: 'Example Session For UI Design. Only has one round now. Other descriptions...'
-    },
-  ]
+  // 装饰组件显示控制
+  const needEmpty = round.isRoundOrSettlement() && stageIndex > round.stages.length - 1
+  const needProgress = round.isRoundOrSettlement()
+    && roundIndex == data.rounds.length - 1
+    && stageIndex == round.stages.length - 1
 
-  let hadData = true
-  let currentData = []
-  let hadFinal = data.final.length > 0
-  let isFinal = current > data.rounds.length + 1
-  if (isFinal) {
-    currentData = data.final[0][0]
-  } else if (current >= 2 && data.rounds.length > current - 2 && data.rounds[current - 2].length > stage) {
-    currentData = data.rounds[current - 2][stage]
-  } else if (current >= 2) {
-    hadData = false
-  }
-  let isGenerating = current >= 2 && data.rounds.length == current - 1 && data.rounds[current - 2].length == stage + 1
 
-  let cover = isFinal ? covers[6] : (current <= 1 ? covers[current] : covers[stage+2])
-
-  let normalStages = [
-    '对抗阶段',
-    '合作阶段',
-    '宣言阶段',
-    '更新阶段',
-  ]
-  let finalStages = [
-    '预测阶段',
-    '宣言阶段',
-    '投票阶段',
-    '对外投票阶段',
-  ]
-  let stages = isFinal ? finalStages : normalStages
-  let sl = stages.length
-
-  for (let i = 0; i < data.rounds.length; i++) {
-    if (i < data.rounds.length - 1 || data.final.length > 0) {
-      rounds.push({
-        name: 'Round ' + (i + 1),
-        icon: 'outlined_people',
-        iconSize: 21,
-        progressIcon: 'outlined_check_circle',
-        progressIconSize: 21,
-      })
-    } else {
-      rounds.push({
-        name: 'Round ' + (i + 1),
-        icon: 'outlined_people',
-        iconSize: 21,
-        progress: data.rounds[i].length + '/' + sl,
-      })
-    }
-  }
-
-  if (data.final.length > 0) {
-    rounds.push({
-      name: 'Settlement',
-      icon: 'outlined_event_available',
-      iconSize: 21,
-    })
-  }
-
+  // 翻页效果及提示文本
   function getLastText(): string {
-    let currentRoundName = isFinal ? 'Settlement' : 'Round ' + (current - 1)
-    let lastRoundName = 'Round ' + (current - 2)
-
-    if (current == 0) return 'No more information'
-    if (current == 1) return 'Overview'
-    if (current == 2 && stage == 0) return 'Start'
-    if (stage == 0) return lastRoundName + ' - ' + normalStages[sl - 1]
-    if (stage < sl) {
-      return currentRoundName + ' - ' + normalStages[stage - 1]
-    }
     return 'No more information'
   }
 
   function getNextText(): string {
-    let currentRoundName = isFinal ? 'Settlement' : 'Round ' + (current - 1)
-    let nextRoundName = current > data.rounds.length ? 'Settlement' : 'Round ' + current
-
-    if (current == 0) return 'Start'
-    if (current == 1) {
-      if (data.rounds.length > 0) {
-        return 'Round ' + '1' + ' - ' + stages[0]
-      } else {
-        return 'No more information'
-      }
-    }
-    if (stage < sl - 1) {
-      return currentRoundName + ' - ' + stages[stage + 1]
-    }
-    if (stage == sl - 1 && data.rounds.length >= current) {
-      return nextRoundName + ' - ' + stages[0]
-    }
-    if (data.final.length > 0 && !isFinal) {
-      return nextRoundName + ' - ' + finalStages[0]
-    }
     return 'No more information'
   }
 
   function lastPage() {
-    if (current == 1) {
-      setCurrent(0)
-      setStage(0)
-    } else if (current == 2 && stage == 0) {
-      setCurrent(1)
-      setStage(0)
-    } else if (stage == 0) {
-      setCurrent(current - 1)
-      setStage(sl - 1)
-    } else if (stage < sl) {
-      setCurrent(current)
-      setStage(stage - 1)
-    }
   }
 
   function nextPage() {
-    let rl = data.rounds.length
-    if (data.final.length > 0) {
-      rl += 1
-    }
-    if (current == 0) {
-      setCurrent(1)
-      setStage(0)
-    } else if (current == 1 && rl > 0) {
-      setCurrent(2)
-      setStage(0)
-    } else if (stage < sl - 1) {
-      setCurrent(current)
-      setStage(stage + 1)
-    } else if (stage == sl - 1 && rl >= current) {
-      setCurrent(current + 1)
-      setStage(0)
-    }
   }
 
+  // 进度条组件持续效果
   let [progressTime, setProgressTime] = useState('')
   let [generatingText, setGeneratingText] = useState('Generating.')
 
@@ -263,13 +128,13 @@ export default function Show() {
         </div>
         <div className={styles.subtitle}>Process Menu</div>
         {
-          rounds.map((item, index) => {
+          drawer.map((item, index) => {
             return <div
-              className={clsx(styles.selectable, index == current ? styles.selectableSelected : '', styles.item)}
+              className={clsx(styles.selectable, index == roundIndex ? styles.selectableSelected : '', styles.item)}
               key={index}
               onClick={e => {
-                setCurrent(index)
-                setStage(0)
+                setRoundIndex(index)
+                setStageIndex(0)
               }}
             >
               <Icon size={item.iconSize + 'px'}>{item.icon}</Icon>
@@ -298,20 +163,20 @@ export default function Show() {
           <div className={styles.img}>
             <img src={cover.background} alt=''/>
             <div className={styles.content}>
-              <h1 className={clsx(styles.title, stage == 1 && current > 1 ? styles.textShadow : '')}>{cover.title}</h1>
+              <h1 className={clsx(styles.title, stageIndex == 1 && roundIndex > 1 ? styles.textShadow : '')}>{cover.title}</h1>
               <div className={styles.session}>{cover.description}</div>
             </div>
           </div>
           <div className={styles.topBar} style={{
-            display: (current >= 2) ? 'flex' : 'none'
+            display: (round.stageNames.length > 1) ? 'flex' : 'none'
           }}>
             {
-              stages.map((item, index) => {
+              round.stageNames.map((item: string, index: number) => {
                 return <div
-                  className={clsx(styles.selectable, index == stage ? styles.selectableSelected : '', styles.item)}
+                  className={clsx(styles.selectable, index == stageIndex ? styles.selectableSelected : '', styles.item)}
                   key={index}
                   onClick={e => {
-                    setStage(index)
+                    setStageIndex(index)
                   }}
                 >
                   {item}
@@ -320,7 +185,7 @@ export default function Show() {
             }
           </div>
           {
-            !hadData && <div className={styles.empty}>
+            needEmpty && <div className={styles.empty}>
                 <span className={styles.title}>
                   <Icon>outlined_takeout_dining</Icon>
                   <span>No Data</span>
@@ -329,12 +194,12 @@ export default function Show() {
               </div>
           }
           <div className={styles.main} style={{
-            display: hadData ? 'block' : 'none'
+            display: !needEmpty ? 'block' : 'none'
           }}>
-            {current == 0 && <Overview/>}
-            {current == 1 && <Start/>}
+            {roundIndex == 0 && <Overview/>}
+            {roundIndex == 1 && <Start/>}
             {
-              currentData.map((item: any, index: number) => {
+              stage.messages.map((item: any, index: number) => {
                 if (item.type == LogType.DialogueContent) {
                   return <div className={styles.message} key={index}>
                     <div className={styles.info}>
@@ -549,13 +414,13 @@ export default function Show() {
               })
             }
             {
-              current >= 2 && <div className={styles.hover}>
+              roundIndex >= 2 && <div className={styles.hover}>
 
               </div>
             }
           </div>
           {
-            isGenerating && <div className={styles.progressing}>
+            needProgress && <div className={styles.progressing}>
               <md-linear-progress indeterminate={true} style={{
                 width: '100%',
               }}/>
@@ -567,7 +432,7 @@ export default function Show() {
             </div>
           }
           <div className={styles.control} style={{
-            // display: current != 1 ? 'flex' : 'none'
+            // display: roundIndex != 1 ? 'flex' : 'none'
           }}>
             <div onClick={e => {
               lastPage()

@@ -3,7 +3,7 @@ export default class Stage {
   constructor(
     public messages: any[] = [],
     public type: StageType = StageType.UNKNOWN,
-    public name: string = '',
+    public coverId: number = 0,
   ) {
   }
 
