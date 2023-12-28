@@ -3,6 +3,7 @@
 import React, {DetailedHTMLProps, HTMLAttributes, useEffect, useRef} from "react";
 import styles from "./RelationTable.module.scss";
 import {clsx} from "clsx";
+import Icon from "@/components/Icon/Icon";
 
 export default function RelationTable (props: RelationTableProps): JSX.Element {
 
@@ -128,18 +129,20 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
           {
             data.map((line, index) => {
               return line.map((item, index2) => {
-                return <div key={index + '-' + index2} className={clsx(styles.item, item != -1 ? styles.useful : '')} style={{
+                let useful = item != -1 && index != index2
+                if (index == index2) item = -3
+                return <div key={index + '-' + index2} className={clsx(styles.item, useful ? styles.useful : '')} style={{
                   top: index * size + 'px',
                   left: index2 * size + 'px',
                   width: size + 'px',
                   height: size + 'px',
                   lineHeight: size + 'px',
                   backgroundColor: color(item),
-                  color: item == -1 ? '#bbbbbb' : '#000000',
+                  color: !useful ? '#bbbbbb' : '#000000',
                 }} onMouseEnter={e => {
                   setHoverX(index2)
                   setHoverY(index)
-                }}>{item == -1 ? 'NaN' : item}</div>
+                }}>{index == index2 ? 'NaN' : (item == -1 ? 'None' : item)}</div>
               })
             })
           }
