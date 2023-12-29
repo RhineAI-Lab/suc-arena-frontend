@@ -46,11 +46,11 @@ export default class Round {
     )
   }
 
-  static SettlementRound(): Round {
+  static SettlementRound(name: string): Round {
     return new Round(
       [],
       RoundType.Settlement,
-      'Settlement',
+      name,
       ['预测阶段', '宣言阶段', '投票阶段', '对外投票阶段']
     )
   }

@@ -1,8 +1,8 @@
 
 
 export enum SessionState {
-  INITIAL = 'INITIAL',
-  GENERATING = 'GENERATING',
-  FINISHED = 'FINISHED',
+  Initial = 'Initial',
+  Generating = 'Generating',
+  Finished = 'Finished',
 }
 

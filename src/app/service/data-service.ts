@@ -3,20 +3,20 @@ import {SessionState} from "@/app/service/class/session-state";
 import Api from "@/app/api/api";
 import {simulateData} from "@/app/service/simulate-data";
 import {LogType} from "@/app/service/class/log-enum";
-import {StageType} from "@/app/service/class/Stage";
+import Stage, {StageType} from "@/app/service/class/Stage";
 import Round from "@/app/service/class/Round";
 
 export default class DataService {
 
   static data: {
     rounds: Round[],
-    finished: boolean
+    state: SessionState
   } = proxy({
     rounds: [
       Round.OverviewRound(),
       Round.StartRound(),
     ],
-    finished: false,
+    state: SessionState.Initial,
   })
   static sourceData: any[] = proxy([])
   static filterData: any[] = proxy([])
@@ -114,166 +114,158 @@ export default class DataService {
       let item = this.sourceData[i]
       let type = item['log_type']
       let content = item['log_content']
-      if (type != undefined) {
-        if (type === LogType.OpenSpeechInRound) {
-          if (this.lastActionStage != StageType.ANNOUNCEMENT) {
-            this.data.rounds.push(Round.NormalRound(content))
-            this.lastActionStage = StageType.ANNOUNCEMENT
-          }
-          if (content.trim().length == 0) content = 'No Data.'
-          this.lastStage().push({
-            type: LogType.ConclusionOfEnvironment,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            content: content,
-          })
-        } else if (type === LogType.SettlementStage) {
-          if (this.lastActionStage != StageType.SETTLEMENT) {
-            this.data.rounds.push(Round.NormalRound(content))
-            this.lastActionStage = StageType.SETTLEMENT
-          }
-        } else if (type === LogType.ActionStage) {
-          if (content.indexOf('Turn') == 0) {
-            this.data.rounds.push(Round.NormalRound(content))
-          } else {
-            // 检查当前阶段
-            if (content != this.lastActionStage) {
-              this.data.rounds.push(Round.NormalRound(content))
-            }
-          }
-          this.lastActionStage = content
-        } else if (type === LogType.DialogueContent) {
-          if (content.trim().length == 0) content = 'No Data.'
-          this.lastStage().push({
-            type: LogType.DialogueContent,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            target: item['target_character'],
-            content: content,
-          })
-        } else if (type === LogType.ConclusionOfEnvironment) {
-          if (content.trim().length == 0) content = 'No Data.'
-          this.lastStage().push({
-            type: LogType.ConclusionOfEnvironment,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            content: content,
-          })
-        } else if (type === LogType.ReflectionResult) {
-          if (content.trim().length == 0) content = 'No Data.'
-          this.lastStage().push({
-            type: LogType.ReflectionResult,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            content: content,
-          })
-          this.moveRelationUpdateBack()
-        } else if (type === LogType.BeliefUpdate) {
-          let stage = this.lastStage()
-          let ele = undefined
-          let i = stage.size() - 1
-          for (; i >= 0; i--) {
-            if (stage.get(i)['type'] === LogType.BeliefUpdate && stage.get(i)['source'] === item['source_character']) {
-              ele = stage.get(i)
-              break
-            }
-          }
-          if (ele == undefined) {
-            ele = {
-              type: LogType.BeliefUpdate,
-              id: item['id'],
-              time: item['time'],
-              source: item['source_character'],
-              content: [
-                {target: item['target_character'], score: content},
-              ]
-            }
-            stage.push(ele)
-          } else {
-            ele.id = item['id']
-            ele.time = item['time']
-            ele.content.push({target: item['target_character'], score: content})
-            const element = stage.messages.splice(i, 1)[0]
-            stage.push(element)
-          }
-        } else if (type === LogType.RelationUpdate) {
-          let stage = this.lastStage()
-          let ele = undefined
-          let i = stage.size() - 1
-          for (; i >= 0; i--) {
-            if (stage.get(i)['type'] === LogType.RelationUpdate) {
-              ele = stage.get(i)
-              break
-            }
-          }
-          if (ele == undefined) {
-            ele = {
-              type: LogType.RelationUpdate,
-              id: item['id'],
-              time: item['time'],
-              characters : [item['source_character']],
-              content: [
-                {source: item['source_character'], target: item['target_character'], score: content},
-              ]
-            }
-            if (ele.characters.indexOf(item['target_character']) == -1) {
-              ele.characters.push(item['target_character'])
-            }
-            stage.push(ele)
-          } else {
-            ele.id = item['id']
-            ele.time = item['time']
-            ele.content.push({source: item['source_character'], target: item['target_character'], score: content})
-            if (ele.characters.indexOf(item['source_character']) == -1) {
-              ele.characters.push(item['source_character'])
-            }
-            if (ele.characters.indexOf(item['target_character']) == -1) {
-              ele.characters.push(item['target_character'])
-            }
-            this.moveRelationUpdateBack()
-          }
-        } else if (type === LogType.VotingExceptSelf) {
-          if (content.trim().length == 0) content = 'No Data.'
-          this.lastStage().push({
-            type: LogType.VotingExceptSelf,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            target: item['target_character'],
-            content: content,
-          })
-        } else if (type === LogType.Voting) {
-          if (content.trim().length == 0) content = 'No Data.'
-          this.lastStage().push({
-            type: LogType.Voting,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            target: item['target_character'],
-            content: content,
-          })
-        } else if (type === LogType.OpenSpeech) {
-          if (content.trim().length == 0) content = 'No Data.'
-          this.lastStage().push({
-            type: LogType.OpenSpeech,
-            id: item['id'],
-            time: item['time'],
-            source: item['source_character'],
-            content: content,
-          })
-        } else if (type === LogType.WinnerAnnouncement) {
-          if (content.trim().length == 0) content = 'No Data.'
-          this.lastStage().push({
-            type: LogType.WinnerAnnouncement,
-            id: item['id'],
-            time: item['time'],
-            content: content,
-          })
+      if (type == undefined) {
+      } else if (type === LogType.TurnChange) {
+        let isSettlement = content.indexOf('Settlement') == 0
+        if (isSettlement) {
+          this.data.rounds.push(Round.SettlementRound(content))
+        } else {
+          this.data.rounds.push(Round.NormalRound(content))
         }
+      } else if (type === LogType.TurnEnd) {
+        this.lastRound().finished = true
+      } else if (type === LogType.StageChange) {
+        let stage = Stage.create(content)
+        this.lastRound().stages.push(stage)
+      } else if (type === LogType.OpenSpeechInRound) {
+        if (content.trim().length == 0) content = 'No Data.'
+        this.lastStage().push({
+          type: LogType.ConclusionOfEnvironment,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          content: content,
+        })
+      } else if (type === LogType.DialogueContent) {
+        if (content.trim().length == 0) content = 'No Data.'
+        this.lastStage().push({
+          type: LogType.DialogueContent,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          target: item['target_character'],
+          content: content,
+        })
+      } else if (type === LogType.ConclusionOfEnvironment) {
+        if (content.trim().length == 0) content = 'No Data.'
+        this.lastStage().push({
+          type: LogType.ConclusionOfEnvironment,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          content: content,
+        })
+      } else if (type === LogType.ReflectionResult) {
+        if (content.trim().length == 0) content = 'No Data.'
+        this.lastStage().push({
+          type: LogType.ReflectionResult,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          content: content,
+        })
+        this.moveRelationUpdateBack()
+      } else if (type === LogType.BeliefUpdate) {
+        let stage = this.lastStage()
+        let ele = undefined
+        let i = stage.size() - 1
+        for (; i >= 0; i--) {
+          if (stage.get(i)['type'] === LogType.BeliefUpdate && stage.get(i)['source'] === item['source_character']) {
+            ele = stage.get(i)
+            break
+          }
+        }
+        if (ele == undefined) {
+          ele = {
+            type: LogType.BeliefUpdate,
+            id: item['id'],
+            time: item['time'],
+            source: item['source_character'],
+            content: [
+              {target: item['target_character'], score: content},
+            ]
+          }
+          stage.push(ele)
+        } else {
+          ele.id = item['id']
+          ele.time = item['time']
+          ele.content.push({target: item['target_character'], score: content})
+          const element = stage.messages.splice(i, 1)[0]
+          stage.push(element)
+        }
+      } else if (type === LogType.RelationUpdate) {
+        let stage = this.lastStage()
+        let ele = undefined
+        let i = stage.size() - 1
+        for (; i >= 0; i--) {
+          if (stage.get(i)['type'] === LogType.RelationUpdate) {
+            ele = stage.get(i)
+            break
+          }
+        }
+        if (ele == undefined) {
+          ele = {
+            type: LogType.RelationUpdate,
+            id: item['id'],
+            time: item['time'],
+            characters : [item['source_character']],
+            content: [
+              {source: item['source_character'], target: item['target_character'], score: content},
+            ]
+          }
+          if (ele.characters.indexOf(item['target_character']) == -1) {
+            ele.characters.push(item['target_character'])
+          }
+          stage.push(ele)
+        } else {
+          ele.id = item['id']
+          ele.time = item['time']
+          ele.content.push({source: item['source_character'], target: item['target_character'], score: content})
+          if (ele.characters.indexOf(item['source_character']) == -1) {
+            ele.characters.push(item['source_character'])
+          }
+          if (ele.characters.indexOf(item['target_character']) == -1) {
+            ele.characters.push(item['target_character'])
+          }
+          this.moveRelationUpdateBack()
+        }
+      } else if (type === LogType.VotingExceptSelf) {
+        if (content.trim().length == 0) content = 'No Data.'
+        this.lastStage().push({
+          type: LogType.VotingExceptSelf,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          target: item['target_character'],
+          content: content,
+        })
+      } else if (type === LogType.Voting) {
+        if (content.trim().length == 0) content = 'No Data.'
+        this.lastStage().push({
+          type: LogType.Voting,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          target: item['target_character'],
+          content: content,
+        })
+      } else if (type === LogType.OpenSpeech) {
+        if (content.trim().length == 0) content = 'No Data.'
+        this.lastStage().push({
+          type: LogType.OpenSpeech,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          content: content,
+        })
+      } else if (type === LogType.WinnerAnnouncement) {
+        if (content.trim().length == 0) content = 'No Data.'
+        this.lastStage().push({
+          type: LogType.WinnerAnnouncement,
+          id: item['id'],
+          time: item['time'],
+          content: content,
+        })
       }
       this.usedIndex = i
     }
