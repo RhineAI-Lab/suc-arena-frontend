@@ -92,13 +92,23 @@ export default function Show() {
   // 装饰组件显示控制
   const needEmpty = round.isRoundOrSettlement() && stageIndex > round.stages.length - 1
   const needProgress = round.isRoundOrSettlement()
+    && !round.finished
     && roundIndex == data.rounds.length - 1
     && stageIndex == round.stages.length - 1
 
 
   // 翻页效果及提示文本
   function getLastText(): string {
-    return 'No more information'
+    if (stageIndex == 0) {
+      if (roundIndex == 0) {
+        return 'No more information'
+      } else {
+        let lastRound = data.rounds[roundIndex - 1]
+        return lastRound.getPageName(lastRound.stages.length - 1)
+      }
+    } else {
+      return round.getPageName(stageIndex - 1)
+    }
   }
 
   function getNextText(): string {

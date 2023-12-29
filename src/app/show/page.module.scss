@@ -311,6 +311,7 @@
 
             span {
               margin: 0 6px;
+              transition: all 0.12s ease-in-out;
             }
 
             .betweenText {
@@ -327,6 +328,14 @@
             }
           }
 
+          .between:hover {
+            word-spacing: 3px;
+
+            span:nth-child(2) {
+              margin: 0 8px;
+            }
+          }
+
           .tag {
             display: flex;
             align-items: center;
@@ -337,10 +346,15 @@
             font-size: 16px;
             color: #0b2959;
             border: 1px solid #0b2959;
+            transition: all 0.12s ease-in-out;
 
             span {
               margin: 0 6px;
             }
+          }
+
+          .tag:hover {
+            word-spacing: 3px;
           }
 
           .to {
