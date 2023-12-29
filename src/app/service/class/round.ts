@@ -1,4 +1,5 @@
-import Stage, {StageType} from "@/app/service/class/Stage";
+import Stage, {StageType} from "@/app/service/class/stage";
+import StageConfig from "@/app/service/class/stage-config";
 
 export default class Round {
 
@@ -7,13 +8,13 @@ export default class Round {
     public stages: Stage[] = [],
     public type: RoundType = RoundType.Unknown,
     public name: string = 'Unknown',
-    public stageNames: string[] = [''],
+    public stageConfigs: StageConfig[] = [],
   ) {
   }
 
   getPageName(index: number): string {
-    if (index < this.stageNames.length) {
-      let name = this.stageNames[index]
+    if (index < this.stageConfigs.length) {
+      let name = this.stageConfigs[index].name
       if (name.length > 0) {
         return this.name + ' - ' + name
       }
@@ -22,19 +23,29 @@ export default class Round {
   }
 
   maxStageNumber() {
-    return this.stageNames.length
+    return this.stageConfigs.length
   }
 
   isRoundOrSettlement(): boolean {
     return this.type === RoundType.Normal || this.type === RoundType.Settlement
   }
 
-  static OverviewRound(): Round {
-    return new Round([new Stage([], StageType.Overview)], RoundType.Overview, 'Overview')
+  static StartRound(): Round {
+    return new Round(
+      [new Stage([], StageType.Start)],
+      RoundType.Start,
+      'Start',
+      [StageConfig.Start()]
+    )
   }
 
-  static StartRound(): Round {
-    return new Round([new Stage([], StageType.Start)], RoundType.Start, 'Start')
+  static OverviewRound(): Round {
+    return new Round(
+      [new Stage([], StageType.Overview)],
+      RoundType.Overview,
+      'Overview',
+      [StageConfig.Overview()]
+    )
   }
 
   static NormalRound(name: string): Round {
@@ -42,7 +53,12 @@ export default class Round {
       [],
       RoundType.Normal,
       name,
-      ['对抗阶段', '合作阶段', '宣言阶段', '更新阶段']
+      [
+        StageConfig.Confrontation(),
+        StageConfig.Cooperation(),
+        StageConfig.Announcement(),
+        StageConfig.Update(),
+      ]
     )
   }
 
@@ -51,7 +67,12 @@ export default class Round {
       [],
       RoundType.Settlement,
       name,
-      ['预测阶段', '宣言阶段', '投票阶段', '对外投票阶段']
+      [
+        StageConfig.Guess(),
+        StageConfig.Announcement(),
+        StageConfig.Vote(),
+        StageConfig.VoteOthers(),
+      ]
     )
   }
 }

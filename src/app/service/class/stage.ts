@@ -3,7 +3,6 @@ export default class Stage {
   constructor(
     public messages: any[] = [],
     public type: StageType = StageType.Unknown,
-    public coverId: number = 0,
   ) {
   }
 
@@ -23,22 +22,22 @@ export default class Stage {
     type = type.trim().split(' ').map((item: string) => {
       return item[0].toUpperCase() + item.substring(1)
     }).join(' ')
-    let stage = type == StageType.Introduce ? new Stage([], StageType.Introduce, 1)
-      : type == StageType.Background ? new Stage([], StageType.Background, 2)
-      : type == StageType.Start ? new Stage([], StageType.Start, 3)
-      : type == StageType.Overview ? new Stage([], StageType.Overview, 4)
-      : type == StageType.Confrontation ? new Stage([], StageType.Confrontation, 5)
-      : type == StageType.Cooperation ? new Stage([], StageType.Cooperation, 6)
-      : type == StageType.Announcement ? new Stage([], StageType.Announcement, 7)
-      : type == StageType.Update ? new Stage([], StageType.Update, 8)
-      : type == StageType.Guess ? new Stage([], StageType.Guess, 9)
-      : type == StageType.OpenSpeech ? new Stage([], StageType.OpenSpeech, 10)
-      : type == StageType.Vote ? new Stage([], StageType.Vote, 11)
-      : type == StageType.VoteOthers ? new Stage([], StageType.VoteOthers, 12)
+    let stage = type == StageType.Introduce ? new Stage([], StageType.Introduce)
+      : type == StageType.Background ? new Stage([], StageType.Background)
+      : type == StageType.Start ? new Stage([], StageType.Start)
+      : type == StageType.Overview ? new Stage([], StageType.Overview)
+      : type == StageType.Confrontation ? new Stage([], StageType.Confrontation)
+      : type == StageType.Cooperation ? new Stage([], StageType.Cooperation)
+      : type == StageType.Announcement ? new Stage([], StageType.Announcement)
+      : type == StageType.Update ? new Stage([], StageType.Update)
+      : type == StageType.Guess ? new Stage([], StageType.Guess)
+      : type == StageType.OpenSpeech ? new Stage([], StageType.OpenSpeech)
+      : type == StageType.Vote ? new Stage([], StageType.Vote)
+      : type == StageType.VoteOthers ? new Stage([], StageType.VoteOthers)
       : undefined
     if (stage) return stage
     console.warn('Unknown stage type: ' + type)
-    return new Stage([], StageType.Unknown, 0)
+    return new Stage([], StageType.Unknown)
   }
 }
 

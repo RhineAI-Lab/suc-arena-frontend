@@ -13,8 +13,8 @@ import {isDialogType, isSpeechType, LogType} from "@/app/service/class/log-enum"
 import RelationTable from "@/components/RelationTable/RelationTable";
 import '@material/web/progress/linear-progress'
 import TimeUtils from "@/utils/TimeUtils";
-import {covers} from "@/app/service/covers-information";
-import Round, {RoundType} from "@/app/service/class/Round";
+import Round, {RoundType} from "@/app/service/class/round";
+import StageConfig from "@/app/service/class/stage-config";
 
 export default function Show() {
   const router = useRouter()
@@ -48,7 +48,7 @@ export default function Show() {
   const stage = round.stages[stageIndex]
 
   // 封面信息
-  const cover = covers[0]
+  const config = round.stageConfigs[stageIndex]
 
   // 抽屉信息
   let drawer: any[] = []
@@ -83,7 +83,7 @@ export default function Show() {
         de.progressIcon = 'outlined_check_circle'
         de.progressIconSize = 21
       } else {
-        de.progress = round.stages.length + '/' + round.stageNames.length
+        de.progress = round.stages.length + '/' + round.stageConfigs.length
       }
       drawer.push(de)
     }
@@ -112,13 +112,41 @@ export default function Show() {
   }
 
   function getNextText(): string {
-    return 'No more information'
+    if (stageIndex == round.stageConfigs.length - 1) {
+      if (roundIndex == data.rounds.length - 1) {
+        return 'No more information'
+      } else {
+        let nextRound = data.rounds[roundIndex + 1]
+        return nextRound.getPageName(0)
+      }
+    }
+    return round.getPageName(stageIndex + 1)
   }
 
   function lastPage() {
+    if (stageIndex == 0) {
+      if (roundIndex == 0) {
+        return
+      } else {
+        setRoundIndex(roundIndex - 1)
+        setStageIndex(data.rounds[roundIndex - 1].stages.length - 1)
+      }
+    } else {
+      setStageIndex(stageIndex - 1)
+    }
   }
 
   function nextPage() {
+    if (stageIndex == round.stageConfigs.length - 1) {
+      if (roundIndex == data.rounds.length - 1) {
+        return
+      } else {
+        setRoundIndex(roundIndex + 1)
+        setStageIndex(0)
+      }
+    } else {
+      setStageIndex(stageIndex + 1)
+    }
   }
 
   // 进度条组件持续效果
@@ -197,17 +225,17 @@ export default function Show() {
       <div className={clsx(styles.scroll, styles.holder)}>
         <div className={styles.article}>
           <div className={styles.img}>
-            <img src={cover.background} alt=''/>
+            <img src={config.cover} alt=''/>
             <div className={styles.content}>
-              <h1 className={clsx(styles.title, stageIndex == 1 && roundIndex > 1 ? styles.textShadow : '')}>{cover.title}</h1>
-              <div className={styles.session}>{cover.description}</div>
+              <h1 className={clsx(styles.title, config.shadow ? styles.textShadow : '')}>{config.title}</h1>
+              <div className={styles.session}>{config.description}</div>
             </div>
           </div>
           <div className={styles.topBar} style={{
-            display: (round.stageNames.length > 1) ? 'flex' : 'none'
+            display: (round.stageConfigs.length > 1) ? 'flex' : 'none'
           }}>
             {
-              round.stageNames.map((item: string, index: number) => {
+              round.stageConfigs.map((item: StageConfig, index: number) => {
                 return <div
                   className={clsx(styles.selectable, index == stageIndex ? styles.selectableSelected : '', styles.item)}
                   key={index}
@@ -215,7 +243,7 @@ export default function Show() {
                     setStageIndex(index)
                   }}
                 >
-                  {item}
+                  {item.name}
                 </div>
               })
             }

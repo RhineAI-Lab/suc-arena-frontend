@@ -3,8 +3,8 @@ import {SessionState} from "@/app/service/class/session-state";
 import Api from "@/app/api/api";
 import {simulateData} from "@/app/service/simulate-data";
 import {isDialogType, isSpeechType, LogType} from "@/app/service/class/log-enum";
-import Stage, {StageType} from "@/app/service/class/Stage";
-import Round from "@/app/service/class/Round";
+import Stage, {StageType} from "@/app/service/class/stage";
+import Round from "@/app/service/class/round";
 
 export default class DataService {
 
