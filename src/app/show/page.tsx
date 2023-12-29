@@ -310,6 +310,20 @@ export default function Show() {
                         <Icon className={styles.link}>round_all_inclusive</Icon>
                         {item.content}
                       </div>
+                      <div className={styles.more}>
+                        <span className={styles.button}>
+                          <Icon>round_keyboard_double_arrow_down</Icon>
+                          <span>Detail Information</span>
+                        </span>
+                        <span className={styles.space}></span>
+                        <span className={styles.time} style={{
+                          marginRight: '26px'
+                        }}>ID: {item.id}</span>
+                        <span className={styles.time} style={{
+                          marginRight: '26px'
+                        }}>Date: {item.time.split(' ')[0]}</span>
+                        <span className={styles.time}>Time: {item.time.split(' ')[1]}</span>
+                      </div>
                     </div>
                   } else if (isSpeechType(item.type)) {
                     return <div className={styles.message} key={index}>
