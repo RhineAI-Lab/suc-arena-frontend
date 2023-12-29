@@ -2,7 +2,7 @@
 export default class Stage {
   constructor(
     public messages: any[] = [],
-    public type: StageType = StageType.UNKNOWN,
+    public type: StageType = StageType.Unknown,
     public coverId: number = 0,
   ) {
   }
@@ -21,12 +21,20 @@ export default class Stage {
 }
 
 export enum StageType {
-  OVERVIEW = 'OVERVIEW',
-  START = 'START',
-  CONFRONTATION = 'CONFRONTATION',
-  COLLABORATION = 'COLLABORATION',
-  ANNOUNCEMENT = 'ANNOUNCEMENT',
-  UPDATE = 'UPDATE',
-  SETTLEMENT = 'SETTLEMENT',
-  UNKNOWN = 'UNKNOWN',
+  Introduce = 'Introduce Stage',
+  Background = 'Background Stage',
+  Start = 'Start Stage',
+  Overview = 'Overview Stage',
+
+  Confrontation = 'Confrontation Stage',
+  Cooperation = 'Cooperation Stage',
+  Announcement = 'Announcement Stage',
+  Update = 'Update Stage',
+
+  Guess = 'Guess Stage',
+  OpenSpeech = 'Open Speech Stage',
+  Vote = 'Vote Stage',
+  VoteOthers = 'Vote Others Stage',
+
+  Unknown = 'Unknown Stage',
 }

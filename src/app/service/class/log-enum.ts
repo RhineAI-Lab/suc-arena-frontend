@@ -1,6 +1,9 @@
 
 export enum LogType {
   ActionStage = 'Action stage',
+  TurnChange = 'Turn Change',
+  TurnEnd = 'Turn End',
+  StageChange = 'Stage Change',
 
   ConclusionOfEnvironment = 'Conclusion of environment',
   SelectDialogueRole = 'Select dialogue role',
@@ -13,16 +16,8 @@ export enum LogType {
   ReflectionResult = 'Reflection result',
   OpenSpeechInRound = 'Open Speech In Round',
 
-  SettlementStage = 'Settlement Stage',
   OpenSpeech = 'Open Speech',
-  VotingExceptSelf = 'Voting Except Self',
   Voting = 'Voting',
+  VotingExceptSelf = 'Voting Except Self',
   WinnerAnnouncement = 'Winner Announcement',
-}
-
-export enum ActionStageType {
-  NewTurn = 'New turn',
-  ConfrontationStage = 'Confrontation stage',
-  CooperationStage = 'Cooperation stage',
-  UpdateStage = 'Update stage',
 }

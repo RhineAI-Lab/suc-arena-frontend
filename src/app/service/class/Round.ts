@@ -5,7 +5,7 @@ export default class Round {
   public finished: boolean = false
   constructor(
     public stages: Stage[] = [],
-    public type: RoundType = RoundType.UNKNOWN,
+    public type: RoundType = RoundType.Unknown,
     public name: string = 'Unknown',
     public stageNames: string[] = [''],
   ) {
@@ -26,21 +26,21 @@ export default class Round {
   }
 
   isRoundOrSettlement(): boolean {
-    return this.type === RoundType.ROUND || this.type === RoundType.SETTLEMENT
+    return this.type === RoundType.Normal || this.type === RoundType.Settlement
   }
 
   static OverviewRound(): Round {
-    return new Round([new Stage([], StageType.OVERVIEW)], RoundType.OVERVIEW, 'Overview')
+    return new Round([new Stage([], StageType.Overview)], RoundType.Overview, 'Overview')
   }
 
   static StartRound(): Round {
-    return new Round([new Stage([], StageType.START)], RoundType.START, 'Start')
+    return new Round([new Stage([], StageType.Start)], RoundType.Start, 'Start')
   }
 
   static NormalRound(name: string): Round {
     return new Round(
       [],
-      RoundType.ROUND,
+      RoundType.Normal,
       name,
       ['对抗阶段', '合作阶段', '宣言阶段', '更新阶段']
     )
@@ -49,7 +49,7 @@ export default class Round {
   static SettlementRound(): Round {
     return new Round(
       [],
-      RoundType.SETTLEMENT,
+      RoundType.Settlement,
       'Settlement',
       ['预测阶段', '宣言阶段', '投票阶段', '对外投票阶段']
     )
@@ -57,9 +57,13 @@ export default class Round {
 }
 
 export enum RoundType {
-  OVERVIEW = 'OVERVIEW',
-  START = 'START',
-  ROUND = 'ROUND',
-  SETTLEMENT = 'SETTLEMENT',
-  UNKNOWN = 'UNKNOWN',
+  Introduce = 'Introduce Round',
+  Background = 'Background Round',
+  Start = 'Start Round',
+  Overview = 'Overview Round',
+
+  Normal = 'Normal Round',
+  Settlement = 'Settlement Round',
+
+  Unknown = 'Unknown Round',
 }
