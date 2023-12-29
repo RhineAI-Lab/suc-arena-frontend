@@ -109,8 +109,8 @@
     flex-direction: column;
     align-items: stretch;
     flex-grow: 1000000;
-    margin: 0 4px 0 0;
-    padding: 12px 8px 12px 0;
+    margin-right: 4px;
+    padding-right: 8px;
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -128,6 +128,7 @@
       height: 500px;
       position: relative;
       max-width: 1380px;
+      margin-top: 12px;
 
       img {
         width: 100%;
@@ -175,22 +176,28 @@
       }
     }
 
-    .topBar {
-      display: flex;
+    .topBarHolder {
       width: 100%;
-      align-items: center;
-      justify-content: center;
-      background: #f6f8fb;
-      border-radius: 1000000px;
-      margin-top: 12px;
+      padding-top: 12px;
       margin-bottom: 30px;
       max-width: 1380px;
+      background: #ffffff;
+      z-index: 100;
 
-      .item {
-        flex-grow: 1;
-        padding: 28px;
-        font-size: 15px;
-        text-align: center;
+      .topBar {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f6f8fb;
+        border-radius: 1000000px;
+
+        .item {
+          flex-grow: 1;
+          padding: 28px;
+          font-size: 15px;
+          text-align: center;
+        }
       }
     }
 

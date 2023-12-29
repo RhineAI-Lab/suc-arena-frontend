@@ -181,6 +181,29 @@ export default function Show() {
   }, [generatingText])
 
 
+  // 锁定顶部导航栏
+  const [scrollOver, setScrollOver] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const checkScrollPosition = () => {
+      if (!scrollRef.current) return
+      console.log(scrollRef.current.scrollTop)
+      if (scrollRef.current.scrollTop >= 512) {
+        setScrollOver(true)
+      } else {
+        setScrollOver(false)
+      }
+    }
+
+    if (!scrollRef.current) return
+    const div = scrollRef.current
+    div.addEventListener('scroll', checkScrollPosition)
+    return () => {
+      div.removeEventListener('scroll', checkScrollPosition)
+    }
+  }, [])
+
+
   return (
     <main className={styles.Show}>
       <div className={clsx(styles.scroll, styles.leftBar)}>
@@ -220,7 +243,7 @@ export default function Show() {
         </div>
       </div>
       <div className={styles.space}></div>
-      <div className={clsx(styles.scroll, styles.holder)}>
+      <div ref={scrollRef} className={clsx(styles.scroll, styles.holder)}>
         <div className={styles.article}>
           <div className={styles.img}>
             <img src={config.cover} alt=''/>
@@ -229,22 +252,25 @@ export default function Show() {
               <div className={styles.session}>{config.description}</div>
             </div>
           </div>
-          <div className={styles.topBar} style={{
-            display: (round.stageConfigs.length > 1) ? 'flex' : 'none'
+          <div className={styles.topBarHolder} style={{
+            display: (round.stageConfigs.length > 1) ? 'flex' : 'none',
+            position: scrollOver ? 'absolute' : 'unset',
           }}>
-            {
-              round.stageConfigs.map((item: StageConfig, index: number) => {
-                return <div
-                  className={clsx(styles.selectable, index == stageIndex ? styles.selectableSelected : '', styles.item)}
-                  key={index}
-                  onClick={e => {
-                    setStageIndex(index)
-                  }}
-                >
-                  {item.name}
-                </div>
-              })
-            }
+            <div className={styles.topBar}>
+              {
+                round.stageConfigs.map((item: StageConfig, index: number) => {
+                  return <div
+                    className={clsx(styles.selectable, index == stageIndex ? styles.selectableSelected : '', styles.item)}
+                    key={index}
+                    onClick={e => {
+                      setStageIndex(index)
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                })
+              }
+            </div>
           </div>
           {
             needEmpty && <div className={styles.empty}>
