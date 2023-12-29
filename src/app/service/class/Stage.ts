@@ -20,6 +20,9 @@ export default class Stage {
   }
 
   static create(type: string): Stage {
+    type = type.trim().split(' ').map((item: string) => {
+      return item[0].toUpperCase() + item.substring(1)
+    }).join(' ')
     let stage = type == StageType.Introduce ? new Stage([], StageType.Introduce, 1)
       : type == StageType.Background ? new Stage([], StageType.Background, 2)
       : type == StageType.Start ? new Stage([], StageType.Start, 3)

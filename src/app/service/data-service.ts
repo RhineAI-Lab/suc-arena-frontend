@@ -2,7 +2,7 @@ import { proxy, useSnapshot } from 'valtio'
 import {SessionState} from "@/app/service/class/session-state";
 import Api from "@/app/api/api";
 import {simulateData} from "@/app/service/simulate-data";
-import {LogType} from "@/app/service/class/log-enum";
+import {isDialogType, isSpeechType, LogType} from "@/app/service/class/log-enum";
 import Stage, {StageType} from "@/app/service/class/Stage";
 import Round from "@/app/service/class/Round";
 
@@ -95,6 +95,7 @@ export default class DataService {
       let num = Math.floor(Math.random() * 5) + 4
       for (let j = 0; j < num; j++) {
         if (i >= simulateData.length) {
+          this.analysis()
           clearInterval(interval)
           return
         }
@@ -127,44 +128,25 @@ export default class DataService {
       } else if (type === LogType.StageChange) {
         let stage = Stage.create(content)
         this.lastRound().stages.push(stage)
-      } else if (type === LogType.OpenSpeechInRound) {
+      } else if (isSpeechType(type)) {
         if (content.trim().length == 0) content = 'No Data.'
         this.lastStage().push({
-          type: LogType.ConclusionOfEnvironment,
+          type: type,
           id: item['id'],
           time: item['time'],
           source: item['source_character'],
           content: content,
         })
-      } else if (type === LogType.DialogueContent) {
+      } else if (isDialogType(type)) {
         if (content.trim().length == 0) content = 'No Data.'
         this.lastStage().push({
-          type: LogType.DialogueContent,
+          type: type,
           id: item['id'],
           time: item['time'],
           source: item['source_character'],
           target: item['target_character'],
           content: content,
         })
-      } else if (type === LogType.ConclusionOfEnvironment) {
-        if (content.trim().length == 0) content = 'No Data.'
-        this.lastStage().push({
-          type: LogType.ConclusionOfEnvironment,
-          id: item['id'],
-          time: item['time'],
-          source: item['source_character'],
-          content: content,
-        })
-      } else if (type === LogType.ReflectionResult) {
-        if (content.trim().length == 0) content = 'No Data.'
-        this.lastStage().push({
-          type: LogType.ReflectionResult,
-          id: item['id'],
-          time: item['time'],
-          source: item['source_character'],
-          content: content,
-        })
-        this.moveRelationUpdateBack()
       } else if (type === LogType.BeliefUpdate) {
         let stage = this.lastStage()
         let ele = undefined
@@ -229,35 +211,6 @@ export default class DataService {
           }
           this.moveRelationUpdateBack()
         }
-      } else if (type === LogType.VotingExceptSelf) {
-        if (content.trim().length == 0) content = 'No Data.'
-        this.lastStage().push({
-          type: LogType.VotingExceptSelf,
-          id: item['id'],
-          time: item['time'],
-          source: item['source_character'],
-          target: item['target_character'],
-          content: content,
-        })
-      } else if (type === LogType.Voting) {
-        if (content.trim().length == 0) content = 'No Data.'
-        this.lastStage().push({
-          type: LogType.Voting,
-          id: item['id'],
-          time: item['time'],
-          source: item['source_character'],
-          target: item['target_character'],
-          content: content,
-        })
-      } else if (type === LogType.OpenSpeech) {
-        if (content.trim().length == 0) content = 'No Data.'
-        this.lastStage().push({
-          type: LogType.OpenSpeech,
-          id: item['id'],
-          time: item['time'],
-          source: item['source_character'],
-          content: content,
-        })
       } else if (type === LogType.WinnerAnnouncement) {
         if (content.trim().length == 0) content = 'No Data.'
         this.lastStage().push({

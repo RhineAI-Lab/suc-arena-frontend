@@ -9,7 +9,7 @@ import Start from "@/components/show/main/Start/Start";
 import Overview from "@/components/show/main/Overview/Overview";
 import DataService from "@/app/service/data-service";
 import {useSnapshot} from "valtio";
-import {LogType} from "@/app/service/class/log-enum";
+import {isDialogType, isSpeechType, LogType} from "@/app/service/class/log-enum";
 import RelationTable from "@/components/RelationTable/RelationTable";
 import '@material/web/progress/linear-progress'
 import TimeUtils from "@/utils/TimeUtils";
@@ -73,9 +73,11 @@ export default function Show() {
       if (round.type == RoundType.Normal) {
         de.icon = 'outlined_people'
         de.iconSize = 21
+        de.name = 'Round ' + de.name.split(' ')[1]
       } else {
         de.icon = 'outlined_event_available'
         de.iconSize = 21
+        de.name = 'Settlement'
       }
       if (round.finished) {
         de.progressIcon = 'outlined_check_circle'
@@ -223,7 +225,7 @@ export default function Show() {
               {roundIndex == 1 && <Start/>}
               {
                 stage.messages.map((item: any, index: number) => {
-                  if (item.type == LogType.DialogueContent) {
+                  if (isDialogType(item.type)) {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
@@ -239,7 +241,7 @@ export default function Show() {
                         </div>
                         <span className={styles.space}></span>
                         <div className={clsx(styles.tag)}>
-                          <span>Dialogue Content</span>
+                          <span>{item.type}</span>
                         </div>
                       </div>
                       <div className={styles.text}>
@@ -247,7 +249,7 @@ export default function Show() {
                         {item.content}
                       </div>
                     </div>
-                  } else if (item.type == LogType.ConclusionOfEnvironment) {
+                  } else if (isSpeechType(item.type)) {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
@@ -258,26 +260,7 @@ export default function Show() {
                         </div>
                         <span className={styles.space}></span>
                         <div className={clsx(styles.tag)}>
-                          <span>Conclusion Of Environment</span>
-                        </div>
-                      </div>
-                      <div className={styles.text}>
-                        <Icon className={styles.link}>round_all_inclusive</Icon>
-                        {item.content}
-                      </div>
-                    </div>
-                  } else if (item.type == LogType.ReflectionResult) {
-                    return <div className={styles.message} key={index}>
-                      <div className={styles.info}>
-                        <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
-                        </div>
-                        <div className={clsx(styles.between)}>
-                          <span>{item.source}</span>
-                        </div>
-                        <span className={styles.space}></span>
-                        <div className={clsx(styles.tag)}>
-                          <span>Reflection Result</span>
+                          <span>{item.type}</span>
                         </div>
                       </div>
                       <div className={styles.text}>
@@ -296,7 +279,7 @@ export default function Show() {
                         </div>
                         <span className={styles.space}></span>
                         <div className={clsx(styles.tag)}>
-                          <span>Belief Status</span>
+                          <span>{item.type}</span>
                         </div>
                       </div>
                       <div className={styles.text}>
@@ -330,92 +313,6 @@ export default function Show() {
                       <div className={styles.text}>
                         <Icon className={styles.link}>round_all_inclusive</Icon>
                         <RelationTable keys={item.characters} values={item.content}/>
-                      </div>
-                    </div>
-                  } else if (item.type == LogType.OpenSpeechInRound) {
-                    return <div className={styles.message} key={index}>
-                      <div className={styles.info}>
-                        <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
-                        </div>
-                        <div className={clsx(styles.between)}>
-                          <span>{item.source}</span>
-                        </div>
-                        <span className={styles.space}></span>
-                        <div className={clsx(styles.tag)}>
-                          <span>Open Speech In Round</span>
-                        </div>
-                      </div>
-                      <div className={styles.text}>
-                        <Icon className={styles.link}>round_all_inclusive</Icon>
-                        {item.content}
-                      </div>
-                    </div>
-                  } else if (item.type == LogType.OpenSpeech) {
-                    return <div className={styles.message} key={index}>
-                      <div className={styles.info}>
-                        <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
-                        </div>
-                        <div className={clsx(styles.between)}>
-                          <span>{item.source}</span>
-                        </div>
-                        <span className={styles.space}></span>
-                        <div className={clsx(styles.tag)}>
-                          <span>Open Speech</span>
-                        </div>
-                      </div>
-                      <div className={styles.text}>
-                        <Icon className={styles.link}>round_all_inclusive</Icon>
-                        {item.content}
-                      </div>
-                    </div>
-                  } else if (item.type == LogType.VotingExceptSelf) {
-                    return <div className={styles.message} key={index}>
-                      <div className={styles.info}>
-                        <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
-                        </div>
-                        <div className={clsx(styles.between)}>
-                          <span>{item.source}</span>
-                          <Icon size='20px' color='#00345b'>east</Icon>
-                          <span>{item.target}</span>
-                        </div>
-                        <div className={clsx(styles.item, styles.to)}>
-                          <img src='/profile/user.png' alt=''/>
-                        </div>
-                        <span className={styles.space}></span>
-                        <div className={clsx(styles.tag)}>
-                          <span>Voting Except Self</span>
-                        </div>
-                      </div>
-                      <div className={styles.text}>
-                        <Icon className={styles.link}>round_all_inclusive</Icon>
-                        {item.content}
-                      </div>
-                    </div>
-                  } else if (item.type == LogType.Voting) {
-                    return <div className={styles.message} key={index}>
-                      <div className={styles.info}>
-                        <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
-                        </div>
-                        <div className={clsx(styles.between)}>
-                          <span>{item.source}</span>
-                          <Icon size='20px' color='#00345b'>east</Icon>
-                          <span>{item.target}</span>
-                        </div>
-                        <div className={clsx(styles.item, styles.to)}>
-                          <img src='/profile/user.png' alt=''/>
-                        </div>
-                        <span className={styles.space}></span>
-                        <div className={clsx(styles.tag)}>
-                          <span>Voting</span>
-                        </div>
-                      </div>
-                      <div className={styles.text}>
-                        <Icon className={styles.link}>round_all_inclusive</Icon>
-                        {item.content}
                       </div>
                     </div>
                   } else if (item.type == LogType.WinnerAnnouncement) {
