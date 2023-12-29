@@ -73,11 +73,9 @@ export default function Show() {
       if (round.type == RoundType.Normal) {
         de.icon = 'outlined_people'
         de.iconSize = 21
-        de.name = 'Round ' + de.name.split(' ')[1]
       } else {
         de.icon = 'outlined_event_available'
         de.iconSize = 21
-        de.name = 'Settlement'
       }
       if (round.finished) {
         de.progressIcon = 'outlined_check_circle'

@@ -117,7 +117,7 @@ export default class DataService {
       let content = item['log_content']
       if (type == undefined) {
       } else if (type === LogType.TurnChange) {
-        let isSettlement = content.indexOf('Settlement') == 0
+        let isSettlement = content.indexOf('Settlement') >= 0
         if (isSettlement) {
           this.data.rounds.push(Round.SettlementRound(content))
         } else {
