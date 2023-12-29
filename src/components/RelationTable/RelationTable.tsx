@@ -130,7 +130,7 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
             data.map((line, index) => {
               return line.map((item, index2) => {
                 let useful = item != -1 && index != index2
-                if (index == index2) item = -3
+                if (index == index2) item = 5
                 return <div key={index + '-' + index2} className={clsx(styles.item, useful ? styles.useful : '')} style={{
                   top: index * size + 'px',
                   left: index2 * size + 'px',
@@ -138,7 +138,7 @@ export default function RelationTable (props: RelationTableProps): JSX.Element {
                   height: size + 'px',
                   lineHeight: size + 'px',
                   backgroundColor: color(item),
-                  color: !useful ? '#bbbbbb' : '#000000',
+                  color: !useful ? '#999999' : '#000000',
                 }} onMouseEnter={e => {
                   setHoverX(index2)
                   setHoverY(index)

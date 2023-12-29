@@ -137,6 +137,9 @@ export default class DataService {
           source: item['source_character'],
           content: content,
         })
+        if (type == LogType.ReflectionResult) {
+          this.moveRelationUpdateBack()
+        }
       } else if (isDialogType(type)) {
         if (content.trim().length == 0) content = 'No Data.'
         this.lastStage().push({
