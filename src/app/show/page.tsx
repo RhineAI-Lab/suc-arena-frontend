@@ -188,7 +188,7 @@ export default function Show() {
   useEffect(() => {
     const checkScrollPosition = () => {
       if (!scrollRef.current) return
-      console.log(scrollRef.current.scrollTop)
+      // console.log(scrollRef.current.scrollTop)
       if (scrollRef.current.scrollTop >= 512) {
         setScrollOver(true)
       } else {
@@ -315,8 +315,8 @@ export default function Show() {
                         <Icon className={styles.link}>round_all_inclusive</Icon>
                         {item.content}
                       </div>
-                      <div className={styles.more}>
-                        <MoreInformation item={item} activeId={activeId} onMore={id => setActiveId(id)}/>
+                      <div className={styles.more} style={activeId == item.id ? {opacity:  1}: {}}>
+                        <MoreInformation item={item} activeId={activeId} onClickMore={id => setActiveId(id)}/>
                       </div>
                     </div>
                   } else if (isSpeechType(item.type)) {
@@ -336,6 +336,9 @@ export default function Show() {
                       <div className={styles.text}>
                         <Icon className={styles.link}>round_all_inclusive</Icon>
                         {item.content}
+                      </div>
+                      <div className={styles.more} style={activeId == item.id ? {opacity:  1}: {}}>
+                        <MoreInformation item={item} activeId={activeId} onClickMore={id => setActiveId(id)}/>
                       </div>
                     </div>
                   } else if (item.type == LogType.BeliefUpdate) {
@@ -369,6 +372,9 @@ export default function Show() {
                           }
                         </div>
                       </div>
+                      <div className={styles.more} style={activeId == item.id ? {opacity:  1}: {}}>
+                        <MoreInformation item={item} activeId={activeId} onClickMore={id => setActiveId(id)}/>
+                      </div>
                     </div>
                   } else if (item.type == LogType.RelationUpdate) {
                     return <div className={styles.message} key={index}>
@@ -384,6 +390,9 @@ export default function Show() {
                         <Icon className={styles.link}>round_all_inclusive</Icon>
                         <RelationTable keys={item.characters} values={item.content}/>
                       </div>
+                      <div className={styles.more} style={activeId == item.id ? {opacity:  1}: {}}>
+                        <MoreInformation item={item} activeId={activeId} onClickMore={id => setActiveId(id)}/>
+                      </div>
                     </div>
                   } else if (item.type == LogType.WinnerAnnouncement) {
                     return <div className={styles.message} key={index}>
@@ -398,6 +407,9 @@ export default function Show() {
                       <div className={styles.text}>
                         <Icon className={styles.link}>round_all_inclusive</Icon>
                         {item.content}
+                      </div>
+                      <div className={styles.more} style={activeId == item.id ? {opacity:  1}: {}}>
+                        <MoreInformation item={item} activeId={activeId} onClickMore={id => setActiveId(id)}/>
                       </div>
                     </div>
                   }

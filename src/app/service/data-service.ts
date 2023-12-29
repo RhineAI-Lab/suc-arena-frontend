@@ -67,17 +67,12 @@ export default class DataService {
     delete item['sid']
     delete item['important_log']
     item['important'] = important
-
     this.sourceData.push(item)
 
     // 制作详细数据
     let obj = JSON.parse(JSON.stringify(item))
     delete obj.time
-    delete obj.id
-    if (type) {
-      delete obj.log_type
-    }
-
+    delete obj.sid
     if (type) {
       type = type.split(' ').map((item: string) => {
         return item[0].toUpperCase() + item.substring(1)
@@ -143,6 +138,7 @@ export default class DataService {
           time: item['time'],
           source: item['source_character'],
           content: content,
+          code: JSON.stringify(item, null, 4),
         })
         if (type == LogType.ReflectionResult) {
           this.moveRelationUpdateBack()
@@ -156,6 +152,7 @@ export default class DataService {
           source: item['source_character'],
           target: item['target_character'],
           content: content,
+          code: JSON.stringify(item, null, 4),
         })
       } else if (type === LogType.BeliefUpdate) {
         let stage = this.lastStage()
@@ -175,7 +172,8 @@ export default class DataService {
             source: item['source_character'],
             content: [
               {target: item['target_character'], score: content},
-            ]
+            ],
+            code: JSON.stringify(item, null, 4),
           }
           stage.push(ele)
         } else {
@@ -203,7 +201,8 @@ export default class DataService {
             characters : [item['source_character']],
             content: [
               {source: item['source_character'], target: item['target_character'], score: content},
-            ]
+            ],
+            code: JSON.stringify(item, null, 4),
           }
           if (ele.characters.indexOf(item['target_character']) == -1) {
             ele.characters.push(item['target_character'])
@@ -228,6 +227,7 @@ export default class DataService {
           id: item['id'],
           time: item['time'],
           content: content,
+          code: JSON.stringify(item, null, 4),
         })
       }
       this.usedIndex = i

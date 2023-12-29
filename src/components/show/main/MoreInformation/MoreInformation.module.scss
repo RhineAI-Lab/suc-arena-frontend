@@ -1,14 +1,17 @@
 
 .MoreInformation {
-  display: flex;
-  align-items: center;
-  height: 40px;
   padding: 0 4px;
-  margin: 20px 0;
   transition: all 0.16s ease-in-out;
 
-  font-size: 16px;
-  color: #444444;
+  .line {
+    margin: 20px 0 6px 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
+
+    font-size: 16px;
+    color: #444444;
+  }
 
   .button {
     height: 100%;
@@ -20,9 +23,13 @@
     user-select: none;
 
     span:nth-child(1) {
-      margin-right: 6px;
+      margin-right: 4px;
       font-weight: 100;
     }
+  }
+
+  .rotate180 {
+    transform: rotateX(180deg)
   }
 
   .space {
