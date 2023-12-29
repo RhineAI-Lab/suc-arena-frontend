@@ -2,15 +2,18 @@
 
 import React, {useEffect, useRef, useState} from "react";
 import styles from "./Start.module.scss";
+import './Start.css'
 import '@material/web/textfield/filled-text-field'
 import '@material/web/button/text-button'
 import '@material/web/button/filled-tonal-button'
 import '@material/web/button/outlined-button'
 import '@material/web/button/filled-button'
+import '@material/web/checkbox/checkbox'
 import Api from "@/app/api/api";
 import CreateConfig from "@/app/api/class/create-config";
 import {AppTools} from "@/utils/AppTools";
 import DataService from "@/app/service/data-service";
+import {clsx} from "clsx";
 
 export default function Start () {
   function onFirstEnter() {
@@ -34,6 +37,11 @@ export default function Start () {
   let [gameRound, setGameRound] = useState('3')
   let [battleChatRound, setBattleChatRound] = useState('2')
   let [collaborationChatRound, setCollaborationChatRound] = useState('2')
+
+  let [loadPre, setLoadPre] = useState(false)
+  let [preSid, setPreSid] = useState('')
+  let [preBeforeId, setPreBeforeId] = useState('10')
+
   let [existsSid, setExistsSid] = useState('')
 
   function checkNumberValid(num: number) {
@@ -99,12 +107,26 @@ export default function Start () {
   }
 
   return (
-    <div className={styles.Start}>
+    <div className={clsx(styles.Start, 'm3-hook')}>
       <h1>Start Config</h1>
       <md-filled-text-field label="Game Round" value={gameRound} onInput={(e: any) => setGameRound(e.target.value)} type='number' size='large'></md-filled-text-field>
       <div className={styles.fieldLine}>
         <md-filled-text-field label="Battle Chat Round" value={battleChatRound} onInput={(e: any) => setBattleChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
         <md-filled-text-field label="Collaboration Chat Round" value={collaborationChatRound} onInput={(e: any) => setCollaborationChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
+      </div>
+      <div className={clsx(styles.checkboxLine, 'line')}>
+        <md-checkbox id="from-mode-checkbox" touch-target="wrapper" onInput={(e: any) => {
+          console.log(e.target.value)
+          console.log(e.target.checked)
+          setLoadPre(Boolean(e.target.checked))
+        }}></md-checkbox>
+        <label htmlFor="from-mode-checkbox">Load Pre-Information from Existing Conversation</label>
+      </div>
+      <div className={styles.copyLine} style={loadPre ? {} : {
+        height: 0,
+      }}>
+        <md-filled-text-field label="Pre Session ID" value={preSid} onInput={(e: any) => setPreSid(e.target.value)} size='large'></md-filled-text-field>
+        <md-filled-text-field label="Before ID" value={preBeforeId} onInput={(e: any) => setPreBeforeId(e.target.value)} type='number' size='large'></md-filled-text-field>
       </div>
       <div className={styles.line} style={{marginTop: '10px'}}>
         <md-text-button trailing-icon>
@@ -119,7 +141,7 @@ export default function Start () {
         </md-filled-tonal-button>
       </div>
       <h1>From Exists Session</h1>
-      <md-filled-text-field label="Session Id" value={existsSid} onInput={(e: any) => setExistsSid(e.target.value)} type='text' size='large'></md-filled-text-field>
+      <md-filled-text-field label="Session ID" value={existsSid} onInput={(e: any) => setExistsSid(e.target.value)} type='text' size='large'></md-filled-text-field>
       <div className={styles.line} style={{marginTop: '10px'}}>
         <md-filled-tonal-button onClick={() => {
           simulate()

@@ -20,6 +20,7 @@
 
   .fieldLine {
     display: flex;
+    overflow: hidden;
 
     .space {
       flex-grow: 1;
@@ -34,9 +35,52 @@
     }
   }
 
+  .copyLine {
+    display: flex;
+    height: 88px;
+    margin: -6px 0 -8px;
+    transition: all 0.16s ease-in-out;
+    overflow: hidden;
+    align-items: center;
+
+    md-filled-text-field {
+      flex-grow: 5;
+    }
+
+    *:nth-child(2) {
+      margin-left: 20px;
+      flex-grow: 1;
+      flex-basis: 160px;
+    }
+  }
+
+  .checkboxLine {
+    height: 30px;
+    display: flex;
+    padding-left: 4px;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #333333;
+
+    label {
+      margin-left: 14px;
+      cursor: pointer;
+      color: #333333;
+      transition: all 0.12s ease-in-out;
+    }
+  }
+
+  .checkboxLine:hover {
+
+    label {
+      color: #000000;
+    }
+  }
+
   .line {
     height: 50px;
     display: flex;
+    margin-bottom: 40px;
 
     .space {
       flex-grow: 1;
