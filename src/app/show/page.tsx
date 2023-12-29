@@ -204,6 +204,22 @@ export default function Show() {
     }
   }, [])
 
+  const coverRef = useRef<HTMLDivElement>(null)
+  const [coverWidth, setCoverWidth] = useState(0)
+  useEffect(() => {
+    const element = coverRef.current
+    if (!element) return
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        setCoverWidth(entry.contentRect.width)
+      }
+    })
+    resizeObserver.observe(element)
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [])
+
 
   // 单一局局部详细代码模式
   let [activeId, setActiveId] = useState(-1)
@@ -250,17 +266,20 @@ export default function Show() {
       <div className={styles.space}></div>
       <div ref={scrollRef} className={clsx(styles.scroll, styles.holder)}>
         <div className={styles.article}>
-          <div className={styles.img}>
+          <div ref={coverRef} className={styles.img}>
             <img src={config.cover} alt=''/>
             <div className={styles.content}>
               <h1 className={clsx(styles.title, config.shadow ? styles.textShadow : '')}>{config.title}</h1>
               <div className={styles.session}>{config.description}</div>
             </div>
           </div>
-          <div className={styles.topBarHolder} style={{
-            display: (round.stageConfigs.length > 1) ? 'flex' : 'none',
-            position: scrollOver ? 'absolute' : 'unset',
-          }}>
+          <div
+            className={clsx(styles.topBarHolder, scrollOver ? styles.topBarHolderFixed : '')}
+            style={{
+              display: (round.stageConfigs.length > 1) ? 'flex' : 'none',
+              width: scrollOver ? coverWidth + 'px' : '',
+            }}
+          >
             <div className={styles.topBar}>
               {
                 round.stageConfigs.map((item: StageConfig, index: number) => {

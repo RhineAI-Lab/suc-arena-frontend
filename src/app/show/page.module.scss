@@ -183,6 +183,7 @@
       max-width: 1380px;
       background: #ffffff;
       z-index: 100;
+      border-radius: 38px;
 
       .topBar {
         width: 100%;
@@ -199,6 +200,11 @@
           text-align: center;
         }
       }
+    }
+
+    .topBarHolderFixed {
+      position: absolute;
+      top: 0;
     }
 
     .empty {
@@ -460,7 +466,7 @@
 
         .more {
           opacity: 1;
-          transition-delay: 0.4s;
+          transition-delay: 0.6s;
         }
       }
     }
