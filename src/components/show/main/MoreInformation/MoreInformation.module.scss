@@ -1,4 +1,31 @@
 
 .MoreInformation {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 4px;
+  margin: 20px 0;
+  transition: all 0.16s ease-in-out;
 
+  font-size: 16px;
+  color: #444444;
+
+  .button {
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    color: #0b2959;
+    cursor: pointer;
+    transform: translateX(-2px);
+    user-select: none;
+
+    span:nth-child(1) {
+      margin-right: 6px;
+      font-weight: 100;
+    }
+  }
+
+  .space {
+    flex-grow: 1;
+  }
 }

@@ -15,6 +15,7 @@ import '@material/web/progress/linear-progress'
 import TimeUtils from "@/utils/TimeUtils";
 import Round, {RoundType} from "@/app/service/class/round";
 import StageConfig from "@/app/service/class/stage-config";
+import MoreInformation from "@/components/show/main/MoreInformation/MoreInformation";
 
 export default function Show() {
   const router = useRouter()
@@ -204,6 +205,10 @@ export default function Show() {
   }, [])
 
 
+  // 单一局局部详细代码模式
+  let [activeId, setActiveId] = useState(-1)
+
+
   return (
     <main className={styles.Show}>
       <div className={clsx(styles.scroll, styles.leftBar)}>
@@ -311,18 +316,7 @@ export default function Show() {
                         {item.content}
                       </div>
                       <div className={styles.more}>
-                        <span className={styles.button}>
-                          <Icon>round_keyboard_double_arrow_down</Icon>
-                          <span>Detail Information</span>
-                        </span>
-                        <span className={styles.space}></span>
-                        <span className={styles.time} style={{
-                          marginRight: '26px'
-                        }}>ID: {item.id}</span>
-                        <span className={styles.time} style={{
-                          marginRight: '26px'
-                        }}>Date: {item.time.split(' ')[0]}</span>
-                        <span className={styles.time}>Time: {item.time.split(' ')[1]}</span>
+                        <MoreInformation item={item} activeId={activeId} onMore={id => setActiveId(id)}/>
                       </div>
                     </div>
                   } else if (isSpeechType(item.type)) {

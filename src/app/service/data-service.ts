@@ -48,6 +48,10 @@ export default class DataService {
 
   static checkAndAddToSourceData(item: any) {
     let id = item['id']
+    let sid = item['sid']
+    let important = item.important_log == 'important_log'
+
+    // 初步美化
     for (const dataItem of this.sourceData) {
       if (dataItem['id'] === id) {
         return
@@ -60,13 +64,16 @@ export default class DataService {
       }).join(' ')
       item['log_type'] = type
     }
+    delete item['sid']
+    delete item['important_log']
+    item['important'] = important
+
     this.sourceData.push(item)
 
+    // 制作详细数据
     let obj = JSON.parse(JSON.stringify(item))
-    delete obj.sid
     delete obj.time
     delete obj.id
-    delete obj.important_log
     if (type) {
       delete obj.log_type
     }
@@ -79,9 +86,9 @@ export default class DataService {
     }
 
     this.filterData.push({
-      id: item.id,
+      id: sid,
       time: item.time,
-      important: item.important_log == 'important_log',
+      important: important,
       type: type,
       code: JSON.stringify(obj, null, 4),
     })
