@@ -14,7 +14,7 @@ import RelationTable from "@/components/RelationTable/RelationTable";
 import '@material/web/progress/linear-progress'
 import TimeUtils from "@/utils/TimeUtils";
 import {covers} from "@/app/service/covers-information";
-import Stage from "@/app/service/class/Stage";
+import Round, {RoundType} from "@/app/service/class/Round";
 
 export default function Show() {
   const router = useRouter()
@@ -48,20 +48,44 @@ export default function Show() {
   const stage = round.stages[stageIndex]
 
   // 封面信息
-  const cover = covers[stage.coverId]
+  const cover = covers[0]
 
   // 抽屉信息
-  let drawer: any[] = [
-    {
-      name: 'Overview',
-      icon: 'round_crop_original',
-      iconSize: 22,
-    }, {
-      name: 'Start',
-      icon: 'round_sports_score',
-      iconSize: 23,
-    },
-  ]
+  let drawer: any[] = []
+  data.rounds.map((item: any, index: number) => {
+    let round = item as Round
+    if (round.type == RoundType.Overview) {
+      drawer.push({
+        name: round.name,
+        icon: 'round_crop_original',
+        iconSize: 22,
+      })
+    } else if (round.type == RoundType.Start) {
+      drawer.push({
+        name: round.name,
+        icon: 'round_sports_score',
+        iconSize: 23,
+      })
+    } else if (round.type == RoundType.Normal || round.type == RoundType.Settlement) {
+      let de: any = {
+        name: round.name,
+      }
+      if (round.type == RoundType.Normal) {
+        de.icon = 'outlined_people'
+        de.iconSize = 21
+      } else {
+        de.icon = 'outlined_event_available'
+        de.iconSize = 21
+      }
+      if (round.finished) {
+        de.progressIcon = 'outlined_check_circle'
+        de.progressIconSize = 21
+      } else {
+        de.progress = round.stages.length + '/' + round.stageNames.length
+      }
+      drawer.push(de)
+    }
+  })
 
   // 装饰组件显示控制
   const needEmpty = round.isRoundOrSettlement() && stageIndex > round.stages.length - 1
@@ -193,232 +217,232 @@ export default function Show() {
                   <span className={styles.text}>The game has not progressed to this stage yet.</span>
               </div>
           }
-          <div className={styles.main} style={{
-            display: !needEmpty ? 'block' : 'none'
-          }}>
-            {roundIndex == 0 && <Overview/>}
-            {roundIndex == 1 && <Start/>}
-            {
-              stage.messages.map((item: any, index: number) => {
-                if (item.type == LogType.DialogueContent) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
+          {
+            !needEmpty && <div className={styles.main}>
+              {roundIndex == 0 && <Overview/>}
+              {roundIndex == 1 && <Start/>}
+              {
+                stage.messages.map((item: any, index: number) => {
+                  if (item.type == LogType.DialogueContent) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                          <Icon size='20px' color='#00345b'>east</Icon>
+                          <span>{item.target}</span>
+                        </div>
+                        <div className={clsx(styles.item, styles.to)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>Dialogue Content</span>
+                        </div>
                       </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                        <Icon size='20px' color='#00345b'>east</Icon>
-                        <span>{item.target}</span>
-                      </div>
-                      <div className={clsx(styles.item, styles.to)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
-                      <span className={styles.space}></span>
-                      <div className={clsx(styles.tag)}>
-                        <span>Dialogue Content</span>
-                      </div>
-                    </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.content}
-                    </div>
-                  </div>
-                } else if (item.type == LogType.ConclusionOfEnvironment) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                      </div>
-                      <span className={styles.space}></span>
-                      <div className={clsx(styles.tag)}>
-                        <span>Conclusion Of Environment</span>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {item.content}
                       </div>
                     </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.content}
-                    </div>
-                  </div>
-                } else if (item.type == LogType.ReflectionResult) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
+                  } else if (item.type == LogType.ConclusionOfEnvironment) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>Conclusion Of Environment</span>
+                        </div>
                       </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                      </div>
-                      <span className={styles.space}></span>
-                      <div className={clsx(styles.tag)}>
-                        <span>Reflection Result</span>
-                      </div>
-                    </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.content}
-                    </div>
-                  </div>
-                } else if (item.type == LogType.BeliefUpdate) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                      </div>
-                      <span className={styles.space}></span>
-                      <div className={clsx(styles.tag)}>
-                        <span>Belief Status</span>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {item.content}
                       </div>
                     </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      <div className={styles.table}>
-                        {
-                          item.content.map((line: any, index: number) => {
-                            return <div className={styles.line} key={index}>
-                              <span className={styles.key}>{line.target}</span>
-                              <span className={styles.split}></span>
-                              <span className={styles.block} style={{
-                                width: line.score * 3.5 + 'px'
-                              }}></span>
-                              <span className={styles.number}>{line.score}</span>
-                            </div>
-                          })
-                        }
+                  } else if (item.type == LogType.ReflectionResult) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>Reflection Result</span>
+                        </div>
+                      </div>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {item.content}
                       </div>
                     </div>
-                  </div>
-                } else if (item.type == LogType.RelationUpdate) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.between)} style={{marginLeft: 0}}>
-                        <span className={styles.betweenText}>
-                          <Icon>round_groups</Icon>
-                          <span>Relation Status</span>
-                        </span>
+                  } else if (item.type == LogType.BeliefUpdate) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>Belief Status</span>
+                        </div>
+                      </div>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        <div className={styles.table}>
+                          {
+                            item.content.map((line: any, index: number) => {
+                              return <div className={styles.line} key={index}>
+                                <span className={styles.key}>{line.target}</span>
+                                <span className={styles.split}></span>
+                                <span className={styles.block} style={{
+                                  width: line.score * 3.5 + 'px'
+                                }}></span>
+                                <span className={styles.number}>{line.score}</span>
+                              </div>
+                            })
+                          }
+                        </div>
                       </div>
                     </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      <RelationTable keys={item.characters} values={item.content}/>
-                    </div>
-                  </div>
-                } else if (item.type == LogType.OpenSpeechInRound) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
+                  } else if (item.type == LogType.RelationUpdate) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.between)} style={{marginLeft: 0}}>
+                          <span className={styles.betweenText}>
+                            <Icon>round_groups</Icon>
+                            <span>Relation Status</span>
+                          </span>
+                        </div>
                       </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                      </div>
-                      <span className={styles.space}></span>
-                      <div className={clsx(styles.tag)}>
-                        <span>Open Speech In Round</span>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        <RelationTable keys={item.characters} values={item.content}/>
                       </div>
                     </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.content}
-                    </div>
-                  </div>
-                } else if (item.type == LogType.OpenSpeech) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
+                  } else if (item.type == LogType.OpenSpeechInRound) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>Open Speech In Round</span>
+                        </div>
                       </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                      </div>
-                      <span className={styles.space}></span>
-                      <div className={clsx(styles.tag)}>
-                        <span>Open Speech</span>
-                      </div>
-                    </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.content}
-                    </div>
-                  </div>
-                } else if (item.type == LogType.VotingExceptSelf) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                        <Icon size='20px' color='#00345b'>east</Icon>
-                        <span>{item.target}</span>
-                      </div>
-                      <div className={clsx(styles.item, styles.to)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
-                      <span className={styles.space}></span>
-                      <div className={clsx(styles.tag)}>
-                        <span>Voting Except Self</span>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {item.content}
                       </div>
                     </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.content}
-                    </div>
-                  </div>
-                } else if (item.type == LogType.Voting) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.item, styles.from)}>
-                        <img src='/profile/user.png' alt=''/>
+                  } else if (item.type == LogType.OpenSpeech) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>Open Speech</span>
+                        </div>
                       </div>
-                      <div className={clsx(styles.between)}>
-                        <span>{item.source}</span>
-                        <Icon size='20px' color='#00345b'>east</Icon>
-                        <span>{item.target}</span>
-                      </div>
-                      <div className={clsx(styles.item, styles.to)}>
-                        <img src='/profile/user.png' alt=''/>
-                      </div>
-                      <span className={styles.space}></span>
-                      <div className={clsx(styles.tag)}>
-                        <span>Voting</span>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {item.content}
                       </div>
                     </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.content}
-                    </div>
-                  </div>
-                } else if (item.type == LogType.WinnerAnnouncement) {
-                  return <div className={styles.message} key={index}>
-                    <div className={styles.info}>
-                      <div className={clsx(styles.between)} style={{marginLeft: 0}}>
-                        <span className={styles.betweenText}>
-                          <Icon size='22px'>round_emoji_events</Icon>
-                          <span>Winner Announcement</span>
-                        </span>
+                  } else if (item.type == LogType.VotingExceptSelf) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                          <Icon size='20px' color='#00345b'>east</Icon>
+                          <span>{item.target}</span>
+                        </div>
+                        <div className={clsx(styles.item, styles.to)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>Voting Except Self</span>
+                        </div>
+                      </div>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {item.content}
                       </div>
                     </div>
-                    <div className={styles.text}>
-                      <Icon className={styles.link}>round_all_inclusive</Icon>
-                      {item.content}
+                  } else if (item.type == LogType.Voting) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                          <Icon size='20px' color='#00345b'>east</Icon>
+                          <span>{item.target}</span>
+                        </div>
+                        <div className={clsx(styles.item, styles.to)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>Voting</span>
+                        </div>
+                      </div>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {item.content}
+                      </div>
                     </div>
-                  </div>
-                }
-              })
-            }
-            {
-              roundIndex >= 2 && <div className={styles.hover}>
+                  } else if (item.type == LogType.WinnerAnnouncement) {
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.between)} style={{marginLeft: 0}}>
+                          <span className={styles.betweenText}>
+                            <Icon size='22px'>round_emoji_events</Icon>
+                            <span>Winner Announcement</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {item.content}
+                      </div>
+                    </div>
+                  }
+                })
+              }
+              {
+                roundIndex >= 2 && <div className={styles.hover}>
 
-              </div>
-            }
-          </div>
+                </div>
+              }
+            </div>
+          }
           {
             needProgress && <div className={styles.progressing}>
               <md-linear-progress indeterminate={true} style={{
