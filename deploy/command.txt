@@ -1,0 +1,26 @@
+
+# 启动
+sudo systemctl start suc-arena-web.service
+
+# 停止
+sudo systemctl stop suc-arena-web.service
+
+# 重启
+sudo systemctl restart suc-arena-web.service
+
+# 查看状态
+sudo systemctl status suc-arena-web.service
+
+# 设为开机启动
+sudo systemctl enable suc-arena-web.service
+
+
+
+# 查找npm安装路径
+which npm
+
+# 查看npm版本
+npm -v
+
+# 查看node版本
+node -v

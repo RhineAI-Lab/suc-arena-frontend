@@ -1,0 +1,15 @@
+[Unit]
+Description=Suc Arena SSR Service
+After=syslog.target
+
+[Service]
+ExecStart=/root/.nvm/versions/node/v21.4.0/bin/npm run start --prefix /root/suc-arena-frontend
+Environment=PATH=/root/.nvm/versions/node/v21.4.0/bin:$PATH
+SuccessExitStatus=143
+StandardOutput=append:/var/log/nextjs_app_output.log
+StandardError=append:/var/log/nextjs_app_error.log
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
