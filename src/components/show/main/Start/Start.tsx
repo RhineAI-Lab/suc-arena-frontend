@@ -116,8 +116,6 @@ export default function Start () {
       </div>
       <div className={clsx(styles.checkboxLine, 'line')}>
         <md-checkbox id="from-mode-checkbox" touch-target="wrapper" onInput={(e: any) => {
-          console.log(e.target.value)
-          console.log(e.target.checked)
           setLoadPre(Boolean(e.target.checked))
         }}></md-checkbox>
         <label htmlFor="from-mode-checkbox">Load Pre-Information from Existing Conversation</label>

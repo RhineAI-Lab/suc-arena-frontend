@@ -127,7 +127,7 @@ export default function Resources () {
           <md-filled-text-field label="Owener" value={owner} onInput={(e: any) => setOwner(e.target.value)} size='large'></md-filled-text-field>
         </div>
         <md-filled-text-field label="Description" value={description} onInput={(e: any) => setDescription(e.target.value)} type="textarea" rows={4} size='large'></md-filled-text-field>
-        <md-filled-text-field label="Topic" value={topic} onInput={(e: any) => setTopic(e.target.value)} type="textarea" rows={2} size='large'></md-filled-text-field>
+        <md-filled-text-field label="Topics &nbsp;[ Each line for one topic ]" value={topic} onInput={(e: any) => setTopic(e.target.value)} type="textarea" rows={2} size='large'></md-filled-text-field>
         <div className={styles.line}>
           <md-text-button trailing-icon>
             Reset
