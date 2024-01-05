@@ -8,6 +8,7 @@ import AiMarkdown from "@/components/AiMarkdown/AiMarkdown";
 import DataService from "@/app/service/data-service";
 import {clsx} from "clsx";
 import Icon from "@/components/Icon/Icon";
+import {AppTools} from "@/utils/AppTools";
 
 export default function Resources () {
   function onFirstEnter() {
@@ -36,13 +37,47 @@ export default function Resources () {
   const [influence, setInfluence] = useState('10')
   const [topic, setTopic] = useState('')
 
-  function create() {
-    let data = {
-      "name": name,
-      "description": description,
-      "influence": influence,
-      "owner": owner,
-      "topic": topic,
+  async function create() {
+    if (name.trim().length == 0) {
+      AppTools.message('请填写社会资源的 Name 信息', 'warning')
+      return
+    }
+    if (description.trim().length == 0) {
+      AppTools.message('请填写社会资源的 Description 信息', 'warning')
+      return
+    }
+    if (influence.trim().length == 0) {
+      AppTools.message('请填写社会资源的 Influence 信息', 'warning')
+      return
+    }
+    if (owner.trim().length == 0) {
+      AppTools.message('请填写社会资源的 Owner 信息', 'warning')
+      return
+    }
+    if (topic.trim().length == 0) {
+      AppTools.message('请填写社会资源的 Topic 信息', 'warning')
+      return
+    }
+    try {
+      let data = {
+        "name": name,
+        "description": description,
+        "influence": influence,
+        "owner": owner,
+        "topic": topic,
+        "portrait": '',
+        "small_portrait": '',
+      }
+      let result = await Api.addResource(data)
+      console.log('Add Resource Result: ' + result)
+      if (result == 'New Resource Created') {
+        Api.updateSettings()
+      } else {
+        AppTools.message('社会资源新增失败: ' + result, 'warning')
+      }
+    } catch (e) {
+      console.warn(e)
+      AppTools.message('参数不支持，请重新输入。', 'warning')
     }
   }
 
@@ -100,10 +135,9 @@ export default function Resources () {
           </md-text-button>
           <div className={styles.space}/>
           <md-filled-tonal-button onClick={() => create()}>
-            <Icon style={{
-
-            }} size='14px'>round_add</Icon>
             Create
+            {/* @ts-ignore */}
+            <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
           </md-filled-tonal-button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import CreateConfig from "@/app/api/class/create-config";
 import {proxy} from "valtio";
+import DataService from "@/app/service/data-service";
 
 export default class Api {
 
@@ -63,6 +64,15 @@ export default class Api {
     }
   }
 
+  static async updateSettings(): Promise<any> {
+    let settings = await Api.getSettings()
+    console.log(settings)
+    if (settings && settings.characters && settings.resources) {
+      DataService.settings.characters = settings.characters
+      DataService.settings.resources = settings.resources
+    }
+  }
+
   static async getSettings(): Promise<any> {
     try {
       const url = this.URL + "/api/v1/getsettings?sid=" + this.data.sid + '&last=' + this.data.last
@@ -84,16 +94,20 @@ export default class Api {
     }
   }
 
-  static async addResource(): Promise<any> {
+  static async addResource(data: any): Promise<any> {
     try {
-      const url = this.URL + "/api/v1/addresource?sid=" + this.data.sid + '&last=' + this.data.last
+      const url = this.URL + "/api/v1/addresource"
+      const headers = new Headers()
+      headers.append("Content-Type", "application/json")
       const requestOptions = {
         method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data),
       }
       console.log('API REQUEST  /api/v1/addresource')
 
       let res = await fetch(url, requestOptions)
-      if (res.status === 200) {
+      if (res.status === 200 || res.status === 201) {
         return await res.json()
       } else {
         console.warn(res)
@@ -104,7 +118,6 @@ export default class Api {
       return null
     }
   }
-
 
   static reset() {
     this.data.sid = ''
