@@ -13,11 +13,19 @@ export default class DataService {
     state: SessionState
   } = proxy({
     rounds: [
-      Round.OverviewRound(),
       Round.StartRound(),
+      Round.OverviewRound(),
     ],
     state: SessionState.Initial,
   })
+  static settings: {
+    characters: any[],
+    resources: any[],
+  } = proxy({
+    characters: [],
+    resources: [],
+  })
+
   static sourceData: any[] = proxy([])
   static filterData: any[] = proxy([])
 

@@ -10,14 +10,33 @@ export default class StageConfig {
   ) {
   }
 
-  static Start(): StageConfig {
+  static Config(): StageConfig {
     return new StageConfig(
-      '',
+      '启动配置',
       'Start A Session',
       'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.',
       '/background/5.jpg'
     )
   }
+
+  static Character(): StageConfig {
+    return new StageConfig(
+      '人物角色',
+      'Start A Session',
+      'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.',
+      '/background/5.jpg'
+    )
+  }
+
+  static Resource(): StageConfig {
+    return new StageConfig(
+      '社会资源',
+      'Start A Session',
+      'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.',
+      '/background/5.jpg'
+    )
+  }
+
   static Overview(): StageConfig {
     return new StageConfig(
       '',
@@ -88,6 +107,15 @@ export default class StageConfig {
       'Vote Others Stage',
       'Example Session For UI Design. Only has one round now. Other descriptions...',
       '/background/10.jpg'
+    )
+  }
+
+  static Introduction(): StageConfig {
+    return new StageConfig(
+      '',
+      'Introduction Stage',
+      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      '/background/7.jpg'
     )
   }
 

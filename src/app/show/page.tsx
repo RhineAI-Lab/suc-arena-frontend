@@ -16,13 +16,20 @@ import TimeUtils from "@/utils/TimeUtils";
 import Round, {RoundType} from "@/app/service/class/round";
 import StageConfig from "@/app/service/class/stage-config";
 import MoreInformation from "@/components/show/main/MoreInformation/MoreInformation";
+import {StageType} from "@/app/service/class/stage";
+import Api from "@/app/api/api";
 
 export default function Show() {
   const router = useRouter()
 
   function onFirstEnter() {
   }
-  function onFirstEffect() {
+  async function onFirstEffect() {
+    let settings = await Api.getSettings()
+    if (settings && settings.characters && settings.resources) {
+      DataService.settings.characters = settings.characters
+      DataService.settings.resources = settings.resources
+    }
   }
 
   const firstEnter = useRef<boolean>(true)
@@ -40,7 +47,7 @@ export default function Show() {
 
 
   // 页面主要状态管理
-  const [roundIndex, setRoundIndex] = useState(1)
+  const [roundIndex, setRoundIndex] = useState(0)
   const [stageIndex, setStageIndex] = useState(0)
 
   // 数据映射
@@ -307,8 +314,8 @@ export default function Show() {
           }
           {
             !needEmpty && <div className={styles.main}>
-              {roundIndex == 0 && <Overview/>}
-              {roundIndex == 1 && <Start/>}
+              {stage.type == StageType.Overview && <Overview/>}
+              {stage.type == StageType.Config && <Start/>}
               {
                 stage.messages.map((item: any, index: number) => {
                   if (isDialogType(item.type)) {

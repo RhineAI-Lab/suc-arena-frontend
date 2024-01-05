@@ -30,12 +30,29 @@ export default class Round {
     return this.type === RoundType.Normal || this.type === RoundType.Settlement
   }
 
-  static StartRound(): Round {
+  static Introduction(): Round {
     return new Round(
-      [new Stage([], StageType.Start)],
+      [new Stage([], StageType.Introduction)],
       RoundType.Start,
       'Start',
-      [StageConfig.Start()]
+      [StageConfig.Introduction()]
+    )
+  }
+
+  static StartRound(): Round {
+    return new Round(
+      [
+        new Stage([], StageType.Config),
+        new Stage([], StageType.Character),
+        new Stage([], StageType.Resource),
+      ],
+      RoundType.Start,
+      'Start',
+      [
+        StageConfig.Config(),
+        StageConfig.Character(),
+        StageConfig.Resource(),
+      ]
     )
   }
 
@@ -78,7 +95,7 @@ export default class Round {
 }
 
 export enum RoundType {
-  Introduce = 'Introduce Round',
+  Introduction = 'Introduction Round',
   Background = 'Background Round',
   Start = 'Start Round',
   Overview = 'Overview Round',

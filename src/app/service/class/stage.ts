@@ -22,9 +22,10 @@ export default class Stage {
     type = type.trim().split(' ').map((item: string) => {
       return item[0].toUpperCase() + item.substring(1)
     }).join(' ')
-    let stage = type == StageType.Introduce ? new Stage([], StageType.Introduce)
-      : type == StageType.Background ? new Stage([], StageType.Background)
-      : type == StageType.Start ? new Stage([], StageType.Start)
+    let stage = type == StageType.Introduction ? new Stage([], StageType.Introduction)
+      : type == StageType.Character ? new Stage([], StageType.Character)
+      : type == StageType.Resource ? new Stage([], StageType.Resource)
+      : type == StageType.Config ? new Stage([], StageType.Config)
       : type == StageType.Overview ? new Stage([], StageType.Overview)
       : type == StageType.Confrontation ? new Stage([], StageType.Confrontation)
       : type == StageType.Cooperation ? new Stage([], StageType.Cooperation)
@@ -42,9 +43,10 @@ export default class Stage {
 }
 
 export enum StageType {
-  Introduce = 'Introduce Stage',
-  Background = 'Background Stage',
-  Start = 'Start Stage',
+  Introduction = 'Introduction Stage',
+  Character = 'Character Stage',
+  Resource = 'Resource Stage',
+  Config = 'Config Stage',
   Overview = 'Overview Stage',
 
   Confrontation = 'Confrontation Stage',

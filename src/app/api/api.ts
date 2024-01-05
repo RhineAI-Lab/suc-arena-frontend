@@ -63,6 +63,28 @@ export default class Api {
     }
   }
 
+  static async getSettings(): Promise<any> {
+    try {
+      const url = this.URL + "/api/v1/getsettings?sid=" + this.data.sid + '&last=' + this.data.last
+      const requestOptions = {
+        method: 'GET',
+      }
+      console.log('API REQUEST  /api/v1/getsettings')
+
+      let res = await fetch(url, requestOptions)
+      if (res.status === 200) {
+        return await res.json()
+      } else {
+        console.warn(res)
+        return null
+      }
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  }
+
+
   static reset() {
     this.data.sid = ''
     this.data.last = 0
