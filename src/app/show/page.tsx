@@ -18,6 +18,8 @@ import StageConfig from "@/app/service/class/stage-config";
 import MoreInformation from "@/components/show/main/MoreInformation/MoreInformation";
 import {StageType} from "@/app/service/class/stage";
 import Api from "@/app/api/api";
+import Characters from "@/components/show/main/Characters/Characters";
+import Resources from "@/components/show/main/Resources/Resources";
 
 export default function Show() {
   const router = useRouter()
@@ -26,6 +28,7 @@ export default function Show() {
   }
   async function onFirstEffect() {
     let settings = await Api.getSettings()
+    console.log(settings)
     if (settings && settings.characters && settings.resources) {
       DataService.settings.characters = settings.characters
       DataService.settings.resources = settings.resources
@@ -316,6 +319,8 @@ export default function Show() {
             !needEmpty && <div className={styles.main}>
               {stage.type == StageType.Overview && <Overview/>}
               {stage.type == StageType.Config && <Start/>}
+              {stage.type == StageType.Character && <Characters/>}
+              {stage.type == StageType.Resource && <Resources/>}
               {
                 stage.messages.map((item: any, index: number) => {
                   if (isDialogType(item.type)) {
