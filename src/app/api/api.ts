@@ -84,6 +84,27 @@ export default class Api {
     }
   }
 
+  static async addResource(): Promise<any> {
+    try {
+      const url = this.URL + "/api/v1/addresource?sid=" + this.data.sid + '&last=' + this.data.last
+      const requestOptions = {
+        method: 'POST',
+      }
+      console.log('API REQUEST  /api/v1/addresource')
+
+      let res = await fetch(url, requestOptions)
+      if (res.status === 200) {
+        return await res.json()
+      } else {
+        console.warn(res)
+        return null
+      }
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  }
+
 
   static reset() {
     this.data.sid = ''

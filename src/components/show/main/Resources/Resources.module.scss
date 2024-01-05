@@ -163,4 +163,70 @@
   .space {
     flex-grow: 1;
   }
+
+  .add {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    margin-bottom: 40px;
+
+    h1 {
+      margin-bottom: 40px;
+      margin-top: 100px;
+      font-size: 38px;
+      font-weight: 500;
+    }
+
+    md-filled-text-field {
+      margin-bottom: 30px;
+    }
+
+    .copyLine {
+      display: flex;
+      height: 88px;
+      margin: -6px 0 -8px;
+      transition: all 0.16s ease-in-out;
+      overflow: hidden;
+      align-items: center;
+
+      md-filled-text-field {
+        flex-grow: 2;
+      }
+
+      *:nth-child(2) {
+        margin-left: 20px;
+        flex-grow: 1;
+        flex-basis: 160px;
+      }
+
+      *:nth-child(3) {
+        margin-left: 20px;
+        flex-grow: 1;
+        flex-basis: 160px;
+      }
+    }
+
+    .line {
+      height: 50px;
+      display: flex;
+      margin-bottom: 40px;
+
+      .space {
+        flex-grow: 1;
+      }
+
+      *:nth-child(2) {
+        margin-left: 20px;
+      }
+
+      md-text-button {
+        padding: 0 20px;
+      }
+
+      md-filled-tonal-button {
+        padding: 0 32px;
+      }
+    }
+  }
 }
+

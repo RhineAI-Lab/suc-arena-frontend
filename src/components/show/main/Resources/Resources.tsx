@@ -30,6 +30,22 @@ export default function Resources () {
 
   const data = useSnapshot(DataService.settings.resources)
 
+  const [name, setName] = useState('')
+  const [owner, setOwner] = useState('C0000')
+  const [description, setDescription] = useState('')
+  const [influence, setInfluence] = useState('10')
+  const [topic, setTopic] = useState('')
+
+  function create() {
+    let data = {
+      "name": name,
+      "description": description,
+      "influence": influence,
+      "owner": owner,
+      "topic": topic,
+    }
+  }
+
   return (
     <div className={styles.Resources}>
       {
@@ -47,7 +63,7 @@ export default function Resources () {
                 <span>Resource - {item.id_number}</span>
               </div>
               <div className={clsx(styles.tag)}>
-                <span>Owner - {item.owner}</span>
+                <span>Belong {item.owner}</span>
               </div>
             </div>
             <div className={styles.text}>
@@ -68,6 +84,29 @@ export default function Resources () {
           </div>
         })
       }
+      <div className={styles.add}>
+        <h1>New Resource</h1>
+        <div className={styles.copyLine}>
+          <md-filled-text-field label="Name" value={name} onInput={(e: any) => setName(e.target.value)} size='large'></md-filled-text-field>
+          <md-filled-text-field label="Influence" value={influence} onInput={(e: any) => setInfluence(e.target.value)} type='number' size='large'></md-filled-text-field>
+          <md-filled-text-field label="Owener" value={owner} onInput={(e: any) => setOwner(e.target.value)} size='large'></md-filled-text-field>
+        </div>
+        <md-filled-text-field label="Description" value={description} onInput={(e: any) => setDescription(e.target.value)} type="textarea" rows={4} size='large'></md-filled-text-field>
+        <md-filled-text-field label="Topic" value={topic} onInput={(e: any) => setTopic(e.target.value)} type="textarea" rows={2} size='large'></md-filled-text-field>
+        <div className={styles.line}>
+          <md-text-button trailing-icon>
+            Reset
+            {/*<svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>*/}
+          </md-text-button>
+          <div className={styles.space}/>
+          <md-filled-tonal-button onClick={() => create()}>
+            <Icon style={{
+
+            }} size='14px'>round_add</Icon>
+            Create
+          </md-filled-tonal-button>
+        </div>
+      </div>
     </div>
   )
 }
