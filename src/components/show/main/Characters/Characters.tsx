@@ -66,7 +66,7 @@ export default function Characters () {
         "objective": objective,
         "scratch": scratch,
         "background": background,
-        "main_character": main,
+        "main_character": main ? 'True' : 'False',
         "belief": [],
         "relation": [],
         "portrait": '',
