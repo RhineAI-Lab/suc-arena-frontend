@@ -14,6 +14,7 @@ import CreateConfig from "@/app/api/class/create-config";
 import {AppTools} from "@/utils/AppTools";
 import DataService from "@/app/service/data-service";
 import {clsx} from "clsx";
+import Icon from "@/components/Icon/Icon";
 
 export default function Start () {
   function onFirstEnter() {
@@ -141,11 +142,11 @@ export default function Start () {
       <h1>From Exists Session</h1>
       <md-filled-text-field label="Session ID" value={existsSid} onInput={(e: any) => setExistsSid(e.target.value)} type='text' size='large'></md-filled-text-field>
       <div className={styles.line} style={{marginTop: '10px'}}>
-        <md-filled-tonal-button onClick={() => {
-          simulate()
-        }}>
-          Quick Simulate
-        </md-filled-tonal-button>
+        {/*<md-filled-tonal-button onClick={() => {*/}
+        {/*  simulate()*/}
+        {/*}}>*/}
+        {/*  Quick Simulate*/}
+        {/*</md-filled-tonal-button>*/}
         <div className={styles.space}/>
         <md-filled-tonal-button onClick={() => {
           continueSession()
@@ -154,6 +155,21 @@ export default function Start () {
           {/* @ts-ignore */}
           <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
         </md-filled-tonal-button>
+      </div>
+      <h1>Quick Simulate</h1>
+      <div className={styles.buttons}>
+        <div onClick={() => simulate()}>
+          <h1>2e295fa3cddd47e8bccbc377608cf179</h1>
+          <Icon size='32px' color='#555577'>round_east</Icon>
+        </div>
+        <div onClick={() => simulate()}>
+          <h1>be141b8d5e2c4befb34e2cf358dd705e</h1>
+          <Icon size='32px' color='#555577'>round_east</Icon>
+        </div>
+        <div onClick={() => simulate()}>
+          <h1>c81e3621c50640aba0aad3feae9dae7c</h1>
+          <Icon size='32px' color='#555577'>round_east</Icon>
+        </div>
       </div>
     </div>
   )

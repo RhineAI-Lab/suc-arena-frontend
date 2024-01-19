@@ -9,7 +9,7 @@
 
   h1 {
     margin-bottom: 40px;
-    margin-top: 100px;
+    margin-top: 120px;
     font-size: 38px;
     font-weight: 500;
   }
@@ -96,6 +96,65 @@
 
     md-filled-tonal-button {
       padding: 0 32px;
+    }
+  }
+
+  .buttons {
+    margin: -20px -10px -10px -10px;
+
+    div {
+      width: 100%;
+      height: 100px;
+      background: #f5f7fa;
+      overflow: hidden;
+      margin: 10px;
+      border-radius: 32px;
+      user-select: none;
+      transition: all 0.12s ease-in-out;
+      position: relative;
+      cursor: pointer;
+
+      h1 {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 24px;
+        color: #444746;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        transition: all 0.12s ease-in-out;
+      }
+
+      span {
+        position: absolute;
+        top: 50%;
+        right: 30px;
+        transform: translateY(-50%);
+      }
+
+      p {
+        margin: 0 27px;
+        font-size: 24px;
+        font-weight: 500;
+        color: #1f1f1f;
+        transition: all 0.12s ease-in-out;
+      }
+    }
+
+    div:hover {
+      background: #c2e7ff;
+
+      h1 {
+        color: #1f1f1f;
+      }
+
+      p {
+        color: #000000;
+      }
+    }
+
+    div:active {
+      background: #b9e0f8;
     }
   }
 

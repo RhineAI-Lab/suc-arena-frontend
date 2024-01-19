@@ -14,7 +14,7 @@ export default class StageConfig {
     return new StageConfig(
       '启动配置',
       'Start A Session',
-      'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.',
+      '设置回合数和对话轮次，然后单击“Start”创建会话，或者输入“Session ID”继续之前的会话。',
       '/background/5.jpg'
     )
   }
@@ -23,7 +23,7 @@ export default class StageConfig {
     return new StageConfig(
       '人物角色',
       'Start A Session',
-      'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.',
+      '这是当前的游戏角色，除了已有角色，你可以自己定义新的角色。',
       '/background/5.jpg'
     )
   }
@@ -32,7 +32,7 @@ export default class StageConfig {
     return new StageConfig(
       '社会资源',
       'Start A Session',
-      'Set the number of rounds and dialogue turns, then click \'Start\' to create a session, or enter \'Session Id\' to continue a previous session.',
+      '这是当前的社会资源，除了已有社会资源，你可以自己定义新的社会资源。',
       '/background/5.jpg'
     )
   }
@@ -41,7 +41,7 @@ export default class StageConfig {
     return new StageConfig(
       '',
       'Succession Arena',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'Welcome to Succession Arena. Here are the overall information of this session. You can see...',
       '/background/4.jpg'
     )
   }
@@ -50,7 +50,7 @@ export default class StageConfig {
     return new StageConfig(
       '对抗阶段',
       'Confrontation Stage',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'In this stage, the main players are talking to their Enemies (a person in other camp). What are they talking about...',
       '/background/2.jpg'
     )
   }
@@ -59,7 +59,7 @@ export default class StageConfig {
     return new StageConfig(
       '合作阶段',
       'Cooperation Stage',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'In this stage, the main players are talking to their teammates (a person his/her camp). What are they talking about...',
       '/background/9.jpg'
     )
   }
@@ -68,7 +68,7 @@ export default class StageConfig {
     return new StageConfig(
       '宣言阶段',
       'Announcement Stage',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'In this stage, all of the players are speaking in public to announce their resolve. What are they speaking about...',
       '/background/8.png',
       true
     )
@@ -78,7 +78,7 @@ export default class StageConfig {
     return new StageConfig(
       '更新阶段',
       'Update Stage',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'In this stage, all of the players are changing their believes by the previous stages. What are they thinking about...',
       '/background/11.jpg'
     )
   }
@@ -87,7 +87,7 @@ export default class StageConfig {
     return new StageConfig(
       '预测阶段',
       'Guess Stage',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'In this stage, all of the players are guessing the final winner. Who do they think will win the game...',
       '/background/1.jpg'
     )
   }
@@ -96,7 +96,7 @@ export default class StageConfig {
     return new StageConfig(
       '投票阶段',
       'Vote Stage',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'In this stage, all of the players are voting for someone (including his/herself). Who do they vote for...',
       '/background/12.jpg'
     )
   }
@@ -105,7 +105,7 @@ export default class StageConfig {
     return new StageConfig(
       '对外投票阶段',
       'Vote Others Stage',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'In this stage, all of the players are voting for someone (expect his/herself). Who do they vote for...',
       '/background/10.jpg'
     )
   }
@@ -114,7 +114,7 @@ export default class StageConfig {
     return new StageConfig(
       '',
       'Introduction Stage',
-      'Example Session For UI Design. Only has one round now. Other descriptions...',
+      'In this stage, all of the players are making their final declarations. What are they speaking about...',
       '/background/7.jpg'
     )
   }

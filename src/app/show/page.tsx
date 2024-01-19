@@ -461,7 +461,7 @@ export default function Show() {
             </div>
           }
           <div className={styles.control} style={{
-            // display: roundIndex != 1 ? 'flex' : 'none'
+            display: stage.type != StageType.Config ? 'flex' : 'none'
           }}>
             <div onClick={e => {
               lastPage()
