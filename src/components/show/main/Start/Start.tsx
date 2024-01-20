@@ -112,6 +112,11 @@ export default function Start () {
     DataService.startUpdate(simulate)
   }
 
+  let simulateList = [
+    '2e295fa3cddd47e8bccbc377608cf179',
+    'be141b8d5e2c4befb34e2cf358dd705e',
+  ]
+
   return (
     <div className={clsx(styles.Start, 'm3-hook')}>
       <h1>Start Config</h1>
@@ -163,18 +168,16 @@ export default function Start () {
       </div>
       <h1>Quick Simulate</h1>
       <div className={styles.buttons}>
-        <div onClick={() => continueSession('2e295fa3cddd47e8bccbc377608cf179', true)}>
-          <h1>2e295fa3cddd47e8bccbc377608cf179</h1>
-          <Icon size='32px' color='#555577'>round_east</Icon>
-        </div>
-        <div onClick={() => continueSession('be141b8d5e2c4befb34e2cf358dd705e', true)}>
-          <h1>be141b8d5e2c4befb34e2cf358dd705e</h1>
-          <Icon size='32px' color='#555577'>round_east</Icon>
-        </div>
-        <div onClick={() => continueSession('c81e3621c50640aba0aad3feae9dae7c', true)}>
-          <h1>c81e3621c50640aba0aad3feae9dae7c</h1>
-          <Icon size='32px' color='#555577'>round_east</Icon>
-        </div>
+        {
+          simulateList.map((sid, index) => {
+            return (
+              <div onClick={() => continueSession(sid, true)} key={index}>
+                <h1>{sid}</h1>
+                <Icon size='32px' color='#555577'>round_east</Icon>
+              </div>
+            )
+          })
+        }
       </div>
     </div>
   )
