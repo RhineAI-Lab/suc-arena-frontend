@@ -461,7 +461,7 @@ export default function Show() {
             </div>
           }
           <div className={styles.control} style={{
-            display: stage.type != StageType.Config ? 'flex' : 'none'
+            display: (stage && stage.type == StageType.Config) ? 'none' : 'flex'
           }}>
             <div onClick={e => {
               lastPage()

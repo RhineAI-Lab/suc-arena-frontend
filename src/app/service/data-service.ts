@@ -67,7 +67,7 @@ export default class DataService {
               return
             }
             this.checkAndAddToSourceData(res[i])
-            Api.data.last = simulateData[i]['id']
+            Api.data.last = res[i]['id']
             i++
           }
           this.analysis()
