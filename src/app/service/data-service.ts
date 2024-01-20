@@ -31,11 +31,15 @@ export default class DataService {
 
   static updating = false
   static updateInterval: any
+  static updatingOne = false
 
-  static startUpdate() {
+  static async startUpdate(simulate: boolean = false) {
     this.updating = true
-    this.updateInterval = setInterval(() => {
-      this.update()
+    this.updateInterval = setInterval(async () => {
+      if (this.updatingOne) return
+      this.updatingOne = true
+      await this.update(simulate)
+      this.updatingOne = false
     }, 1000)
   }
 
@@ -44,13 +48,31 @@ export default class DataService {
     clearInterval(this.updateInterval)
   }
 
-  static update() {
+  static async update(simulate: boolean = false) {
     Api.get().then((res: any[]) => {
-      for (let item of res) {
-        this.checkAndAddToSourceData(item)
+      if (!simulate) {
+        for (let item of res) {
+          this.checkAndAddToSourceData(item)
+        }
+        console.log('SOURCE DATA', this.sourceData)
+        this.analysis()
+      } else {
+        let i = 0
+        let interval = setInterval(() => {
+          let num = Math.floor(Math.random() * 5) + 4
+          for (let j = 0; j < num; j++) {
+            if (i >= res.length) {
+              this.analysis()
+              clearInterval(interval)
+              return
+            }
+            this.checkAndAddToSourceData(res[i])
+            Api.data.last = simulateData[i]['id']
+            i++
+          }
+          this.analysis()
+        }, 500)
       }
-      console.log('SOURCE DATA', this.sourceData)
-      this.analysis()
     })
   }
 

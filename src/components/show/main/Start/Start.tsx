@@ -93,18 +93,23 @@ export default function Start () {
     DataService.simulate()
   }
 
-  function continueSession() {
+  function continueSession(sid = '', simulate = false) {
     if (Api.data.sid.length > 0) {
       AppTools.message('当前已有进行中的会话。', 'warning')
       return
     }
 
-    if (existsSid.trim().length == 0) {
-      AppTools.message('请输入SessionId', 'warning')
+    if (sid.length == 0) {
+      if (existsSid.trim().length == 0) {
+        AppTools.message('请输入SessionId', 'warning')
+        return;
+      }
+      sid = existsSid
     }
 
-    Api.data.sid = existsSid
-    DataService.startUpdate()
+    console.log('Continue session. Sid:' + sid)
+    Api.data.sid = sid
+    DataService.startUpdate(simulate)
   }
 
   return (
@@ -158,15 +163,15 @@ export default function Start () {
       </div>
       <h1>Quick Simulate</h1>
       <div className={styles.buttons}>
-        <div onClick={() => simulate()}>
+        <div onClick={() => continueSession('2e295fa3cddd47e8bccbc377608cf179', true)}>
           <h1>2e295fa3cddd47e8bccbc377608cf179</h1>
           <Icon size='32px' color='#555577'>round_east</Icon>
         </div>
-        <div onClick={() => simulate()}>
+        <div onClick={() => continueSession('be141b8d5e2c4befb34e2cf358dd705e', true)}>
           <h1>be141b8d5e2c4befb34e2cf358dd705e</h1>
           <Icon size='32px' color='#555577'>round_east</Icon>
         </div>
-        <div onClick={() => simulate()}>
+        <div onClick={() => continueSession('c81e3621c50640aba0aad3feae9dae7c', true)}>
           <h1>c81e3621c50640aba0aad3feae9dae7c</h1>
           <Icon size='32px' color='#555577'>round_east</Icon>
         </div>
