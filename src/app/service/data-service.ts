@@ -7,6 +7,8 @@ import Stage, {StageType} from "@/app/service/class/stage";
 import Round from "@/app/service/class/round";
 
 export default class DataService {
+  
+  static simulateStop = false
 
   static data: {
     rounds: Round[],
@@ -131,11 +133,17 @@ export default class DataService {
           clearInterval(interval)
           return
         }
+        if (this.simulateStop) {
+          clearInterval(interval)
+          break
+        }
         this.checkAndAddToSourceData(simulateData[i])
         Api.data.last = simulateData[i]['id']
         i++
       }
-      this.analysis()
+      if (!this.simulateStop) {
+        this.analysis()
+      }
     }, 500)
   }
 
@@ -147,16 +155,6 @@ export default class DataService {
       let item = this.sourceData[i]
       let type = item['log_type']
       let content = item['log_content']
-      const makeDataEasy = () => {
-        return {
-          type: type,
-          id: item['id'],
-          time: item['time'],
-          source: item['source_character'],
-          content: content,
-          code: JSON.stringify(item, null, 4),
-        }
-      }
       if (type == undefined) {
       } else if (type === LogType.TurnChange) {
         let isSettlement = content.indexOf('Settlement') >= 0
@@ -171,12 +169,52 @@ export default class DataService {
         let stage = Stage.create(content)
         this.lastRound().stages.push(stage)
       } else if (type === LogType.HumanSpeaking) {
-        this.lastStage().push(makeDataEasy())
+        this.lastStage().push({
+          type: type,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          content: content,
+          tempResult: '',
+          result: '',
+          code: JSON.stringify(item, null, 4),
+        })
       } else if (type === LogType.HumanSpeakingResult) {
-        this.lastStage().push(makeDataEasy())
+        let i = this.lastStage().messages.findLastIndex(message => message.type == LogType.HumanSpeaking)
+        if (i >= 0) {
+          this.lastStage().messages[i].result = content
+          this.lastStage().messages[i].code += '\n\n' + JSON.stringify(item, null, 4)
+        }
+      } else if (type === LogType.HumanChoosing) {
+        this.lastStage().push({
+          type: type,
+          id: item['id'],
+          time: item['time'],
+          require: item['require'],
+          source: item['source_character'],
+          content: content,
+          tempResult: '',
+          result: '',
+          code: JSON.stringify(item, null, 4),
+        })
+        this.simulateStop = true
+        break
+      } else if (type === LogType.HumanChoosingResult) {
+        let i = this.lastStage().messages.findLastIndex(message => message.type == LogType.HumanChoosing)
+        if (i >= 0) {
+          this.lastStage().messages[i].result = content
+          this.lastStage().messages[i].code += '\n\n' + JSON.stringify(item, null, 4)
+        }
       } else if (isSpeechType(type)) {
         if (content.trim().length == 0) content = 'No Data.'
-        this.lastStage().push(makeDataEasy())
+        this.lastStage().push({
+          type: type,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          content: content,
+          code: JSON.stringify(item, null, 4),
+        })
         if (type == LogType.ReflectionResult) {
           this.moveRelationUpdateBack()
         }

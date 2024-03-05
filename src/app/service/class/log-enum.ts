@@ -18,6 +18,8 @@ export enum LogType {
   
   HumanSpeaking = 'Human Speaking',
   HumanSpeakingResult = 'Human Speaking Result',
+  HumanChoosing = 'Human Choosing',
+  HumanChoosingResult = 'Human Choosing Result',
 
   GuessWhoWillWin = 'Guess Who Will Win',
   OpenSpeech = 'Open Speech',

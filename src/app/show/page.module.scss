@@ -455,6 +455,55 @@
           opacity: 0;
           transition: all 0.16s ease-in-out;
         }
+
+        .table {
+          margin-top: 16px;
+          width: 100%;
+
+          .line {
+            margin-top: 24px;
+            height: 50px;
+            display: flex;
+            margin-bottom: 40px;
+
+            .space {
+              flex-grow: 1;
+            }
+
+            *:nth-child(2) {
+              margin-left: 20px;
+            }
+
+            md-text-button {
+              padding: 0 20px;
+            }
+
+            md-filled-tonal-button {
+              padding: 0 32px;
+            }
+          }
+
+          md-filled-text-field {
+            width: 100%;
+          }
+        }
+      }
+
+      .buttons {
+        margin-top: 4px;
+
+        md-filled-tonal-button {
+          padding: 0 14px 0 12px;
+          margin: 6px 6px;
+        }
+
+        :first-child {
+          margin-left: 0;
+        }
+
+        :last-child {
+          margin-right: 0;
+        }
       }
 
       .message:hover {

@@ -95,10 +95,12 @@ export default function Show() {
 
   // 装饰组件显示控制
   const needEmpty = round.isRoundOrSettlement() && stageIndex > round.stages.length - 1
+  const lastMessage = stage.messages[stage.messages.length - 1]
   const needProgress = round.isRoundOrSettlement()
     && !round.finished
     && roundIndex == data.rounds.length - 1
     && stageIndex == round.stages.length - 1
+    && (lastMessage === undefined || ![LogType.HumanSpeaking, LogType.HumanChoosing].includes(lastMessage.type) || lastMessage.result.length > 0)
 
 
   // 翻页效果及提示文本
@@ -366,6 +368,98 @@ export default function Show() {
                       <div className={styles.more} style={activeId == item.id ? {opacity:  1}: {}}>
                         <MoreInformation item={item} activeId={activeId} onClickMore={id => setActiveId(id)}/>
                       </div>
+                    </div>
+                  } else if (item.type === LogType.HumanSpeaking) {
+                    const hasResult = Boolean(item.result)
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>{item.type}</span>
+                        </div>
+                      </div>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {hasResult ? item.result : item.content}
+                      </div>
+                      {
+                        hasResult ? <>
+                          <div className={styles.more} style={activeId == item.id ? {opacity:  1}: {}}>
+                            <MoreInformation item={item} activeId={activeId} onClickMore={id => setActiveId(id)}/>
+                          </div>
+                        </> : <>
+                          <div className={styles.table}>
+                            <md-filled-text-field label="Say Something..." value={item.tempResult} onInput={(e: any) => {
+                              DataService.data.rounds[roundIndex].stages[stageIndex].messages[index].tempResult = e.target.value
+                            }} type="textarea" rows={4} size='large'></md-filled-text-field>
+                            <div className={styles.line}>
+                              <md-text-button trailing-icon onClick={() => {
+                                DataService.data.rounds[roundIndex].stages[stageIndex].messages[index].tempResult = ''
+                              }}>
+                                Clear
+                              </md-text-button>
+                              <div className={styles.space}/>
+                              <md-filled-tonal-button onClick={() => {
+                                if (item.tempResult.trim().length > 0) {
+                                  DataService.data.rounds[roundIndex].stages[stageIndex].messages[index].result = item.tempResult
+                                }
+                              }}>
+                                Confirm
+                                {/* @ts-ignore */}
+                                <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
+                              </md-filled-tonal-button>
+                            </div>
+                          </div>
+                        </>
+                      }
+                    </div>
+                  } else if (item.type === LogType.HumanChoosing) {
+                    const hasResult = Boolean(item.result)
+                    return <div className={styles.message} key={index}>
+                      <div className={styles.info}>
+                        <div className={clsx(styles.item, styles.from)}>
+                          <img src='/profile/user.png' alt=''/>
+                        </div>
+                        <div className={clsx(styles.between)}>
+                          <span>{item.source}</span>
+                        </div>
+                        <span className={styles.space}></span>
+                        <div className={clsx(styles.tag)}>
+                          <span>{item.type}</span>
+                        </div>
+                      </div>
+                      <div className={styles.text}>
+                        <Icon className={styles.link}>round_all_inclusive</Icon>
+                        {hasResult ? 'Choose: ' + item.result : item.content}
+                      </div>
+                      {
+                        hasResult ? <>
+                          <div className={styles.more} style={activeId == item.id ? {opacity:  1}: {}}>
+                            <MoreInformation item={item} activeId={activeId} onClickMore={id => setActiveId(id)}/>
+                          </div>
+                        </> : <>
+                          <div className={styles.buttons}>
+                            {
+                              item.require.map((user: string, indexButton: number) => {
+                                return <md-filled-tonal-button key={indexButton} onClick={() => {
+                                  DataService.data.rounds[roundIndex].stages[stageIndex].messages[index].result = user
+                                  console.log('onClick', user, item)
+                                }}>
+                                  {user}
+                                  {/* @ts-ignore */}
+                                  <Icon slot="icon" size='18px'>outlined_person</Icon>
+                                </md-filled-tonal-button>
+                              })
+                            }
+                          </div>
+                        </>
+                      }
                     </div>
                   } else if (item.type == LogType.BeliefUpdate) {
                     return <div className={styles.message} key={index}>
