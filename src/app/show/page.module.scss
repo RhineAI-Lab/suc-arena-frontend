@@ -250,6 +250,7 @@
       max-width: 1050px;
       margin: 50px 0 80px 0;
 
+      --md-linear-progress-active-indicator-color: #1c4a80;
       --md-linear-progress-track-height: 6px;
       --md-linear-progress-active-indicator-height: 6px;
 
@@ -492,7 +493,9 @@
       .buttons {
         margin-top: 4px;
 
-        md-filled-tonal-button {
+        --md-sys-color-primary: #2c4b8d;
+
+        md-outlined-button {
           padding: 0 14px 0 12px;
           margin: 6px 6px;
         }
@@ -503,6 +506,10 @@
 
         :last-child {
           margin-right: 0;
+        }
+
+        .buttonIcon {
+          transform: translateY(-2px);
         }
       }
 

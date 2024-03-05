@@ -144,6 +144,36 @@ export default class Api {
       return null
     }
   }
+  
+  static async input(value: string) {
+    try {
+      const data = {
+        sid: this.data.sid,
+        input_str: value,
+      }
+      const url = this.URL + "/api/v1/input"
+      const headers = new Headers()
+      headers.append("Content-Type", "application/json")
+      console.log('Request Body', data)
+      const requestOptions = {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data),
+      }
+      console.log('API REQUEST  /api/v1/input')
+      
+      let res = await fetch(url, requestOptions)
+      if (res.status === 200 || res.status === 201) {
+        return await res.json()
+      } else {
+        console.warn(res)
+        return null
+      }
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  }
 
   static reset() {
     this.data.sid = ''

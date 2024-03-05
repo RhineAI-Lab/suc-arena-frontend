@@ -12,6 +12,7 @@ import {useSnapshot} from "valtio";
 import {isDialogType, isSpeechType, LogType} from "@/app/service/class/log-enum";
 import RelationTable from "@/components/RelationTable/RelationTable";
 import '@material/web/progress/linear-progress'
+import '@material/web/button/outlined-button'
 import TimeUtils from "@/utils/TimeUtils";
 import Round, {RoundType} from "@/app/service/class/round";
 import StageConfig from "@/app/service/class/stage-config";
@@ -408,6 +409,7 @@ export default function Show() {
                               <md-filled-tonal-button onClick={() => {
                                 if (item.tempResult.trim().length > 0) {
                                   DataService.data.rounds[roundIndex].stages[stageIndex].messages[index].result = item.tempResult
+                                  Api.input(item.tempResult)
                                 }
                               }}>
                                 Confirm
@@ -447,14 +449,14 @@ export default function Show() {
                           <div className={styles.buttons}>
                             {
                               item.require.map((user: string, indexButton: number) => {
-                                return <md-filled-tonal-button key={indexButton} onClick={() => {
+                                return <md-outlined-button key={indexButton} onClick={() => {
                                   DataService.data.rounds[roundIndex].stages[stageIndex].messages[index].result = user
-                                  console.log('onClick', user, item)
+                                  Api.input(user)
                                 }}>
                                   {user}
                                   {/* @ts-ignore */}
-                                  <Icon slot="icon" size='18px'>outlined_person</Icon>
-                                </md-filled-tonal-button>
+                                  <Icon slot="icon" size='21px' className={styles.buttonIcon}>outlined_person</Icon>
+                                </md-outlined-button>
                               })
                             }
                           </div>

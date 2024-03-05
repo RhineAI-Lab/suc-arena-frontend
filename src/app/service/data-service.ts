@@ -179,6 +179,8 @@ export default class DataService {
           result: '',
           code: JSON.stringify(item, null, 4),
         })
+        // this.simulateStop = true
+        // break
       } else if (type === LogType.HumanSpeakingResult) {
         let i = this.lastStage().messages.findLastIndex(message => message.type == LogType.HumanSpeaking)
         if (i >= 0) {
@@ -197,8 +199,8 @@ export default class DataService {
           result: '',
           code: JSON.stringify(item, null, 4),
         })
-        this.simulateStop = true
-        break
+        // this.simulateStop = true
+        // break
       } else if (type === LogType.HumanChoosingResult) {
         let i = this.lastStage().messages.findLastIndex(message => message.type == LogType.HumanChoosing)
         if (i >= 0) {
