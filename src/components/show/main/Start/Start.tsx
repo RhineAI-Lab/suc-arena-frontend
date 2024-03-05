@@ -99,6 +99,11 @@ export default function Start () {
       return
     }
 
+    if (sid === 'Local') {
+      DataService.simulate()
+      return;
+    }
+
     if (sid.length == 0) {
       if (existsSid.trim().length == 0) {
         AppTools.message('请输入SessionId', 'warning')
@@ -178,6 +183,10 @@ export default function Start () {
             )
           })
         }
+        <div onClick={() => continueSession('Local', true)}>
+          <h1>Local Data</h1>
+          <Icon size='32px' color='#555577'>round_east</Icon>
+        </div>
       </div>
     </div>
   )

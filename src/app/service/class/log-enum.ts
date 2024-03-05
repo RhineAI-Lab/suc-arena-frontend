@@ -15,6 +15,9 @@ export enum LogType {
   EnvironmentJudgement = 'Environment Judgement',
   ReflectionResult = 'Reflection Result',
   OpenSpeechInRound = 'Open Speech In Round',
+  
+  HumanSpeaking = 'Human Speaking',
+  HumanSpeakingResult = 'Human Speaking Result',
 
   GuessWhoWillWin = 'Guess Who Will Win',
   OpenSpeech = 'Open Speech',

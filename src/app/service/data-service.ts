@@ -1,4 +1,4 @@
-import { proxy, useSnapshot } from 'valtio'
+import {proxy} from 'valtio'
 import {SessionState} from "@/app/service/class/session-state";
 import Api from "@/app/api/api";
 import {simulateData} from "@/app/service/simulate-data";
@@ -121,7 +121,7 @@ export default class DataService {
 
 
   static simulate() {
-    Api.data.sid = 'da2569d0ca9d4b2aa2c24a8a82494041'
+    Api.data.sid = 'local-data-sid'
     let i = 0
     let interval = setInterval(() => {
       let num = Math.floor(Math.random() * 5) + 4
@@ -147,6 +147,16 @@ export default class DataService {
       let item = this.sourceData[i]
       let type = item['log_type']
       let content = item['log_content']
+      const makeDataEasy = () => {
+        return {
+          type: type,
+          id: item['id'],
+          time: item['time'],
+          source: item['source_character'],
+          content: content,
+          code: JSON.stringify(item, null, 4),
+        }
+      }
       if (type == undefined) {
       } else if (type === LogType.TurnChange) {
         let isSettlement = content.indexOf('Settlement') >= 0
@@ -160,16 +170,13 @@ export default class DataService {
       } else if (type === LogType.StageChange) {
         let stage = Stage.create(content)
         this.lastRound().stages.push(stage)
+      } else if (type === LogType.HumanSpeaking) {
+        this.lastStage().push(makeDataEasy())
+      } else if (type === LogType.HumanSpeakingResult) {
+        this.lastStage().push(makeDataEasy())
       } else if (isSpeechType(type)) {
         if (content.trim().length == 0) content = 'No Data.'
-        this.lastStage().push({
-          type: type,
-          id: item['id'],
-          time: item['time'],
-          source: item['source_character'],
-          content: content,
-          code: JSON.stringify(item, null, 4),
-        })
+        this.lastStage().push(makeDataEasy())
         if (type == LogType.ReflectionResult) {
           this.moveRelationUpdateBack()
         }
