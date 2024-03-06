@@ -30,7 +30,7 @@ npm i
 npm run dev
 ```
 
-浏览器访问 `http://localhost:3310/show` 即可
+浏览器访问 `http://localhost:3310/` 即可
 
 <br/>
 
@@ -41,21 +41,21 @@ npm run build
 npm run start
 ```
 
-浏览器访问 `http://localhost:3310/show` 即可
+浏览器访问 `http://localhost:3310/` 即可
 
 <br/>
 
 ### Service Mode Deploy
 
 ```text
-# 复制 ./deploy/suc-arena-web.service 到 /etc/systemd/system/suc-arena-web.service
-cp ./deploy/suc-arena-web.service /etc/systemd/system/suc-arena-web.service
+# 复制 ./deploy/suc_arena_web.service 到 /etc/systemd/system/suc_arena_web.service
+cp ./deploy/suc_arena_web.service /etc/systemd/system/suc_arena_web.service
 
 # 设为开机启动
-systemctl enable suc-arena-web.service
+systemctl enable suc_arena_web.service
 
 # 启动服务
-systemctl start suc-arena-web.service
+systemctl start suc_arena_web.service
 ```
 
 更多见 `./deploy` 目录下的文件。

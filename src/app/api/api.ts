@@ -177,7 +177,7 @@ export default class Api {
 
   static reset() {
     this.data.sid = ''
-    this.data.last = 0
+    this.data.last = -1
   }
 
   static NETWORK_ERROR_RESPONSE = {
