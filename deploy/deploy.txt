@@ -1,0 +1,7 @@
+
+cd /root/suc-arena-frontend/
+sudo systemctl stop suc_arena_web.service
+git pull origin main
+npm i
+npm run build
+sudo systemctl start suc_arena_web.service
