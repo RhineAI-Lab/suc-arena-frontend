@@ -8,7 +8,7 @@ export default class Api {
 
   static data = proxy({
     sid: '',
-    last: 0,
+    last: -1,
   })
 
   static async create(config: CreateConfig) {

@@ -90,4 +90,23 @@
     }
   }
 
+  .pageButtons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 24px 4px 4px 4px;
+
+    --md-sys-color-primary: #2c4b8d;
+
+    md-filled-tonal-button {
+      padding: 0 16px;
+      margin: 6px;
+    }
+
+    md-outlined-button {
+      padding: 0 16px;
+      margin: 6px;
+    }
+  }
+
 }

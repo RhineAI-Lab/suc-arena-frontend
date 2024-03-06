@@ -111,7 +111,7 @@ export default class DataService {
       }).join(' ')
       delete obj.log_type
     }
-
+    
     this.filterData.push({
       id: sid,
       time: item.time,

@@ -10,6 +10,9 @@ import {clsx} from "clsx";
 import Icon from "@/components/Icon/Icon";
 
 export default function Overview () {
+  const [page, setPage] = useState(0)
+  const pageSize = 10
+  
   function onFirstEnter() {
   }
   function onFirstEffect() {
@@ -29,7 +32,6 @@ export default function Overview () {
   }, [])
 
   const apiData = useSnapshot(Api.data)
-
   let showData = useSnapshot(DataService.filterData)
 
   const UNKNOWN = 'unknown'
@@ -56,6 +58,9 @@ export default function Overview () {
         }
         {
           showData.map((item, index) => {
+            if (index < page * pageSize || index >= page * pageSize + pageSize) {
+              return null
+            }
             return (
               <div key={index} className={styles.log}>
                 <div className={styles.tags}>
@@ -80,6 +85,25 @@ export default function Overview () {
                 </AiMarkdown>
               </div>
             )
+          })
+        }
+      </div>
+      <div className={styles.pageButtons} style={{
+        display: showData.length > 0 ? 'flex' : 'none'
+      }}>
+        {
+          Array.from({length: parseInt(showData.length / pageSize + '') + 1}).map((_, index) => {
+            return <span>
+              {
+                index == page ? <md-filled-tonal-button>
+                  Page {index + 1}
+                </md-filled-tonal-button> : <md-outlined-button onClick={() => {
+                  setPage(index)
+                }}>
+                  Page {index + 1}
+                </md-outlined-button>
+              }
+            </span>
           })
         }
       </div>
