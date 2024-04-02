@@ -39,23 +39,28 @@ export default function Resources () {
 
   async function create() {
     if (name.trim().length == 0) {
-      AppTools.message('请填写社会资源的 Name 信息', 'warning')
+      // AppTools.message('请填写社会资源的 Name 信息', 'warning')
+      AppTools.message('Please fill in the Name information of the social resources.', 'warning')
       return
     }
     if (description.trim().length == 0) {
-      AppTools.message('请填写社会资源的 Description 信息', 'warning')
+      // AppTools.message('请填写社会资源的 Description 信息', 'warning')
+      AppTools.message('Please fill in the Description information of the social resources.', 'warning')
       return
     }
     if (influence.trim().length == 0) {
-      AppTools.message('请填写社会资源的 Influence 信息', 'warning')
+      // AppTools.message('请填写社会资源的 Influence 信息', 'warning')
+      AppTools.message('Please fill in the Influence information of the social resources.', 'warning')
       return
     }
     if (owner.trim().length == 0) {
-      AppTools.message('请填写社会资源的 Owner 信息', 'warning')
+      // AppTools.message('请填写社会资源的 Owner 信息', 'warning')
+      AppTools.message('Please fill in the Owner information of the social resources.', 'warning')
       return
     }
     if (topic.trim().length == 0) {
-      AppTools.message('请填写社会资源的 Topic 信息', 'warning')
+      // AppTools.message('请填写社会资源的 Topic 信息', 'warning')
+      AppTools.message('Please fill in the Topic information of the social resources.', 'warning')
       return
     }
     try {
@@ -73,11 +78,13 @@ export default function Resources () {
       if (result == 'New Resource Created') {
         Api.updateSettings()
       } else {
-        AppTools.message('社会资源新增失败: ' + result, 'warning')
+        // AppTools.message('社会资源新增失败: ' + result, 'warning')
+        AppTools.message('Social resource addition failed: ' + result, 'warning')
       }
     } catch (e) {
       console.warn(e)
-      AppTools.message('参数不支持，请重新输入。', 'warning')
+      // AppTools.message('参数不支持，请重新输入。', 'warning')
+      AppTools.message('Parameter not supported, please re-enter.', 'warning')
     }
   }
 

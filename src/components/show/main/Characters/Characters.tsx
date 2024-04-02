@@ -40,23 +40,28 @@ export default function Characters () {
 
   async function create() {
     if (name.trim().length == 0) {
-      AppTools.message('请填写角色的 Name 信息', 'warning')
+      // AppTools.message('请填写角色的 Name 信息', 'warning')
+      AppTools.message('Please fill in the character\'s Name information.', 'warning')
       return
     }
     if (support.trim().length == 0) {
-      AppTools.message('请填写角色的 Support 信息', 'warning')
+      // AppTools.message('请填写角色的 Support 信息', 'warning')
+      AppTools.message('Please fill in the character\'s Support information.', 'warning')
       return
     }
     if (objective.trim().length == 0) {
-      AppTools.message('请填写角色的 Objective 信息', 'warning')
+      // AppTools.message('请填写角色的 Objective 信息', 'warning')
+      AppTools.message('Please fill in the character\'s Objective information.', 'warning')
       return
     }
     if (scratch.trim().length == 0) {
-      AppTools.message('请填写角色的 Scratch 信息', 'warning')
+      // AppTools.message('请填写角色的 Scratch 信息', 'warning')
+      AppTools.message('Please fill in the character\'s Scratch information.', 'warning')
       return
     }
     if (background.trim().length == 0) {
-      AppTools.message('请填写角色的 Background 信息', 'warning')
+      // AppTools.message('请填写角色的 Background 信息', 'warning')
+      AppTools.message('Please fill in the character\'s Background information.', 'warning')
       return
     }
     try {
@@ -77,11 +82,13 @@ export default function Characters () {
       if (result == 'New Character Created') {
         Api.updateSettings()
       } else {
-        AppTools.message('创建角色失败: ' + result, 'warning')
+        // AppTools.message('创建角色失败: ' + result, 'warning')
+        AppTools.message('Failed to create character: ' + result, 'warning')
       }
     } catch (e) {
       console.warn(e)
-      AppTools.message('参数不支持，请重新输入。', 'warning')
+      // AppTools.message('参数不支持，请重新输入。', 'warning')
+      AppTools.message('Parameter not supported, please re-enter.', 'warning')
     }
   }
 

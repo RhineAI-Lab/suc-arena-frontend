@@ -55,7 +55,8 @@ export default function Start () {
 
   function create() {
     if (Api.data.sid.length > 0) {
-      AppTools.message('当前已有进行中的会话。', 'warning')
+      // AppTools.message('当前已有进行中的会话。', 'warning')
+      AppTools.message('The current session is in progress.', 'warning')
       return
     }
 
@@ -66,7 +67,8 @@ export default function Start () {
       config.collaborationChatRound = parseInt(collaborationChatRound)
     } catch (e) {
       console.error(e)
-      AppTools.message('启动参数错误，请重新设置。', 'warning')
+      // AppTools.message('启动参数错误，请重新设置。', 'warning')
+      AppTools.message('Startup parameters incorrect, please reset.', 'warning')
       return
     }
 
@@ -75,7 +77,8 @@ export default function Start () {
       || !checkNumberValid(config.battleChatRound)
       || !checkNumberValid(config.collaborationChatRound)
     ) {
-      AppTools.message('启动参数不支持，请重新设置。', 'warning')
+      // AppTools.message('启动参数不支持，请重新设置。', 'warning')
+      AppTools.message('Startup parameters not supported, please reset.', 'warning')
     }
 
     Api.create(config).then(res => {
@@ -86,7 +89,8 @@ export default function Start () {
 
   function simulate() {
     if (Api.data.sid.length > 0) {
-      AppTools.message('当前已有进行中的会话。', 'warning')
+      // AppTools.message('当前已有进行中的会话。', 'warning')
+      AppTools.message('The current session is in progress.', 'warning')
       return
     }
 
@@ -95,7 +99,8 @@ export default function Start () {
 
   function continueSession(sid = '', simulate = false) {
     if (Api.data.sid.length > 0) {
-      AppTools.message('当前已有进行中的会话。', 'warning')
+      // AppTools.message('当前已有进行中的会话。', 'warning')
+      AppTools.message('The current session is in progress.', 'warning')
       return
     }
 
@@ -106,7 +111,8 @@ export default function Start () {
 
     if (sid.length == 0) {
       if (existsSid.trim().length == 0) {
-        AppTools.message('请输入SessionId', 'warning')
+        // AppTools.message('请输入SessionId', 'warning')
+        AppTools.message('Please enter the SessionId', 'warning')
         return;
       }
       sid = existsSid
