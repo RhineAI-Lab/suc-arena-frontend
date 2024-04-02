@@ -11,7 +11,7 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: 'Succession Arena',
+  title: 'Agent Group Chat',
   description: '',
 }
 

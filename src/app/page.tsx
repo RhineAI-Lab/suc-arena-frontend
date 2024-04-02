@@ -237,8 +237,8 @@ export default function Show() {
     <main className={styles.Show}>
       <div className={clsx(styles.scroll, styles.leftBar)}>
         <div className={styles.title}>
-          <Icon size='36px'>insights</Icon>
-          <h2>Suc Arena</h2>
+          <Icon size='30px'>insights</Icon>
+          <h2>AgentGroupChat</h2>
         </div>
         <div className={styles.subtitle}>Process Menu</div>
         {

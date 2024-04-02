@@ -40,8 +40,8 @@ export default class StageConfig {
   static Overview(): StageConfig {
     return new StageConfig(
       '',
-      'Succession Arena',
-      'Welcome to Succession Arena. Here are the overall information of this session. You can see...',
+      'Agent Group Chat',
+      'Welcome to Agent Group Chat. Here are the overall information of this session. You can see...',
       '/background/4.jpg'
     )
   }
