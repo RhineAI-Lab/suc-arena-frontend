@@ -38,6 +38,7 @@ export default function Start () {
   let [gameRound, setGameRound] = useState('3')
   let [battleChatRound, setBattleChatRound] = useState('2')
   let [collaborationChatRound, setCollaborationChatRound] = useState('2')
+  let [groupChatRound, setGroupChatRound] = useState('2')
 
   let [loadPre, setLoadPre] = useState(false)
   let [preSid, setPreSid] = useState('')
@@ -65,6 +66,7 @@ export default function Start () {
       config.gameRound = parseInt(gameRound)
       config.battleChatRound = parseInt(battleChatRound)
       config.collaborationChatRound = parseInt(collaborationChatRound)
+      config.groupChatRound = parseInt(groupChatRound)
     } catch (e) {
       console.error(e)
       // AppTools.message('启动参数错误，请重新设置。', 'warning')
@@ -133,8 +135,9 @@ export default function Start () {
       <h1>Start Config</h1>
       <md-filled-text-field label="Game Round" value={gameRound} onInput={(e: any) => setGameRound(e.target.value)} type='number' size='large'></md-filled-text-field>
       <div className={styles.fieldLine}>
-        <md-filled-text-field label="Battle Chat Round" value={battleChatRound} onInput={(e: any) => setBattleChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
-        <md-filled-text-field label="Collaboration Chat Round" value={collaborationChatRound} onInput={(e: any) => setCollaborationChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
+        <md-filled-text-field label="Private Chat Round" value={battleChatRound} onInput={(e: any) => setBattleChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
+        <md-filled-text-field label="Meeting Chat Round" value={collaborationChatRound} onInput={(e: any) => setCollaborationChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
+        <md-filled-text-field label="Group Chat Round" value={groupChatRound} onInput={(e: any) => setGroupChatRound(e.target.value)} type='number' size='large'></md-filled-text-field>
       </div>
       <div className={clsx(styles.checkboxLine, 'line')}>
         <md-checkbox id="from-mode-checkbox" touch-target="wrapper" onInput={(e: any) => {

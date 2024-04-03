@@ -28,10 +28,11 @@
 
     md-filled-text-field {
       flex-grow: 1;
+      margin-left: 20px;
     }
 
-    *:nth-child(2) {
-      margin-left: 20px;
+    *:nth-child(1) {
+      margin-left: 0;
     }
   }
 

@@ -22,6 +22,7 @@ import Api from "@/app/api/api";
 import Characters from "@/components/show/main/Characters/Characters";
 import Resources from "@/components/show/main/Resources/Resources";
 import {AppTools} from "@/utils/AppTools";
+import getPortraitByName from "@/utils/PortraitUtils";
 
 export default function Show() {
   const router = useRouter()
@@ -326,7 +327,7 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
+                          <img src={getPortraitByName(item.source)} alt=''/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>
@@ -334,7 +335,7 @@ export default function Show() {
                           <span>{item.target}</span>
                         </div>
                         <div className={clsx(styles.item, styles.to)}>
-                          <img src='/profile/user.png' alt=''/>
+                          <img src={getPortraitByName(item.target)} alt=''/>
                         </div>
                         <span className={styles.space}></span>
                         <div className={clsx(styles.tag)}>
@@ -353,7 +354,7 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
+                          <img src={getPortraitByName(item.source)} alt=''/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>
@@ -376,7 +377,7 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
+                          <img src={getPortraitByName(item.source)} alt=''/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>
@@ -427,7 +428,7 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
+                          <img src={getPortraitByName(item.source)} alt=''/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>
@@ -468,7 +469,7 @@ export default function Show() {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
                         <div className={clsx(styles.item, styles.from)}>
-                          <img src='/profile/user.png' alt=''/>
+                          <img src={getPortraitByName(item.source)} alt=''/>
                         </div>
                         <div className={clsx(styles.between)}>
                           <span>{item.source}</span>

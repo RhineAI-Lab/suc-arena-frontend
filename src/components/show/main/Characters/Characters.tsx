@@ -9,6 +9,7 @@ import DataService from "@/app/service/data-service";
 import {clsx} from "clsx";
 import Icon from "@/components/Icon/Icon";
 import {AppTools} from "@/utils/AppTools";
+import getPortraitByName from "@/utils/PortraitUtils";
 
 export default function Characters () {
   function onFirstEnter() {
@@ -99,7 +100,7 @@ export default function Characters () {
           return <div key={index} className={styles.character}>
             <div className={styles.info}>
               <div className={clsx(styles.item, styles.from)}>
-                <img src='/profile/user.png' alt=''/>
+                <img src={getPortraitByName(item.name)} alt=''/>
               </div>
               <div className={clsx(styles.between)}>
                 <span>{item.name}</span>
