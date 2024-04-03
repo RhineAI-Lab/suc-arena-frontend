@@ -98,7 +98,8 @@ export default function Show() {
 
   // 装饰组件显示控制
   const needEmpty = round.isRoundOrSettlement() && stageIndex > round.stages.length - 1
-  const lastMessage = stage.messages[stage.messages.length - 1]
+  const stageMessages = stage ? (stage.messages ? stage.messages : []) : []
+  const lastMessage = stageMessages.length > 0 ? stageMessages[stageMessages.length - 1] : undefined
   const needProgress = round.isRoundOrSettlement()
     && !round.finished
     && roundIndex == data.rounds.length - 1
@@ -322,7 +323,7 @@ export default function Show() {
               {stage.type == StageType.Character && <Characters/>}
               {stage.type == StageType.Resource && <Resources/>}
               {
-                stage.messages.map((item: any, index: number) => {
+                stageMessages.map((item: any, index: number) => {
                   if (isDialogType(item.type)) {
                     return <div className={styles.message} key={index}>
                       <div className={styles.info}>
