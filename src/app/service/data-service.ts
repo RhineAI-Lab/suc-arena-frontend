@@ -8,6 +8,9 @@ import Round from "@/app/service/class/round";
 
 export default class DataService {
   
+  // static SIMULATE_STOP_AT = 36  // Human Choosing
+  static SIMULATE_STOP_AT = 42  // Human Speaking
+  
   static simulateStop = false
 
   static data: {
@@ -139,11 +142,12 @@ export default class DataService {
         }
         this.checkAndAddToSourceData(simulateData[i])
         Api.data.last = simulateData[i]['id']
+        if (Api.data.last == this.SIMULATE_STOP_AT) {
+          this.simulateStop = true
+        }
         i++
       }
-      if (!this.simulateStop) {
-        this.analysis()
-      }
+      this.analysis()
     }, 500)
   }
 

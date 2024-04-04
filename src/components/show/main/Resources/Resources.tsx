@@ -77,15 +77,17 @@ export default function Resources () {
       let result = await Api.addResource(data)
       console.log('Add Resource Result: ' + result)
       if (result == 'New Resource Created') {
-        Api.updateSettings()
+        // Success
       } else {
         // AppTools.message('社会资源新增失败: ' + result, 'warning')
         AppTools.message('Social resource addition failed: ' + result, 'warning')
       }
+      Api.updateSettings()
     } catch (e) {
       console.warn(e)
       // AppTools.message('参数不支持，请重新输入。', 'warning')
       AppTools.message('Parameter not supported, please re-enter.', 'warning')
+      Api.updateSettings()
     }
   }
 

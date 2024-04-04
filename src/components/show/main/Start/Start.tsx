@@ -106,7 +106,7 @@ export default function Start () {
       return
     }
 
-    if (sid === 'Local') {
+    if (sid.startsWith('Local')) {
       DataService.simulate()
       return;
     }
@@ -128,6 +128,7 @@ export default function Start () {
   let simulateList = [
     '2e295fa3cddd47e8bccbc377608cf179',
     'be141b8d5e2c4befb34e2cf358dd705e',
+    'Local Test Data',
   ]
 
   return (
