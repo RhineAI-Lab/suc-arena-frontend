@@ -40,8 +40,8 @@ export default class StageConfigChinese {
   static Overview(): StageConfigChinese {
     return new StageConfigChinese(
       '',
-      'Agent Group Chat',
-      'Welcome to Agent Group Chat. Here are the overall information of this session. You can see...',
+      'Succession Arena',
+      'Welcome to Succession Arena. Here are the overall information of this session. You can see...',
       '/background/4.jpg'
     )
   }
